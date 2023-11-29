@@ -1,5 +1,4 @@
 import { createTheme } from '@mui/material';
-import { useEffect, useState } from 'react';
 
 const getTheme = (mode) => {
   return createTheme({

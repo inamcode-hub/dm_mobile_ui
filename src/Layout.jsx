@@ -1,17 +1,15 @@
 import { Outlet } from 'react-router-dom';
-
-import styled from '@emotion/styled';
-
+import { useSelector } from 'react-redux';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import useCustomTheme from './styles/theme';
 const Layout = () => {
+  const { mode } = useSelector((state) => state.localStorage);
   return (
-    <Wrapper>
+    <ThemeProvider theme={useCustomTheme(mode)}>
+      <CssBaseline />
       <Outlet />
-    </Wrapper>
+    </ThemeProvider>
   );
 };
-
-const Wrapper = styled.div`
-  min-height: 100vh;
-`;
 
 export default Layout;

@@ -1,7 +1,14 @@
-import React from 'react';
+import styled from '@emotion/styled';
 
 const Login = () => {
-  return <div>Login</div>;
+  return (
+    <Wrapper>
+      <h1>Login</h1>
+    </Wrapper>
+  );
 };
 
+const Wrapper = styled.div`
+  background-color: pink;
+`;
 export default Login;
