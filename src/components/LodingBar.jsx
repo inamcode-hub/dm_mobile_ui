@@ -15,7 +15,7 @@ const LoadingBar = () => {
       setProgress(0);
     }
 
-    const timeout = setTimeout(() => setProgress(0), 500);
+    const timeout = setTimeout(() => setProgress(0), 1500);
     return () => clearTimeout(timeout);
   }, [location]);
 
@@ -41,7 +41,18 @@ const ProgressBar = styled.div`
 
 const Filler = styled.div`
   height: 100%;
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  background: linear-gradient(to right, #edeff3, #f5f5f5, #1f3660);
+  background-size: 300% 100%;
+  animation: loading 4s linear infinite; /* Changed the animation duration to 5 seconds */
+
+  @keyframes loading {
+    0% {
+      background-position: 100% 0;
+    }
+    100% {
+      background-position: -100% 0;
+    }
+  }
 `;
 
 export default LoadingBar;
