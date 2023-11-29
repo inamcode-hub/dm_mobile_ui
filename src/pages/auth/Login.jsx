@@ -80,6 +80,7 @@ const Login = () => {
               type='email'
               label='Email address'
               variant='outlined'
+              margin='normal'
               value={email}
               onChange={(e) => setState({ ...state, email: e.target.value })}
               error={emailError}
@@ -90,6 +91,7 @@ const Login = () => {
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
+              margin='normal'
               value={password}
               onChange={(e) => setState({ ...state, password: e.target.value })}
               error={passwordError}

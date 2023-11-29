@@ -107,6 +107,7 @@ const Register = () => {
                 fullWidth
                 label='First name'
                 variant='outlined'
+                margin='normal'
                 value={firstName}
                 onChange={(e) =>
                   setState({ ...state, firstName: e.target.value })
@@ -118,6 +119,7 @@ const Register = () => {
                 fullWidth
                 label='Last name'
                 variant='outlined'
+                margin='normal'
                 value={lastName}
                 onChange={(e) =>
                   setState({ ...state, lastName: e.target.value })
@@ -131,6 +133,7 @@ const Register = () => {
               type='email'
               label='Email address'
               variant='outlined'
+              margin='normal'
               value={email}
               onChange={(e) => setState({ ...state, email: e.target.value })}
               error={emailError}
@@ -141,6 +144,7 @@ const Register = () => {
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
+              margin='normal'
               value={password}
               onChange={(e) => setState({ ...state, password: e.target.value })}
               error={passwordError}
