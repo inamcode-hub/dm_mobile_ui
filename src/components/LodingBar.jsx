@@ -1,21 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 
 const LoadingBar = () => {
   const location = useLocation();
   const [progress, setProgress] = useState(0);
+  const pathNames = ['/', '/register', '/forgot-password'];
 
   useEffect(() => {
-    // Set the progress to 100% when the route changes
-    setProgress(100);
-
-    // After a short delay, reset the progress to 0
-    const timer = setTimeout(() => {
+    // if path names array includes the current path name then set progress to 100
+    if (pathNames.includes(location.pathname)) {
+      setProgress(100);
+    } else {
       setProgress(0);
-    }, 500);
+    }
 
-    return () => clearTimeout(timer);
+    const timeout = setTimeout(() => setProgress(0), 500);
+    return () => clearTimeout(timeout);
   }, [location]);
 
   return (
