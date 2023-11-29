@@ -194,7 +194,10 @@ const HeadingBody = styled.div`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
+  @media (max-width: 600px) {
+    gap: 0px;
+  }
 `;
 const ForgotPassword = styled.div`
   display: flex;
@@ -203,6 +206,9 @@ const ForgotPassword = styled.div`
   a {
     color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? 'white' : 'black'};
+  }
+  @media (max-width: 600px) {
+    padding: 12px 0px;
   }
 `;
 
