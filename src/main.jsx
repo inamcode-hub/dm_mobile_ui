@@ -6,7 +6,7 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import Provider from './lib/provider.jsx';
-import RoutesConfig from './routesConfig.jsx';
+import RoutesConfig from './RoutesConfig.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
