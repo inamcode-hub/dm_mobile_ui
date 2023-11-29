@@ -123,7 +123,9 @@ const Login = () => {
               variant='contained'
               color='primary'
               type='submit'
-              size='large'></Button>
+              size='large'>
+              Login
+            </Button>
             <ToggleTheme />
           </Body>
         </form>

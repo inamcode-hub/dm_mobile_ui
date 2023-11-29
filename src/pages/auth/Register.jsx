@@ -12,15 +12,29 @@ import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const initialState = {
+  firstName: '',
+  lastName: '',
   email: '',
   password: '',
   showPassword: false,
+  firstNameError: false,
+  lastNameError: false,
   emailError: false,
   passwordError: false,
 };
 const Register = () => {
   const [state, setState] = useState(initialState);
-  const { email, password, emailError, passwordError, showPassword } = state;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    firstNameError,
+    lastNameError,
+    emailError,
+    passwordError,
+    showPassword,
+  } = state;
 
   const handleShowPassword = () => {
     setState({ ...state, showPassword: !showPassword });
@@ -28,6 +42,19 @@ const Register = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Validate first name
+    if (!firstName) {
+      setState((prevState) => ({ ...prevState, firstNameError: true }));
+    } else {
+      setState((prevState) => ({ ...prevState, firstNameError: false }));
+    }
+
+    // Validate last name
+    if (!lastName) {
+      setState((prevState) => ({ ...prevState, lastNameError: true }));
+    } else {
+      setState((prevState) => ({ ...prevState, lastNameError: false }));
+    }
 
     // Validate email
     if (!email) {
@@ -44,7 +71,7 @@ const Register = () => {
     }
 
     // If both email and password are valid, proceed with form submission
-    if (!emailError && !passwordError) {
+    if (!emailError && !passwordError && !firstNameError && !lastNameError) {
       console.log('Submit form');
     }
   };
@@ -75,6 +102,32 @@ const Register = () => {
         </Heading>
         <form onSubmit={handleSubmit}>
           <Body>
+            <div className='name'>
+              <TextField
+                fullWidth
+                label='First name'
+                variant='outlined'
+                margin='normal'
+                value={firstName}
+                onChange={(e) =>
+                  setState({ ...state, firstName: e.target.value })
+                }
+                error={firstNameError}
+                helperText={firstNameError && 'First name is required'}
+              />
+              <TextField
+                fullWidth
+                label='Last name'
+                variant='outlined'
+                margin='normal'
+                value={lastName}
+                onChange={(e) =>
+                  setState({ ...state, lastName: e.target.value })
+                }
+                error={lastNameError}
+                helperText={lastNameError && 'Last name is required'}
+              />
+            </div>
             <TextField
               fullWidth
               type='email'
@@ -116,7 +169,7 @@ const Register = () => {
               color='primary'
               type='submit'
               size='large'>
-              Sign In
+              Create account
             </Button>
             <ToggleTheme />
           </Body>
@@ -190,6 +243,11 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  .name {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+  }
 `;
 
 export default Register;
