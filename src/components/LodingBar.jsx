@@ -41,9 +41,9 @@ const ProgressBar = styled.div`
 
 const Filler = styled.div`
   height: 100%;
-  background: linear-gradient(to right, #edeff3, #f5f5f5, #1f3660);
+  background: linear-gradient(to right, #edeff3, #f5f5f5, #39558a, #1f3660);
   background-size: 300% 100%;
-  animation: loading 4s linear infinite; /* Changed the animation duration to 5 seconds */
+  animation: loading 3.2s linear;
 
   @keyframes loading {
     0% {
