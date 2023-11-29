@@ -80,7 +80,6 @@ const Login = () => {
               type='email'
               label='Email address'
               variant='outlined'
-              margin='normal'
               value={email}
               onChange={(e) => setState({ ...state, email: e.target.value })}
               error={emailError}
@@ -91,7 +90,6 @@ const Login = () => {
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
-              margin='normal'
               value={password}
               onChange={(e) => setState({ ...state, password: e.target.value })}
               error={passwordError}
@@ -162,7 +160,7 @@ const Heading = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
   .heading-title {
     margin: 0px;
     font-weight: 700;
