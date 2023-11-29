@@ -196,7 +196,7 @@ const Container = styled.div`
     theme.palette.mode === 'dark' ? '#333' : 'white'};
   border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
   @media (max-width: 600px) {
-    width: 95%;
+    width: 90%;
   }
   @media (min-width: 600px) {
     width: 500px;
@@ -250,6 +250,10 @@ const Body = styled.div`
     display: flex;
     flex-direction: row;
     gap: 20px;
+    @media (max-width: 600px) {
+      flex-direction: column;
+      gap: 0px;
+    }
   }
 `;
 
