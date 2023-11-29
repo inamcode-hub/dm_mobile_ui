@@ -126,7 +126,6 @@ const Login = () => {
               size='large'>
               Login
             </Button>
-            <ToggleTheme />
           </Body>
         </form>
       </Container>
@@ -139,8 +138,6 @@ const Wrapper = styled.div`
   width: 100vw;
   display: grid;
   place-items: center;
-  background-color: ${({ theme }) =>
-    theme.palette.mode === 'light' && '#f0f2f5'};
 `;
 
 const Container = styled.div`
@@ -197,7 +194,7 @@ const HeadingBody = styled.div`
 const Body = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 `;
 const ForgotPassword = styled.div`
   display: flex;

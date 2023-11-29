@@ -12,7 +12,7 @@ const getTheme = (mode) => {
       },
 
       background: {
-        default: mode === 'dark' ? '#121212' : '#ffffff',
+        default: mode === 'dark' ? '#121212' : '#f0f2f5',
         paper: mode === 'dark' ? '#1f3660' : '#ffffff',
       },
     },

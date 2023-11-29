@@ -171,7 +171,6 @@ const Register = () => {
               size='large'>
               Create account
             </Button>
-            <ToggleTheme />
           </Body>
         </form>
       </Container>
@@ -184,8 +183,6 @@ const Wrapper = styled.div`
   width: 100vw;
   display: grid;
   place-items: center;
-  background-color: ${({ theme }) =>
-    theme.palette.mode === 'light' && '#f0f2f5'};
 `;
 
 const Container = styled.div`
