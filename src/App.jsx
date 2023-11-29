@@ -1,21 +1,20 @@
 import styled from '@emotion/styled';
-import { Button, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
-import theme from './styles/theme';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import useCustomTheme from './styles/theme';
+import { useSelector } from 'react-redux';
+
+import ToggleTheme from './components/ToggleTheme';
 
 const App = () => {
+  const { mode } = useSelector((state) => state.localStorage);
+
   return (
-    <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Wrapper>
-          <Button
-            variant='contained'
-            color='primary'>
-            Hello World
-          </Button>
-        </Wrapper>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={useCustomTheme(mode)}>
+      <CssBaseline />
+      <Wrapper>
+        <ToggleTheme />
+      </Wrapper>
+    </ThemeProvider>
   );
 };
 

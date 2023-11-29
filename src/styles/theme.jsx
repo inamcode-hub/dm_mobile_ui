@@ -1,15 +1,16 @@
 import { createTheme } from '@mui/material';
+import { useEffect, useState } from 'react';
 
-const theme = createTheme({
-  palette: {
-    mode: 'dark', // Set the mode to 'dark' for a dark theme
-    primary: {
-      main: '#ff4400',
+const getTheme = (mode) => {
+  return createTheme({
+    palette: {
+      mode: mode,
     },
-    secondary: {
-      main: '#0044ff',
-    },
-  },
-});
+  });
+};
 
-export default theme;
+const useCustomTheme = (theme) => {
+  return getTheme(theme);
+};
+
+export default useCustomTheme;
