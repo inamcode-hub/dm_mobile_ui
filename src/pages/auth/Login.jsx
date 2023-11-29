@@ -123,9 +123,7 @@ const Login = () => {
               variant='contained'
               color='primary'
               type='submit'
-              size='large'>
-              Sign In
-            </Button>
+              size='large'></Button>
             <ToggleTheme />
           </Body>
         </form>
@@ -166,6 +164,13 @@ const Heading = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
+  .heading-title {
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    font-size: 1.25rem;
+    font-family: 'Public Sans', sans-serif;
+  }
 `;
 
 const HeadingBody = styled.div`
