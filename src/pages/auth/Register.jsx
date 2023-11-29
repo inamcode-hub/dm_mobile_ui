@@ -240,6 +240,12 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  @media (max-width: 600px) {
+    gap: 0px;
+    button {
+      margin-top: 10px;
+    }
+  }
   .name {
     display: flex;
     flex-direction: row;
