@@ -107,7 +107,6 @@ const Register = () => {
                 fullWidth
                 label='First name'
                 variant='outlined'
-                margin='normal'
                 value={firstName}
                 onChange={(e) =>
                   setState({ ...state, firstName: e.target.value })
@@ -119,7 +118,6 @@ const Register = () => {
                 fullWidth
                 label='Last name'
                 variant='outlined'
-                margin='normal'
                 value={lastName}
                 onChange={(e) =>
                   setState({ ...state, lastName: e.target.value })
@@ -133,7 +131,6 @@ const Register = () => {
               type='email'
               label='Email address'
               variant='outlined'
-              margin='normal'
               value={email}
               onChange={(e) => setState({ ...state, email: e.target.value })}
               error={emailError}
@@ -144,7 +141,6 @@ const Register = () => {
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
-              margin='normal'
               value={password}
               onChange={(e) => setState({ ...state, password: e.target.value })}
               error={passwordError}
@@ -214,7 +210,7 @@ const Heading = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-bottom: 30px;
+  margin-bottom: 40px;
   .heading-title {
     margin: 0px;
     font-weight: 700;
@@ -248,10 +244,6 @@ const Body = styled.div`
   flex-direction: column;
   gap: 20px;
   @media (max-width: 600px) {
-    gap: 0px;
-    button {
-      margin-top: 10px;
-    }
   }
   .name {
     display: flex;
@@ -259,7 +251,6 @@ const Body = styled.div`
     gap: 20px;
     @media (max-width: 600px) {
       flex-direction: column;
-      gap: 0px;
     }
   }
 `;
