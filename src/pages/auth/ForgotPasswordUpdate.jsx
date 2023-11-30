@@ -357,6 +357,7 @@ const CodeInput = styled.div`
     -moz-appearance: textfield; /* Firefox */
     appearance: none; /* Other modern browsers */
     margin: 0; /* Remove default margin */
+    text-align: center;
   }
 
   /* Hide number input arrow in Webkit browsers (Chrome, Safari) */
