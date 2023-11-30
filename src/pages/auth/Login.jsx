@@ -124,6 +124,7 @@ const Login = () => {
               size='large'>
               Login
             </Button>
+            <ToggleTheme />
           </Body>
         </form>
       </Container>
@@ -202,7 +203,6 @@ const Body = styled.div`
 const ForgotPassword = styled.div`
   display: flex;
   justify-content: flex-end;
-
   a {
     color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? 'white' : 'black'};

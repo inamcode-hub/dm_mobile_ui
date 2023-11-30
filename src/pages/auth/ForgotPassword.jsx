@@ -74,6 +74,11 @@ const Login = () => {
               size='large'>
               Send request
             </Button>
+            <Link
+              to='/'
+              className='login'>
+              <Typography variant='body2'>&lt; Return to sign in</Typography>
+            </Link>
           </Body>
         </form>
       </Container>
@@ -147,13 +152,23 @@ const Body = styled.div`
   button {
     text-transform: capitalize;
   }
-`;
-const ForgotPassword = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  a {
-    color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? 'white' : 'black'};
+  .login {
+    text-align: center;
+    text-decoration: none;
+
+    p {
+      margin: 0px;
+      font-weight: 600;
+      line-height: 1.57143;
+      font-size: 0.875rem;
+      font-family: 'Public Sans', sans-serif;
+      color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? 'white' : 'black'};
+      text-decoration: none;
+    }
+    :hover {
+      text-decoration: underline;
+    }
   }
 `;
 
