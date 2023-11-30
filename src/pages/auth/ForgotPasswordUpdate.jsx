@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   Button,
@@ -19,7 +19,7 @@ const initialState = {
   showPassword: false,
 };
 
-const Login = () => {
+const ForgotPasswordUpdate = () => {
   const [state, setState] = useState(initialState);
   const [errors, setErrors] = useState({
     email: '',
@@ -98,7 +98,14 @@ const Login = () => {
       console.log('Code:', code.join(''));
     }
   };
+  useEffect(() => {
+    const path = window.location.pathname;
+    document.getElementById('code-input-0').focus();
+    const pathArray = path.split('/');
+    const email = pathArray[2];
 
+    setState({ ...state, email });
+  }, []);
   return (
     <Wrapper>
       <Container>
@@ -219,6 +226,11 @@ const Login = () => {
               size='large'>
               Send request
             </Button>
+            <div className='resend-code'>
+              <Typography variant='body2'>
+                Didn&apos;t receive the code? <Link to='/'>Resend code</Link>
+              </Typography>
+            </div>
             <Link
               to='/'
               className='login'>
@@ -318,12 +330,41 @@ const Body = styled.div`
       text-decoration: underline;
     }
   }
+  .resend-code {
+    text-align: center;
+    a {
+      margin: 0px;
+      font-weight: 600;
+      line-height: 1.57143;
+      font-size: 0.875rem;
+      font-family: 'Public Sans', sans-serif;
+      color: ${({ theme }) => theme.palette.secondary.main};
+      text-decoration: none;
+      :hover {
+        text-decoration: underline;
+      }
+    }
+  }
 `;
 
 const CodeInput = styled.div`
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 8px;
+
+  /* Hide number input arrow */
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
+    appearance: none; /* Other modern browsers */
+    margin: 0; /* Remove default margin */
+  }
+
+  /* Hide number input arrow in Webkit browsers (Chrome, Safari) */
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
 `;
 
-export default Login;
+export default ForgotPasswordUpdate;
