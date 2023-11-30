@@ -204,6 +204,16 @@ const Container = styled.div`
   @media (min-width: 600px) {
     width: 500px;
   }
+  .policy {
+    color: ${({ theme }) => theme.palette.text.secondary};
+    a {
+      color: ${({ theme }) => theme.palette.secondary.main};
+      text-decoration: none;
+      :hover {
+        text-decoration: underline;
+      }
+    }
+  }
 `;
 
 const Heading = styled.div`
