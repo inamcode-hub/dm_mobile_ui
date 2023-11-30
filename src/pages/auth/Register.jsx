@@ -243,7 +243,8 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  @media (max-width: 600px) {
+  button {
+    text-transform: capitalize;
   }
   .name {
     display: flex;

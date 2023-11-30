@@ -175,7 +175,9 @@ const HeadingBody = styled.div`
   flex-direction: row;
   gap: 4px;
   align-items: center;
-
+  button {
+    text-transform: capitalize;
+  }
   a {
     margin: 0px;
     font-weight: 600;
@@ -193,6 +195,9 @@ const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  button {
+    text-transform: capitalize;
+  }
 `;
 const ForgotPassword = styled.div`
   display: flex;
