@@ -12,7 +12,7 @@ import send_email from '../../assets/images/send-email.svg';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const initialState = {
-  email: 'inam@dryermaster.com',
+  email: '',
   password: '',
   confirmPassword: '',
   code: ['', '', '', '', '', ''],
@@ -224,7 +224,7 @@ const ForgotPasswordUpdate = () => {
               color='primary'
               type='submit'
               size='large'>
-              Send request
+              Update password
             </Button>
             <div className='resend-code'>
               <Typography variant='body2'>

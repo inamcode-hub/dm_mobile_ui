@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, TextField, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import lock from '../../assets/images/lock.svg';
 
 const initialState = {
@@ -9,6 +9,7 @@ const initialState = {
   emailError: false,
 };
 const Login = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState(initialState);
   const { email, emailError } = state;
 
@@ -24,7 +25,7 @@ const Login = () => {
 
     // If both email and password are valid, proceed with form submission
     if (!emailError) {
-      console.log('Submit form');
+      navigate(`/forgot-password/${email}`);
     }
   };
 
