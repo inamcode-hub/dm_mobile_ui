@@ -14,7 +14,6 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 const initialState = {
   email: '',
   code: ['', '', '', '', '', ''],
-  showPassword: false,
 };
 
 const EmailVerify = () => {
@@ -24,7 +23,7 @@ const EmailVerify = () => {
     code: '',
   });
 
-  const { email, code, showPassword } = state;
+  const { email, code } = state;
 
   const handleCodeChange = (index, value) => {
     if (!isNaN(value) && value.length <= 1) {
