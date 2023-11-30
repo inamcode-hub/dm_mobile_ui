@@ -17,10 +17,18 @@ const initialState = {
   showPassword: false,
   emailError: false,
   passwordError: false,
+  passwordErrorText: 'Password is required',
 };
 const Login = () => {
   const [state, setState] = useState(initialState);
-  const { email, password, emailError, passwordError, showPassword } = state;
+  const {
+    email,
+    password,
+    emailError,
+    passwordError,
+    showPassword,
+    passwordErrorText,
+  } = state;
 
   const handleShowPassword = () => {
     setState({ ...state, showPassword: !showPassword });
@@ -37,8 +45,15 @@ const Login = () => {
     }
 
     // Validate password
-    if (!password) {
+    if (!password || password.length < 8) {
       setState((prevState) => ({ ...prevState, passwordError: true }));
+
+      if (password.length > 0 && password.length < 8) {
+        setState((prevState) => ({
+          ...prevState,
+          passwordErrorText: 'Password must be at least 8 characters',
+        }));
+      }
     } else {
       setState((prevState) => ({ ...prevState, passwordError: false }));
     }
@@ -93,7 +108,7 @@ const Login = () => {
               value={password}
               onChange={(e) => setState({ ...state, password: e.target.value })}
               error={passwordError}
-              helperText={passwordError && 'Password is required'}
+              helperText={passwordError && passwordErrorText}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
