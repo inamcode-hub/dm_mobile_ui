@@ -6,6 +6,7 @@ import DashboardRoutes from './pages/dashboard/DashboardRoutes.jsx';
 import Register from './pages/auth/Register.jsx';
 import ForgotPassword from './pages/auth/ForgotPassword.jsx';
 import ForgotPasswordUpdate from './pages/auth/ForgotPasswordUpdate.jsx';
+import EmailVerify from './pages/auth/EmailVerify.jsx';
 
 const RoutesConfig = () => {
   return (
@@ -29,6 +30,10 @@ const RoutesConfig = () => {
           <Route
             path='/forgot-password/:token'
             element={<ForgotPasswordUpdate />}
+          />
+          <Route
+            path='/email-verify/:token'
+            element={<EmailVerify />}
           />
           <Route
             path='/dashboard/*'
