@@ -192,7 +192,7 @@ const ForgotPasswordUpdate = () => {
 
             <TextField
               fullWidth
-              label='Confirm Password'
+              label='Confirm New Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
               value={confirmPassword}
