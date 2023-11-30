@@ -1,15 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import {
-  Button,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Button, TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
-import ToggleTheme from '../../components/ToggleTheme';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import lock from '../../assets/images/lock.svg';
 
 const initialState = {
   email: '',
@@ -39,6 +32,12 @@ const Login = () => {
     <Wrapper>
       <Container>
         <Heading>
+          <img
+            src={lock}
+            alt='lock'
+            width='120' // Adjust the width as needed
+            height='120' // Adjust the height as needed
+          />
           <Typography
             variant='h4'
             className='heading-title'>
@@ -116,6 +115,8 @@ const Heading = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
+  display: grid;
+  place-items: center;
   text-align: center;
   .heading-title {
     margin: 0px;
