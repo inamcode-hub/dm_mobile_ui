@@ -13,18 +13,11 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const initialState = {
   email: '',
-  password: '',
-  showPassword: false,
   emailError: false,
-  passwordError: false,
 };
 const Login = () => {
   const [state, setState] = useState(initialState);
-  const { email, password, emailError, passwordError, showPassword } = state;
-
-  const handleShowPassword = () => {
-    setState({ ...state, showPassword: !showPassword });
-  };
+  const { email, emailError } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -36,15 +29,8 @@ const Login = () => {
       setState((prevState) => ({ ...prevState, emailError: false }));
     }
 
-    // Validate password
-    if (!password) {
-      setState((prevState) => ({ ...prevState, passwordError: true }));
-    } else {
-      setState((prevState) => ({ ...prevState, passwordError: false }));
-    }
-
     // If both email and password are valid, proceed with form submission
-    if (!emailError && !passwordError) {
+    if (!emailError) {
       console.log('Submit form');
     }
   };
@@ -56,21 +42,15 @@ const Login = () => {
           <Typography
             variant='h4'
             className='heading-title'>
-            Sign in to DryerMaster
+            Forgot your password?
           </Typography>
           <HeadingBody>
             <Typography
               variant='body2'
               className='new-user'>
-              New User?
+              Please enter the email address associated with your account and We
+              will email you a link to reset your password.
             </Typography>
-            <Link to='/register'>
-              <Typography
-                variant='body2'
-                sx={{ fontWeight: 500 }}>
-                Create an account
-              </Typography>
-            </Link>
           </HeadingBody>
         </Heading>
         <form onSubmit={handleSubmit}>
@@ -85,37 +65,7 @@ const Login = () => {
               error={emailError}
               helperText={emailError && 'Please enter your email'}
             />
-            <TextField
-              fullWidth
-              label='Password'
-              type={showPassword ? 'text' : 'password'}
-              variant='outlined'
-              value={password}
-              onChange={(e) => setState({ ...state, password: e.target.value })}
-              error={passwordError}
-              helperText={passwordError && 'Password is required'}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleShowPassword}
-                      edge='end'>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-            <ForgotPassword>
-              <Link to='/forgot-password'>
-                <Typography
-                  variant='body2'
-                  sx={{ fontWeight: 500 }}>
-                  Forgot password?
-                </Typography>
-              </Link>
-            </ForgotPassword>
+
             <Button
               fullWidth
               variant='contained'
@@ -161,11 +111,12 @@ const Heading = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
+  text-align: center;
   .heading-title {
     margin: 0px;
     font-weight: 700;
     line-height: 1.5;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-family: 'Public Sans', sans-serif;
   }
 `;

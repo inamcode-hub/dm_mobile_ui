@@ -215,7 +215,7 @@ const Heading = styled.div`
     margin: 0px;
     font-weight: 700;
     line-height: 1.5;
-    font-size: 1.25rem;
+    font-size: 1.5rem;
     font-family: 'Public Sans', sans-serif;
   }
 `;
