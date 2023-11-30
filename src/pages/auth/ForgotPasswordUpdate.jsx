@@ -146,7 +146,7 @@ const Login = () => {
                   variant='outlined'
                   value={digit}
                   onChange={(e) => handleCodeChange(index, e.target.value)}
-                  type='text'
+                  type='number'
                   inputProps={{ maxLength: 1 }}
                 />
               ))}
