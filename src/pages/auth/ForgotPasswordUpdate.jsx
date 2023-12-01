@@ -7,127 +7,96 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
-import send_email from '../../assets/images/send-email.svg';
+import { Link, useLocation } from 'react-router-dom';
+import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-
-const initialState = {
-  email: '',
-  password: '',
-  confirmPassword: '',
-  code: ['', '', '', '', '', ''],
-  showPassword: false,
-};
+import useFormValidation from '../../hooks/useFormValidation';
 
 const ForgotPasswordUpdate = () => {
-  const [state, setState] = useState(initialState);
-  const [errors, setErrors] = useState({
+  const location = useLocation();
+  const [state, setState] = useState({
     email: '',
-    password: '',
-    confirmPassword: '',
-    code: '',
+    token: '',
+    disableToken: false,
   });
+  const { email, token } = state;
 
-  const { email, password, confirmPassword, code, showPassword } = state;
+  const { formState, validatePassword, handleChange } = useFormValidation();
+  const {
+    password,
+    emailError,
+    passwordError,
+    emailErrorList,
+    passwordErrorList,
+  } = formState;
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
-    setState({ ...state, showPassword: !showPassword });
+    setShowPassword(!showPassword);
   };
-
-  const handleCodeChange = (index, value) => {
-    if (!isNaN(value) && value.length <= 1) {
-      const newCode = [...code];
-      newCode[index] = value;
-      setState({ ...state, code: newCode });
-
-      // If the current input has a value, move to the next input
-      if (value && index < code.length - 1) {
-        document.getElementById(`code-input-${index + 1}`).focus();
-      }
+  const handleTokenChange = (e) => {
+    const { name, value } = e.target;
+    const token = value;
+    if (token.length === 7) {
+      return handleChange(name, token);
     }
+    setState((prevState) => ({
+      ...prevState,
+      [name]: token,
+    }));
   };
-
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const newErrors = {
-      email: '',
-      password: '',
-      confirmPassword: '',
-      code: '',
-    };
-
-    // Validate email
-    if (!email) {
-      newErrors.email = 'Please enter your email';
-    }
-
-    // Validate password
-    if (!password) {
-      newErrors.password = 'Password is required';
-    } else if (password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters long';
-    } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]+$/.test(password)) {
-      newErrors.password = 'Password must include digits and letters';
-    }
-
-    // Validate confirmPassword
-    if (!confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password';
-    } else if (password !== confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-
-    // Validate code
-    if (code.some((digit) => digit === '')) {
-      newErrors.code = 'Please enter all 6 digits for verification';
-    }
-
-    setErrors(newErrors);
-
-    // If all validations pass, proceed with form submission
-    if (
-      !newErrors.email &&
-      !newErrors.password &&
-      !newErrors.confirmPassword &&
-      !newErrors.code
-    ) {
-      console.log('Submit form with:');
-      console.log('Email:', email);
-      console.log('Password:', password);
-      console.log('Code:', code.join(''));
+    const isPasswordValid = validatePassword(password);
+    if (isPasswordValid && !emailError && token.length === 6) {
+      console.log('Form is valid');
     }
   };
   useEffect(() => {
-    const path = window.location.pathname;
-    document.getElementById('code-input-0').focus();
-    const pathArray = path.split('/');
-    const email = pathArray[2];
-
-    setState({ ...state, email });
+    const queryParams = new URLSearchParams(location.search);
+    const token = queryParams.get('token');
+    const email = queryParams.get('email');
+    if (email) {
+      setState((prevState) => ({
+        ...prevState,
+        email,
+      }));
+      handleChange('email', email);
+    }
+    if (token) {
+      setState((prevState) => ({
+        ...prevState,
+        token: token,
+        disableToken: true,
+      }));
+    }
   }, []);
   return (
     <Wrapper>
       <Container>
         <Heading>
-          <img
-            src={send_email}
-            alt='lock'
-            width='120'
-            height='120'
-          />
           <Typography
             variant='h4'
             className='heading-title'>
-            Request sent successfully!
+            Sign in to DryerMaster
           </Typography>
           <HeadingBody>
             <Typography
               variant='body2'
               className='new-user'>
-              We&apos;ve sent a 6-digit confirmation email to your email. Please
-              enter the code in the boxes below to verify your email.
+              New User?
             </Typography>
+            <Link to='/register'>
+              <Typography
+                variant='body2'
+                sx={{ fontWeight: 500 }}>
+                Create an account
+              </Typography>
+            </Link>
           </HeadingBody>
         </Heading>
         <form onSubmit={handleSubmit}>
@@ -137,45 +106,47 @@ const ForgotPasswordUpdate = () => {
               type='email'
               label='Email address'
               variant='outlined'
+              name='email'
               value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
-              error={!!errors.email}
-              helperText={errors.email}
+              onChange={handleFieldChange}
+              error={emailError}
               disabled
+              required
             />
-
-            <CodeInput>
-              {code.map((digit, index) => (
-                <TextField
-                  key={index}
-                  id={`code-input-${index}`}
-                  label={`${index + 1}`}
-                  variant='outlined'
-                  value={digit}
-                  onChange={(e) => handleCodeChange(index, e.target.value)}
-                  type='number'
-                  inputProps={{ maxLength: 1 }}
-                />
-              ))}
-            </CodeInput>
-            {errors.code && (
-              <Typography color='error'>{errors.code}</Typography>
+            {emailError && (
+              <ErrorList>
+                {emailErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
             )}
+            <TextField
+              fullWidth
+              label='Token'
+              variant='outlined'
+              name='token'
+              type='number'
+              value={token}
+              onChange={handleTokenChange}
+              disabled={state.disableToken}
+              required
+              error={state.token ? state.token.length !== 6 : false}
+              helperText={
+                state.token
+                  ? state.token.length !== 6 && 'Token must be 6 digits'
+                  : ''
+              }
+            />
             <TextField
               fullWidth
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
+              name='password'
               value={password}
-              onChange={(e) =>
-                setState({
-                  ...state,
-                  password: e.target.value,
-                  passwordError: e.target.value === '', // Set error if password is empty
-                })
-              }
-              error={!!errors.password}
-              helperText={errors.password}
+              onChange={handleFieldChange}
+              error={passwordError}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
@@ -189,60 +160,29 @@ const ForgotPasswordUpdate = () => {
                 ),
               }}
             />
+            {passwordError && (
+              <ErrorList>
+                {passwordErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
+            )}
 
-            <TextField
-              fullWidth
-              label='Confirm New Password'
-              type={showPassword ? 'text' : 'password'}
-              variant='outlined'
-              value={confirmPassword}
-              onChange={(e) =>
-                setState({
-                  ...state,
-                  confirmPassword: e.target.value,
-                  confirmPasswordError: e.target.value === '', // Set error if confirm password is empty
-                })
-              }
-              error={!!errors.confirmPassword}
-              helperText={errors.confirmPassword}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleShowPassword}
-                      edge='end'>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
             <Button
               fullWidth
               variant='contained'
               color='primary'
               type='submit'
               size='large'>
-              Update password
+              Login
             </Button>
-            <div className='resend-code'>
-              <Typography variant='body2'>
-                Didn&apos;t receive the code? <Link to='/'>Resend code</Link>
-              </Typography>
-            </div>
-            <Link
-              to='/'
-              className='login'>
-              <Typography variant='body2'>&lt; Return to sign in</Typography>
-            </Link>
+            <ToggleTheme />
           </Body>
         </form>
       </Container>
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -273,9 +213,6 @@ const Heading = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
-  display: grid;
-  place-items: center;
-  text-align: center;
   .heading-title {
     margin: 0px;
     font-weight: 700;
@@ -290,7 +227,9 @@ const HeadingBody = styled.div`
   flex-direction: row;
   gap: 4px;
   align-items: center;
-
+  button {
+    text-transform: capitalize;
+  }
   a {
     margin: 0px;
     font-weight: 600;
@@ -304,7 +243,6 @@ const HeadingBody = styled.div`
     }
   }
 `;
-
 const Body = styled.div`
   display: flex;
   flex-direction: column;
@@ -312,60 +250,14 @@ const Body = styled.div`
   button {
     text-transform: capitalize;
   }
-  .login {
-    text-align: center;
-    text-decoration: none;
-
-    p {
-      margin: 0px;
-      font-weight: 600;
-      line-height: 1.57143;
-      font-size: 0.875rem;
-      font-family: 'Public Sans', sans-serif;
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? 'white' : 'black'};
-      text-decoration: none;
-    }
-    :hover {
-      text-decoration: underline;
-    }
-  }
-  .resend-code {
-    text-align: center;
-    a {
-      margin: 0px;
-      font-weight: 600;
-      line-height: 1.57143;
-      font-size: 0.875rem;
-      font-family: 'Public Sans', sans-serif;
-      color: ${({ theme }) => theme.palette.secondary.main};
-      text-decoration: none;
-      :hover {
-        text-decoration: underline;
-      }
-    }
-  }
 `;
-
-const CodeInput = styled.div`
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 8px;
-
-  /* Hide number input arrow */
-  input[type='number'] {
-    -moz-appearance: textfield; /* Firefox */
-    appearance: none; /* Other modern browsers */
-    margin: 0; /* Remove default margin */
-    text-align: center;
-  }
-
-  /* Hide number input arrow in Webkit browsers (Chrome, Safari) */
-  input[type='number']::-webkit-inner-spin-button,
-  input[type='number']::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    appearance: none;
-  }
+const ErrorList = styled.ul`
+  color: ${({ theme }) => theme.palette.error.main};
+  margin: 0px;
+  margin-top: -15px;
+  list-style: inside;
+  font-size: 0.8rem;
+  padding-left: 0;
 `;
 
 export default ForgotPasswordUpdate;

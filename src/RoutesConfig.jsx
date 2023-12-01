@@ -28,7 +28,7 @@ const RoutesConfig = () => {
             element={<ForgotPassword />}
           />
           <Route
-            path='/forgot-password/:token'
+            path='/forgot-password-update'
             element={<ForgotPasswordUpdate />}
           />
           <Route
