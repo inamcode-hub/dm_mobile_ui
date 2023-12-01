@@ -8,9 +8,10 @@ import {
   Typography,
 } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
+import lock from '../../assets/images/send-email.svg';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ForgotPasswordUpdate = () => {
   const location = useLocation();
@@ -85,24 +86,23 @@ const ForgotPasswordUpdate = () => {
     <Wrapper>
       <Container>
         <Heading>
+          <img
+            src={lock}
+            alt='lock'
+            style={{ width: '120px', height: '120px', margin: '0px auto' }}
+          />
           <Typography
             variant='h4'
             className='heading-title'>
-            Sign in to DryerMaster
+            Request sent successfully!
           </Typography>
           <HeadingBody>
             <Typography
               variant='body2'
               className='new-user'>
-              New User?
+              We&apos;ve sent a 6-digit confirmation email to your email. Please
+              enter the code in below box to verify your email.
             </Typography>
-            <Link to='/register'>
-              <Typography
-                variant='body2'
-                sx={{ fontWeight: 500 }}>
-                Create an account
-              </Typography>
-            </Link>
           </HeadingBody>
         </Heading>
         <form onSubmit={handleSubmit}>
@@ -216,7 +216,25 @@ const ForgotPasswordUpdate = () => {
               size='large'>
               Login
             </Button>
-            <ToggleTheme />
+            {/* don't have a code ? Resend code */}
+            <div className='code'>
+              <p>Don&apos;t have a code?</p>
+              <Button
+                variant='text'
+                color='primary'>
+                Resend code
+              </Button>
+            </div>
+            <Link
+              to='/'
+              className='link'>
+              <Typography
+                variant='body2'
+                sx={{ fontWeight: 500 }}>
+                <ArrowBackIosIcon sx={{ fontSize: 'small', mr: '0px' }} />
+                Return to sign in
+              </Typography>
+            </Link>
           </Body>
         </form>
       </Container>
@@ -246,6 +264,29 @@ const Container = styled.div`
   @media (min-width: 600px) {
     width: 500px;
   }
+  .link {
+    text-decoration: none;
+    color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
+    :hover {
+      text-decoration: underline;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .code {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      margin: 0px;
+    }
+    button {
+      color: ${({ theme }) => theme.palette.secondary.main};
+    }
+  }
 `;
 
 const Heading = styled.div`
@@ -253,6 +294,7 @@ const Heading = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
+  text-align: center;
   .heading-title {
     margin: 0px;
     font-weight: 700;
