@@ -10,57 +10,36 @@ import {
 import { Link } from 'react-router-dom';
 import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import useFormValidation from '../../hooks/useFormValidation';
 
-const initialState = {
-  email: '',
-  password: '',
-  showPassword: false,
-  emailError: false,
-  passwordError: false,
-  passwordErrorText: 'Password is required',
-};
 const Login = () => {
-  const [state, setState] = useState(initialState);
   const {
     email,
     password,
     emailError,
     passwordError,
-    showPassword,
-    passwordErrorText,
-  } = state;
+    emailErrorList,
+    passwordErrorList,
+    handleEmailChange,
+    handlePasswordChange,
+    validateEmail,
+    validatePassword,
+  } = useFormValidation();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
-    setState({ ...state, showPassword: !showPassword });
+    setShowPassword(!showPassword);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Validate email
-    if (!email) {
-      setState((prevState) => ({ ...prevState, emailError: true }));
-    } else {
-      setState((prevState) => ({ ...prevState, emailError: false }));
-    }
+    const isEmailValid = validateEmail(email);
+    const isPasswordValid = validatePassword(password);
 
-    // Validate password
-    if (!password || password.length < 8) {
-      setState((prevState) => ({ ...prevState, passwordError: true }));
-
-      if (password.length > 0 && password.length < 8) {
-        setState((prevState) => ({
-          ...prevState,
-          passwordErrorText: 'Password must be at least 8 characters',
-        }));
-      }
-    } else {
-      setState((prevState) => ({ ...prevState, passwordError: false }));
-    }
-
-    // If both email and password are valid, proceed with form submission
-    if (!emailError && !passwordError) {
+    if (isEmailValid && isPasswordValid) {
       console.log('Submit form');
+      // Proceed with form submission
     }
   };
 
@@ -96,32 +75,32 @@ const Login = () => {
               label='Email address'
               variant='outlined'
               value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
+              onChange={handleEmailChange}
               error={emailError}
-              helperText={emailError && 'Please enter your email'}
             />
+            {emailError && (
+              <ErrorList>
+                {emailErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
+            )}
             <TextField
               fullWidth
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
               value={password}
-              onChange={(e) => setState({ ...state, password: e.target.value })}
+              onChange={handlePasswordChange}
               error={passwordError}
-              helperText={passwordError && passwordErrorText}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleShowPassword}
-                      edge='end'>
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
             />
+            {passwordError && (
+              <ErrorList>
+                {passwordErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
+            )}
             <ForgotPassword>
               <Link to='/forgot-password'>
                 <Typography
@@ -146,7 +125,6 @@ const Login = () => {
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -169,6 +147,16 @@ const Container = styled.div`
   }
   @media (min-width: 600px) {
     width: 500px;
+  }
+  .MuiFormHelperText-root {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    ul {
+      padding: 0px;
+      li {
+        margin-left: 0px;
+      }
+    }
   }
 `;
 
@@ -214,6 +202,13 @@ const Body = styled.div`
   button {
     text-transform: capitalize;
   }
+`;
+const ErrorList = styled.ul`
+  color: ${({ theme }) => theme.palette.error.main};
+  margin: 0px;
+  list-style: inside;
+  font-size: 0.8rem;
+  padding-left: 0;
 `;
 const ForgotPassword = styled.div`
   display: flex;
