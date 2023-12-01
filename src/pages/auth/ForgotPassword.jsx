@@ -4,6 +4,7 @@ import { Button, TextField, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 import lock from '../../assets/images/lock.svg';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ForgotPassword = () => {
   const { formState, validateEmail, handleChange } = useFormValidation();
@@ -76,6 +77,7 @@ const ForgotPassword = () => {
               <Typography
                 variant='body2'
                 sx={{ fontWeight: 500 }}>
+                <ArrowBackIosIcon sx={{ fontSize: 'small', mr: '0px' }} />
                 Return to Sign in
               </Typography>
             </Link>
@@ -111,9 +113,13 @@ const Container = styled.div`
   .link {
     text-decoration: none;
     color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
-    text-align: center;
     :hover {
       text-decoration: underline;
+    }
+    p {
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 `;
