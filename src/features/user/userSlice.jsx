@@ -44,6 +44,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     getStateValues: (state, { payload }) => {
+      console.log(payload);
       const { name, value } = payload;
       state[name] = value;
     },

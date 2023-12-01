@@ -14,7 +14,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 import { useSelector } from 'react-redux';
 
 const Login = () => {
-  const { isMember } = useSelector((state) => state.user);
+  const { isMember, isLoading } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const { formState, validateEmail, validatePassword, handleChange } =
     useFormValidation();

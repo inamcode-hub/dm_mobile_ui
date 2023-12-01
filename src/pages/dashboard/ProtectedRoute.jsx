@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
 import Cookies from 'js-cookie';
+import { getStateValues } from '../../features/user/userSlice';
 
 const ProtectedRoute = ({ children }) => {
-  const [isMember, setIsMember] = useState(!!Cookies.get('dryermaster_token'));
+  const dispatch = useDispatch();
+  const { isMember } = useSelector((state) => state.user);
   const location = useLocation();
 
   useEffect(() => {
     const token = Cookies.get('dryermaster_token');
     if (!token) {
-      setIsMember(false);
+      dispatch(getStateValues({ name: 'isMember', value: false }));
     }
   }, [location.pathname]);
 
