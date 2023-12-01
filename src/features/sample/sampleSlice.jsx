@@ -33,7 +33,6 @@ const samplesSlice = createSlice({
     builder
       .addCase(samplesThunk.pending, (state, { payload }) => {
         console.log('promise pending');
-        console.log(payload);
         state.isLoading = true;
       })
       .addCase(samplesThunk.fulfilled, (state, { payload }) => {

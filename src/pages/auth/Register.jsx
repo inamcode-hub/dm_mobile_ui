@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
-import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
+import { useDispatch, useSelector } from 'react-redux';
+import { userRegisterThunk } from '../../features/user/userSlice';
 
 const Register = () => {
+  const { isLoading } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   const {
     formState,
     validateFirstName,
@@ -58,7 +62,14 @@ const Register = () => {
       isEmailValid &&
       isPasswordValid
     ) {
-      console.log('Form is valid');
+      dispatch(
+        userRegisterThunk({
+          firstName,
+          lastName,
+          email,
+          password,
+        })
+      );
     }
   };
 
@@ -184,8 +195,20 @@ const Register = () => {
               variant='contained'
               color='primary'
               type='submit'
-              size='large'>
-              Create account
+              size='large'
+              disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <CircularProgress
+                    size={24}
+                    color='inherit'
+                    style={{ marginRight: '10px' }} // Add some spacing between the spinner and the text
+                  />
+                  Creating account...
+                </>
+              ) : (
+                'Create account'
+              )}
             </Button>
           </Body>
         </form>
