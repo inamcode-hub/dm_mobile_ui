@@ -39,6 +39,7 @@ const Login = () => {
     const isPasswordValid = validatePassword(password);
 
     if (isEmailValid && isPasswordValid) {
+      console.log('Form is valid');
     }
   };
 
