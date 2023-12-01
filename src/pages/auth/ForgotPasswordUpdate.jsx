@@ -10,7 +10,7 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
-import lock from '../../assets/images/send-email.svg';
+import sendEmail from '../../assets/images/send-email.svg';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const ForgotPasswordUpdate = () => {
@@ -87,7 +87,7 @@ const ForgotPasswordUpdate = () => {
       <Container>
         <Heading>
           <img
-            src={lock}
+            src={sendEmail}
             alt='lock'
             style={{ width: '120px', height: '120px', margin: '0px auto' }}
           />
