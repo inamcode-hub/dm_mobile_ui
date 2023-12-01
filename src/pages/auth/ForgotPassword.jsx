@@ -1,31 +1,23 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, TextField, Typography } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import useFormValidation from '../../hooks/useFormValidation';
 import lock from '../../assets/images/lock.svg';
 
-const initialState = {
-  email: '',
-  emailError: false,
-};
-const Login = () => {
-  const navigate = useNavigate();
-  const [state, setState] = useState(initialState);
-  const { email, emailError } = state;
+const ForgotPassword = () => {
+  const { formState, validateEmail, handleChange } = useFormValidation();
+  const { email, emailError, emailErrorList } = formState;
 
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Validate email
-    if (!email) {
-      setState((prevState) => ({ ...prevState, emailError: true }));
-    } else {
-      setState((prevState) => ({ ...prevState, emailError: false }));
-    }
-
-    // If both email and password are valid, proceed with form submission
-    if (!emailError) {
-      navigate(`/forgot-password/${email}`);
+    const isEmailValid = validateEmail(email);
+    if (isEmailValid) {
+      console.log('Form is valid');
     }
   };
 
@@ -36,22 +28,19 @@ const Login = () => {
           <img
             src={lock}
             alt='lock'
-            width='120' // Adjust the width as needed
-            height='120' // Adjust the height as needed
+            style={{ width: '120px', height: '120px', margin: '0px auto' }}
           />
           <Typography
             variant='h4'
             className='heading-title'>
             Forgot your password?
           </Typography>
-          <HeadingBody>
-            <Typography
-              variant='body2'
-              className='new-user'>
-              Please enter the email address associated with your account and We
-              will email you a link to reset your password.
-            </Typography>
-          </HeadingBody>
+          <Typography
+            variant='body2'
+            className='new-user'>
+            Please enter the email address associated with your account and We
+            will email you a link to reset your password.
+          </Typography>
         </Heading>
         <form onSubmit={handleSubmit}>
           <Body>
@@ -60,24 +49,35 @@ const Login = () => {
               type='email'
               label='Email address'
               variant='outlined'
+              name='email'
               value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
+              onChange={handleFieldChange}
               error={emailError}
-              helperText={emailError && 'Please enter your email'}
             />
-
+            {emailError && (
+              <ErrorList>
+                {emailErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
+            )}
             <Button
               fullWidth
               variant='contained'
               color='primary'
               type='submit'
               size='large'>
-              Send request
+              Send Request
             </Button>
+
             <Link
               to='/'
-              className='login'>
-              <Typography variant='body2'>&lt; Return to sign in</Typography>
+              className='link'>
+              <Typography
+                variant='body2'
+                sx={{ fontWeight: 500 }}>
+                Return to Sign in
+              </Typography>
             </Link>
           </Body>
         </form>
@@ -85,7 +85,6 @@ const Login = () => {
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -109,6 +108,14 @@ const Container = styled.div`
   @media (min-width: 600px) {
     width: 500px;
   }
+  .link {
+    text-decoration: none;
+    color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
+    text-align: center;
+    :hover {
+      text-decoration: underline;
+    }
+  }
 `;
 
 const Heading = styled.div`
@@ -116,8 +123,6 @@ const Heading = styled.div`
   flex-direction: column;
   gap: 16px;
   margin-bottom: 40px;
-  display: grid;
-  place-items: center;
   text-align: center;
   .heading-title {
     margin: 0px;
@@ -128,25 +133,6 @@ const Heading = styled.div`
   }
 `;
 
-const HeadingBody = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  align-items: center;
-
-  a {
-    margin: 0px;
-    font-weight: 600;
-    line-height: 1.57143;
-    font-size: 0.875rem;
-    font-family: 'Public Sans', sans-serif;
-    color: ${({ theme }) => theme.palette.secondary.main};
-    text-decoration: none;
-    :hover {
-      text-decoration: underline;
-    }
-  }
-`;
 const Body = styled.div`
   display: flex;
   flex-direction: column;
@@ -154,24 +140,14 @@ const Body = styled.div`
   button {
     text-transform: capitalize;
   }
-  .login {
-    text-align: center;
-    text-decoration: none;
-
-    p {
-      margin: 0px;
-      font-weight: 600;
-      line-height: 1.57143;
-      font-size: 0.875rem;
-      font-family: 'Public Sans', sans-serif;
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? 'white' : 'black'};
-      text-decoration: none;
-    }
-    :hover {
-      text-decoration: underline;
-    }
-  }
+`;
+const ErrorList = styled.ul`
+  color: ${({ theme }) => theme.palette.error.main};
+  margin: 0px;
+  margin-top: -15px;
+  list-style: inside;
+  font-size: 0.8rem;
+  padding-left: 0;
 `;
 
-export default Login;
+export default ForgotPassword;
