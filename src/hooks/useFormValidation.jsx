@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const useFormValidation = () => {
   const [formState, setFormState] = useState({
@@ -112,7 +112,25 @@ const useFormValidation = () => {
     }));
     return errorMessages.length === 0;
   };
-
+  useEffect(() => {
+    if (formState.firstNameError) {
+      validateFirstName();
+    }
+    if (formState.lastNameError) {
+      validateLastName();
+    }
+    if (formState.emailError) {
+      validateEmail();
+    }
+    if (formState.passwordError) {
+      validatePassword();
+    }
+  }, [
+    formState.firstName,
+    formState.lastName,
+    formState.email,
+    formState.password,
+  ]);
   return {
     formState,
     handleChange,
