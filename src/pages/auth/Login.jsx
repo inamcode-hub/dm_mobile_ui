@@ -162,16 +162,6 @@ const Container = styled.div`
   @media (min-width: 600px) {
     width: 500px;
   }
-  .MuiFormHelperText-root {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    ul {
-      padding: 0px;
-      li {
-        margin-left: 0px;
-      }
-    }
-  }
 `;
 
 const Heading = styled.div`
@@ -220,6 +210,7 @@ const Body = styled.div`
 const ErrorList = styled.ul`
   color: ${({ theme }) => theme.palette.error.main};
   margin: 0px;
+  margin-top: -15px;
   list-style: inside;
   font-size: 0.8rem;
   padding-left: 0;

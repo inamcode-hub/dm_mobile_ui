@@ -2,10 +2,16 @@ import { useState } from 'react';
 
 const useFormValidation = () => {
   const [formState, setFormState] = useState({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     emailError: false,
     passwordError: false,
+    firstNameError: false,
+    lastNameError: false,
+    firstNameErrorList: [],
+    lastNameErrorList: [],
     emailErrorList: [],
     passwordErrorList: [],
   });
@@ -19,7 +25,43 @@ const useFormValidation = () => {
       validateEmail(value);
     } else if (field === 'password') {
       validatePassword(value);
+    } else if (field === 'firstName') {
+      validateFirstName(value);
+    } else if (field === 'lastName') {
+      validateLastName(value);
     }
+  };
+
+  const validateFirstName = () => {
+    let errorMessages = [];
+    const firstName = formState.firstName;
+
+    if (!firstName) {
+      errorMessages.push('First Name is required');
+    }
+
+    setFormState((prevState) => ({
+      ...prevState,
+      firstNameErrorList: errorMessages,
+      firstNameError: errorMessages.length > 0,
+    }));
+    return errorMessages.length === 0;
+  };
+
+  const validateLastName = () => {
+    let errorMessages = [];
+    const lastName = formState.lastName;
+
+    if (!lastName) {
+      errorMessages.push('Last Name is required');
+    }
+
+    setFormState((prevState) => ({
+      ...prevState,
+      lastNameErrorList: errorMessages,
+      lastNameError: errorMessages.length > 0,
+    }));
+    return errorMessages.length === 0;
   };
 
   const validateEmail = () => {
@@ -74,6 +116,8 @@ const useFormValidation = () => {
   return {
     formState,
     handleChange,
+    validateFirstName,
+    validateLastName,
     validateEmail,
     validatePassword,
   };

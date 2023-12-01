@@ -10,21 +10,17 @@ import {
 import { Link } from 'react-router-dom';
 import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import useFormValidation from '../../hooks/useFormValidation';
 
-const initialState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  showPassword: false,
-  firstNameError: false,
-  lastNameError: false,
-  emailError: false,
-  passwordError: false,
-  passwordErrorText: 'Password is required',
-};
 const Register = () => {
-  const [state, setState] = useState(initialState);
+  const {
+    formState,
+    validateFirstName,
+    validateLastName,
+    validateEmail,
+    validatePassword,
+    handleChange,
+  } = useFormValidation();
   const {
     firstName,
     lastName,
@@ -34,53 +30,35 @@ const Register = () => {
     lastNameError,
     emailError,
     passwordError,
-    showPassword,
-    passwordErrorText,
-  } = state;
+    firstNameErrorList,
+    lastNameErrorList,
+    emailErrorList,
+    passwordErrorList,
+  } = formState;
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
-    setState({ ...state, showPassword: !showPassword });
+    setShowPassword(!showPassword);
   };
-
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Validate first name
-    if (!firstName) {
-      setState((prevState) => ({ ...prevState, firstNameError: true }));
-    } else {
-      setState((prevState) => ({ ...prevState, firstNameError: false }));
-    }
 
-    // Validate last name
-    if (!lastName) {
-      setState((prevState) => ({ ...prevState, lastNameError: true }));
-    } else {
-      setState((prevState) => ({ ...prevState, lastNameError: false }));
-    }
+    const isFirstNameValid = validateFirstName();
+    const isLastNameValid = validateLastName();
+    const isEmailValid = validateEmail();
+    const isPasswordValid = validatePassword();
 
-    // Validate email
-    if (!email) {
-      setState((prevState) => ({ ...prevState, emailError: true }));
-    } else {
-      setState((prevState) => ({ ...prevState, emailError: false }));
-    }
-
-    // Validate password
-    if (!password || password.length < 8) {
-      setState((prevState) => ({ ...prevState, passwordError: true }));
-      if (password.length > 0 && password.length < 8) {
-        setState((prevState) => ({
-          ...prevState,
-          passwordErrorText: 'Password must be at least 8 characters',
-        }));
-      }
-    } else {
-      setState((prevState) => ({ ...prevState, passwordError: false }));
-    }
-
-    // If both email and password are valid, proceed with form submission
-    if (!emailError && !passwordError && !firstNameError && !lastNameError) {
-      console.log('Submit form');
+    if (
+      isFirstNameValid &&
+      isLastNameValid &&
+      isEmailValid &&
+      isPasswordValid
+    ) {
+      console.log('Form is valid');
     }
   };
 
@@ -111,48 +89,71 @@ const Register = () => {
         <form onSubmit={handleSubmit}>
           <Body>
             <div className='name'>
-              <TextField
-                fullWidth
-                label='First name'
-                variant='outlined'
-                value={firstName}
-                onChange={(e) =>
-                  setState({ ...state, firstName: e.target.value })
-                }
-                error={firstNameError}
-                helperText={firstNameError && 'First name is required'}
-              />
-              <TextField
-                fullWidth
-                label='Last name'
-                variant='outlined'
-                value={lastName}
-                onChange={(e) =>
-                  setState({ ...state, lastName: e.target.value })
-                }
-                error={lastNameError}
-                helperText={lastNameError && 'Last name is required'}
-              />
+              <div className='first-name'>
+                <TextField
+                  fullWidth
+                  label='First Name'
+                  type='text'
+                  variant='outlined'
+                  name='firstName'
+                  value={firstName}
+                  onChange={handleFieldChange}
+                  error={firstNameError}
+                />
+                {firstNameError && (
+                  <ErrorList>
+                    {firstNameErrorList.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ErrorList>
+                )}
+              </div>
+              <div className='last-name'>
+                <TextField
+                  fullWidth
+                  label='Last Name'
+                  type='text'
+                  variant='outlined'
+                  name='lastName'
+                  value={lastName}
+                  onChange={handleFieldChange}
+                  error={lastNameError}
+                />
+                {lastNameError && (
+                  <ErrorList>
+                    {lastNameErrorList.map((error, index) => (
+                      <li key={index}>{error}</li>
+                    ))}
+                  </ErrorList>
+                )}
+              </div>
             </div>
             <TextField
               fullWidth
               type='email'
               label='Email address'
               variant='outlined'
+              name='email'
               value={email}
-              onChange={(e) => setState({ ...state, email: e.target.value })}
+              onChange={handleFieldChange}
               error={emailError}
-              helperText={emailError && 'Please enter your email'}
             />
+            {emailError && (
+              <ErrorList>
+                {emailErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
+            )}
             <TextField
               fullWidth
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
+              name='password'
               value={password}
-              onChange={(e) => setState({ ...state, password: e.target.value })}
+              onChange={handleFieldChange}
               error={passwordError}
-              helperText={passwordError && passwordErrorText}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>
@@ -166,6 +167,13 @@ const Register = () => {
                 ),
               }}
             />
+            {passwordError && (
+              <ErrorList>
+                {passwordErrorList.map((error, index) => (
+                  <li key={index}>{error}</li>
+                ))}
+              </ErrorList>
+            )}
 
             <Button
               fullWidth
@@ -177,18 +185,17 @@ const Register = () => {
             </Button>
           </Body>
         </form>
-        <Typography
-          variant='body2'
-          sx={{ textAlign: 'center', fontSize: '0.8rem', mt: 2 }}
-          className='policy'>
-          By signing up, I agree to <Link>Terms of Service</Link> and{' '}
-          <Link>Privacy Policy</Link>.
-        </Typography>
+        <div className='policy'>
+          <Typography variant='body2'>
+            By signing in, you agree to DryerMaster&apos;s
+            <Link to='/'>Privacy Policy</Link> and{' '}
+            <Link href='/'>Terms of Use</Link>.
+          </Typography>
+        </div>
       </Container>
     </Wrapper>
   );
 };
-
 const Wrapper = styled.div`
   height: 100vh;
   width: 100vw;
@@ -213,10 +220,19 @@ const Container = styled.div`
     width: 500px;
   }
   .policy {
-    color: ${({ theme }) => theme.palette.text.secondary};
+    margin-top: 20px;
+    text-align: center;
+    p {
+      font-size: 0.8rem;
+      color: ${({ theme }) => theme.palette.grey[600]};
+    }
+
     a {
       color: ${({ theme }) => theme.palette.secondary.main};
+      font-weight: 400;
+      padding-left: 4px;
       text-decoration: none;
+
       :hover {
         text-decoration: underline;
       }
@@ -244,6 +260,9 @@ const HeadingBody = styled.div`
   gap: 4px;
   align-items: center;
 
+  button {
+    text-transform: capitalize;
+  }
   a {
     margin: 0px;
     font-weight: 600;
@@ -257,20 +276,36 @@ const HeadingBody = styled.div`
     }
   }
 `;
+const ErrorList = styled.ul`
+  color: ${({ theme }) => theme.palette.error.main};
+  margin: 0px;
+  margin-top: -15px;
+  list-style: inside;
+  font-size: 0.8rem;
+  padding-left: 0;
+`;
 const Body = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  button {
-    text-transform: capitalize;
-  }
   .name {
     display: flex;
     flex-direction: row;
-    gap: 20px;
-    @media (max-width: 600px) {
-      flex-direction: column;
+    gap: 16px;
+    .first-name {
+      li {
+        margin-top: 20px;
+      }
     }
+    .last-name {
+      li {
+        margin-top: 20px;
+      }
+      flex: 1;
+    }
+  }
+  button {
+    text-transform: capitalize;
   }
 `;
 
