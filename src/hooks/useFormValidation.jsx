@@ -21,15 +21,6 @@ const useFormValidation = () => {
       ...prevState,
       [field]: value,
     }));
-    if (field === 'email') {
-      validateEmail(value);
-    } else if (field === 'password') {
-      validatePassword(value);
-    } else if (field === 'firstName') {
-      validateFirstName(value);
-    } else if (field === 'lastName') {
-      validateLastName(value);
-    }
   };
 
   const validateFirstName = () => {
