@@ -289,9 +289,12 @@ const Body = styled.div`
   flex-direction: column;
   gap: 20px;
   .name {
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
     .first-name {
       li {
         margin-top: 20px;
@@ -301,7 +304,6 @@ const Body = styled.div`
       li {
         margin-top: 20px;
       }
-      flex: 1;
     }
   }
   button {
