@@ -6,6 +6,7 @@ import DashboardRoutes from './pages/dashboard/DashboardRoutes.jsx';
 import Register from './pages/auth/Register.jsx';
 import ForgotPassword from './pages/auth/ForgotPassword.jsx';
 import ForgotPasswordUpdate from './pages/auth/ForgotPasswordUpdate.jsx';
+import ProtectedRoute from './pages/auth/ProtectedRoute.jsx';
 
 const RoutesConfig = () => {
   return (
@@ -16,15 +17,27 @@ const RoutesConfig = () => {
           element={<Layout />}>
           <Route
             index
-            element={<Login />}
+            element={
+              <ProtectedRoute>
+                <Login />
+              </ProtectedRoute>
+            }
           />
           <Route
             path='/register'
-            element={<Register />}
+            element={
+              <ProtectedRoute>
+                <Register />
+              </ProtectedRoute>
+            }
           />
           <Route
             path='/forgot-password'
-            element={<ForgotPassword />}
+            element={
+              <ProtectedRoute>
+                <ForgotPassword />
+              </ProtectedRoute>
+            }
           />
           <Route
             path='/forgot-password-update'
