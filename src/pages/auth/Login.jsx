@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   Button,
@@ -7,12 +7,15 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
+import { useSelector } from 'react-redux';
 
 const Login = () => {
+  const { isMember } = useSelector((state) => state.user);
+  const navigate = useNavigate();
   const { formState, validateEmail, validatePassword, handleChange } =
     useFormValidation();
   const {
@@ -42,7 +45,11 @@ const Login = () => {
       console.log('Form is valid');
     }
   };
-
+  useEffect(() => {
+    if (isMember) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [isMember]);
   return (
     <Wrapper>
       <Container>
