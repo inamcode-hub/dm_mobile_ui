@@ -14,8 +14,7 @@ import useFormValidation from '../../hooks/useFormValidation';
 import { useSelector } from 'react-redux';
 
 const Login = () => {
-  const { isMember, isLoading } = useSelector((state) => state.user);
-  const navigate = useNavigate();
+  const { isLoading } = useSelector((state) => state.user);
   const { formState, validateEmail, validatePassword, handleChange } =
     useFormValidation();
   const {
@@ -45,11 +44,7 @@ const Login = () => {
       console.log('Form is valid');
     }
   };
-  useEffect(() => {
-    if (isMember) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [isMember]);
+
   return (
     <Wrapper>
       <Container>

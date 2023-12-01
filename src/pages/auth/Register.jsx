@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
@@ -16,9 +16,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userRegisterThunk } from '../../features/user/userSlice';
 
 const Register = () => {
-  const { isMember, isLoading } = useSelector((state) => state.user);
+  const { isLoading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const {
     formState,
     validateFirstName,
@@ -74,11 +74,7 @@ const Register = () => {
       );
     }
   };
-  useEffect(() => {
-    if (isMember) {
-      navigate('/dashboard', { replace: true });
-    }
-  }, [isMember]);
+
   return (
     <Wrapper>
       <Container>
