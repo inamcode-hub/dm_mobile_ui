@@ -78,6 +78,7 @@ const Login = () => {
               value={email}
               onChange={handleFieldChange}
               error={emailError}
+              required
             />
             {emailError && (
               <ErrorList>
@@ -95,6 +96,7 @@ const Login = () => {
               value={password}
               onChange={handleFieldChange}
               error={passwordError}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>

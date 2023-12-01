@@ -99,6 +99,7 @@ const Register = () => {
                   value={firstName}
                   onChange={handleFieldChange}
                   error={firstNameError}
+                  required
                 />
                 {firstNameError && (
                   <ErrorList>
@@ -118,6 +119,7 @@ const Register = () => {
                   value={lastName}
                   onChange={handleFieldChange}
                   error={lastNameError}
+                  required
                 />
                 {lastNameError && (
                   <ErrorList>
@@ -137,6 +139,7 @@ const Register = () => {
               value={email}
               onChange={handleFieldChange}
               error={emailError}
+              required
             />
             {emailError && (
               <ErrorList>
@@ -154,6 +157,7 @@ const Register = () => {
               value={password}
               onChange={handleFieldChange}
               error={passwordError}
+              required
               InputProps={{
                 endAdornment: (
                   <InputAdornment position='end'>

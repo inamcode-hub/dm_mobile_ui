@@ -54,6 +54,7 @@ const ForgotPassword = () => {
               value={email}
               onChange={handleFieldChange}
               error={emailError}
+              required
             />
             {emailError && (
               <ErrorList>
