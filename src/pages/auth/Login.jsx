@@ -13,6 +13,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
 
 const Login = () => {
+  const { formState, validateEmail, validatePassword, handleChange } =
+    useFormValidation();
   const {
     email,
     password,
@@ -20,17 +22,16 @@ const Login = () => {
     passwordError,
     emailErrorList,
     passwordErrorList,
-    handleEmailChange,
-    handlePasswordChange,
-    validateEmail,
-    validatePassword,
-  } = useFormValidation();
+  } = formState;
   const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
+  const handleFieldChange = (e) => {
+    const { name, value } = e.target;
+    handleChange(name, value);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -38,8 +39,6 @@ const Login = () => {
     const isPasswordValid = validatePassword(password);
 
     if (isEmailValid && isPasswordValid) {
-      console.log('Submit form');
-      // Proceed with form submission
     }
   };
 
@@ -74,8 +73,9 @@ const Login = () => {
               type='email'
               label='Email address'
               variant='outlined'
+              name='email'
               value={email}
-              onChange={handleEmailChange}
+              onChange={handleFieldChange}
               error={emailError}
             />
             {emailError && (
@@ -90,9 +90,22 @@ const Login = () => {
               label='Password'
               type={showPassword ? 'text' : 'password'}
               variant='outlined'
+              name='password'
               value={password}
-              onChange={handlePasswordChange}
+              onChange={handleFieldChange}
               error={passwordError}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleShowPassword}
+                      edge='end'>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             {passwordError && (
               <ErrorList>

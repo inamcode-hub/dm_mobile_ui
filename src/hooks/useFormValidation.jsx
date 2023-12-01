@@ -1,16 +1,31 @@
 import { useState } from 'react';
 
 const useFormValidation = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailError, setEmailError] = useState(false);
-  const [passwordError, setPasswordError] = useState(false);
-  const [emailErrorList, setEmailErrorList] = useState([]);
-  const [passwordErrorList, setPasswordErrorList] = useState([]);
+  const [formState, setFormState] = useState({
+    email: '',
+    password: '',
+    emailError: false,
+    passwordError: false,
+    emailErrorList: [],
+    passwordErrorList: [],
+  });
 
-  const validateEmail = (email) => {
+  const handleChange = (field, value) => {
+    setFormState((prevState) => ({
+      ...prevState,
+      [field]: value,
+    }));
+    if (field === 'email') {
+      validateEmail(value);
+    } else if (field === 'password') {
+      validatePassword(value);
+    }
+  };
+
+  const validateEmail = () => {
     let errorMessages = [];
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const email = formState.email;
 
     if (!email) {
       errorMessages.push('Email is required');
@@ -19,13 +34,17 @@ const useFormValidation = () => {
       errorMessages.push('Invalid email format');
     }
 
-    setEmailErrorList(errorMessages);
-    setEmailError(errorMessages.length > 0);
+    setFormState((prevState) => ({
+      ...prevState,
+      emailErrorList: errorMessages,
+      emailError: errorMessages.length > 0,
+    }));
     return errorMessages.length === 0;
   };
 
-  const validatePassword = (password) => {
+  const validatePassword = () => {
     let errorMessages = [];
+    const password = formState.password;
     const minLength = 8;
     const hasUpperCase = /[A-Z]/.test(password);
     const hasNumber = /[0-9]/.test(password);
@@ -44,34 +63,17 @@ const useFormValidation = () => {
       errorMessages.push('Password must include a letter');
     }
 
-    setPasswordErrorList(errorMessages);
-    setPasswordError(errorMessages.length > 0);
+    setFormState((prevState) => ({
+      ...prevState,
+      passwordErrorList: errorMessages,
+      passwordError: errorMessages.length > 0,
+    }));
     return errorMessages.length === 0;
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    if (emailError) {
-      validateEmail(e.target.value);
-    }
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    if (passwordError) {
-      validatePassword(e.target.value);
-    }
-  };
-
   return {
-    email,
-    password,
-    emailError,
-    passwordError,
-    emailErrorList,
-    passwordErrorList,
-    handleEmailChange,
-    handlePasswordChange,
+    formState,
+    handleChange,
     validateEmail,
     validatePassword,
   };
