@@ -17,6 +17,7 @@ const ForgotPasswordUpdate = () => {
   const [state, setState] = useState({
     email: '',
     token: '',
+    confirmPassword: '',
     disableToken: false,
   });
   const { email, token } = state;
@@ -52,7 +53,12 @@ const ForgotPasswordUpdate = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const isPasswordValid = validatePassword(password);
-    if (isPasswordValid && !emailError && token.length === 6) {
+    if (
+      isPasswordValid &&
+      !emailError &&
+      token.length === 6 &&
+      password === state.confirmPassword
+    ) {
       console.log('Form is valid');
     }
   };
@@ -167,7 +173,41 @@ const ForgotPasswordUpdate = () => {
                 ))}
               </ErrorList>
             )}
-
+            <TextField
+              fullWidth
+              label='Confirm Password'
+              type={showPassword ? 'text' : 'password'}
+              variant='outlined'
+              name='confirmPassword'
+              value={state.confirmPassword}
+              onChange={(e) =>
+                setState({ ...state, confirmPassword: e.target.value })
+              }
+              error={
+                state.confirmPassword
+                  ? state.confirmPassword !== password
+                  : false
+              }
+              helperText={
+                state.confirmPassword
+                  ? state.confirmPassword !== password &&
+                    'Password does not match'
+                  : ''
+              }
+              required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleShowPassword}
+                      edge='end'>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
             <Button
               fullWidth
               variant='contained'
