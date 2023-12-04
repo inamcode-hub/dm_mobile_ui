@@ -19,12 +19,13 @@ const EmailSent = () => {
           <Typography
             variant='h4'
             className='heading-title'>
-            Email Sent to <br></br> {email}
+            Request sent successfully!
           </Typography>
           <Typography
             variant='body2'
             className='new-user'>
-            Please check your email for a link to reset your password.
+            We have sent an email to <strong>{email}</strong> with a link to get
+            back into your account.
           </Typography>
         </Heading>
         <Body>

@@ -36,17 +36,7 @@ const ForgotPasswordUpdate = () => {
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-  const handleTokenChange = (e) => {
-    const { name, value } = e.target;
-    const token = value;
-    if (token.length === 7) {
-      return handleChange(name, token);
-    }
-    setState((prevState) => ({
-      ...prevState,
-      [name]: token,
-    }));
-  };
+
   const handleFieldChange = (e) => {
     const { name, value } = e.target;
     handleChange(name, value);
@@ -126,23 +116,7 @@ const ForgotPasswordUpdate = () => {
                 ))}
               </ErrorList>
             )}
-            <TextField
-              fullWidth
-              label='Token'
-              variant='outlined'
-              name='token'
-              type='number'
-              value={token}
-              onChange={handleTokenChange}
-              disabled={state.disableToken}
-              required
-              error={state.token ? state.token.length !== 6 : false}
-              helperText={
-                state.token
-                  ? state.token.length !== 6 && 'Token must be 6 digits'
-                  : ''
-              }
-            />
+
             <TextField
               fullWidth
               label='Password'

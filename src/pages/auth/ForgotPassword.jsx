@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
-import { Button, TextField, Typography } from '@mui/material';
+import { Button, CircularProgress, TextField, Typography } from '@mui/material';
 import { Link, useNavigate } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 import lock from '../../assets/images/lock.svg';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { userForgotPasswordThunk } from '../../features/user/userSlice';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
   const { formState, validateEmail, handleChange } = useFormValidation();
   const { email, emailError, emailErrorList } = formState;
 
@@ -71,8 +72,20 @@ const ForgotPassword = () => {
               variant='contained'
               color='primary'
               type='submit'
-              size='large'>
-              Send Request
+              size='large'
+              disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <CircularProgress
+                    size={24}
+                    color='inherit'
+                    style={{ marginRight: '10px' }} // Add some spacing between the spinner and the text
+                  />
+                  Sending...
+                </>
+              ) : (
+                'Send Request'
+              )}
             </Button>
 
             <Link

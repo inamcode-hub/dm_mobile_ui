@@ -24,10 +24,10 @@ export const handleGlobalError = (error, thunkAPI) => {
       toast.error(`${message}`);
       break;
     case 500: // Internal Server Error
-      toast.error('Server error: Something went wrong');
+      toast.error(`server error: ${message}`);
       break;
     case 503: // Service Unavailable
-      toast.error('Service Unavailable: Please try again later');
+      toast.error(`server error: ${message}`);
       break;
     default: // Other errors
       toast.error(message);

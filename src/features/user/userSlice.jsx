@@ -67,7 +67,6 @@ export const userForgotPasswordThunk = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await customFetch.post('/user/forgot_password', user);
-      window.location.href = `/email-sent/${user.email}`;
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -173,6 +172,7 @@ const userSlice = createSlice({
       })
       .addCase(userForgotPasswordThunk.fulfilled, (state, { payload }) => {
         console.log(payload);
+        window.location.href = `/email-sent/${payload.email}`;
         state.isLoading = false;
       })
       .addCase(userForgotPasswordThunk.rejected, (state, { payload }) => {
