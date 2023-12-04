@@ -69,6 +69,13 @@ const userSlice = createSlice({
       const { name, value } = payload;
       state[name] = value;
     },
+    signOut: (state) => {
+      state.isMember = false;
+      Cookies.remove('dryermaster_token');
+      Cookies.remove('dryermaster_role');
+      Cookies.remove('dryermaster_firstName');
+      Cookies.remove('dryermaster_lastName');
+    },
   },
 
   extraReducers: (builder) => {
@@ -143,6 +150,6 @@ const userSlice = createSlice({
       });
   },
 });
-export const { getStateValues } = userSlice.actions;
+export const { getStateValues, signOut } = userSlice.actions;
 
 export default userSlice.reducer;
