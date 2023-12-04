@@ -42,7 +42,11 @@ const RoutesConfig = () => {
           />
           <Route
             path='/forgot-password-update'
-            element={<ForgotPasswordUpdate />}
+            element={
+              <ProtectedRoute>
+                <ForgotPasswordUpdate />
+              </ProtectedRoute>
+            }
           />
           <Route
             path='/email-sent/:email'

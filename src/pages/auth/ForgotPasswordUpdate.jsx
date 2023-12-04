@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
   TextField,
@@ -13,7 +14,10 @@ import useFormValidation from '../../hooks/useFormValidation';
 import sendEmail from '../../assets/images/change-password.svg';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useDispatch, useSelector } from 'react-redux';
-import { userForgotPasswordThunk } from '../../features/user/userSlice';
+import {
+  userForgotPasswordThunk,
+  userForgotPasswordUpdateThunk,
+} from '../../features/user/userSlice';
 
 const ForgotPasswordUpdate = () => {
   const location = useLocation();
@@ -54,7 +58,7 @@ const ForgotPasswordUpdate = () => {
       token &&
       password === state.confirmPassword
     ) {
-      console.log('Form is valid');
+      dispatch(userForgotPasswordUpdateThunk({ email, token, password }));
     }
   };
 
@@ -175,20 +179,28 @@ const ForgotPasswordUpdate = () => {
               color='primary'
               type='submit'
               size='large'>
-              Login
+              {isLoading ? (
+                <>
+                  <CircularProgress
+                    size={24}
+                    color='inherit'
+                    style={{ marginRight: '10px' }} // Add some spacing between the spinner and the text
+                  />
+                  Updating...
+                </>
+              ) : (
+                'Change Password'
+              )}
             </Button>
-            {/* don't have a code ? Resend code */}
+
             <div className='code'>
-              <p>
-                {/* text your code expired send another */}
-                Is your token expired?
-              </p>
+              <p>Need a fresh start?</p>
               <Button
                 variant='text'
                 color='primary'
                 disabled={isLoading}
                 onClick={handleResendCode}>
-                Resend another link
+                Send Me a New Password Reset Link
               </Button>
             </div>
             <Link

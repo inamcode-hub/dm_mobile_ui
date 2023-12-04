@@ -74,6 +74,24 @@ export const userForgotPasswordThunk = createAsyncThunk(
   }
 );
 
+// userForgotPasswordUpdateThunk
+export const userForgotPasswordUpdateThunk = createAsyncThunk(
+  'user/userForgotPasswordUpdateThunk',
+  async (user, thunkAPI) => {
+    try {
+      const response = await customFetch.put(
+        '/user/forgot_password_update',
+        user
+      );
+      toast.success(response.data.message);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -171,11 +189,37 @@ const userSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(userForgotPasswordThunk.fulfilled, (state, { payload }) => {
-        console.log(payload);
         window.location.href = `/email-sent/${payload.email}`;
         state.isLoading = false;
       })
       .addCase(userForgotPasswordThunk.rejected, (state, { payload }) => {
+        console.log('promise rejected');
+        state.isLoading = false;
+      })
+      //  userForgotThunk
+      .addCase(userForgotPasswordUpdateThunk.pending, (state, { payload }) => {
+        console.log('promise pending');
+        state.isLoading = true;
+      })
+      .addCase(
+        userForgotPasswordUpdateThunk.fulfilled,
+        (state, { payload }) => {
+          const { token, role, firstName, lastName } = payload;
+          state.isLoading = false;
+          state.isMember = true;
+          Cookies.set(
+            'dryermaster_token',
+            token,
+            { expires: 30 },
+            { secure: true },
+            { sameSite: 'none' }
+          );
+          Cookies.set('dryermaster_role', role);
+          Cookies.set('dryermaster_firstName', firstName);
+          Cookies.set('dryermaster_lastName', lastName);
+        }
+      )
+      .addCase(userForgotPasswordUpdateThunk.rejected, (state, { payload }) => {
         console.log('promise rejected');
         state.isLoading = false;
       });
