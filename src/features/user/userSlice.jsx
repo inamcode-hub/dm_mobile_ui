@@ -50,7 +50,7 @@ export const userLoginThunk = createAsyncThunk(
     try {
       const response = await customFetch.post('/user/login', user);
       toast.success(
-        `Welcome ${capitalize(response.data.firstName)} ${capitalize(
+        `Welcome back ${capitalize(response.data.firstName)} ${capitalize(
           response.data.lastName
         )}`
       );
