@@ -71,6 +71,11 @@ const userSlice = createSlice({
     },
     signOut: (state) => {
       state.isMember = false;
+      toast.success(
+        `Goodbye ${capitalize(
+          Cookies.get('dryermaster_firstName')
+        )} ${capitalize(Cookies.get('dryermaster_lastName'))}`
+      );
       Cookies.remove('dryermaster_token');
       Cookies.remove('dryermaster_role');
       Cookies.remove('dryermaster_firstName');
@@ -125,7 +130,6 @@ const userSlice = createSlice({
       //  userLoginThunk
       .addCase(userLoginThunk.pending, (state, { payload }) => {
         console.log('promise pending');
-
         state.isLoading = true;
       })
       .addCase(userLoginThunk.fulfilled, (state, { payload }) => {
