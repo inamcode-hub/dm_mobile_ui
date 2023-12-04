@@ -1,10 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
-import {
-  getItemFromLocalStorage,
-  setItemInLocalStorage,
-} from '../../lib/localStorage';
 import Cookies from 'js-cookie';
+import { toast } from 'react-toastify';
+import { capitalize } from '@mui/material';
+import { handleGlobalError } from '../../lib/handleGlobalError';
 
 const initialState = {
   firstName: '',
@@ -29,12 +28,35 @@ export const userRegisterThunk = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const response = await customFetch.post('/user/register', user);
-      // console.log(response);
-
+      toast.success(
+        `Welcome ${capitalize(response.data.firstName)} ${capitalize(
+          response.data.lastName
+        )}`
+      );
       return response.data;
     } catch (error) {
-      console.log(error);
-      return thunkAPI.rejectWithValue(error.response.data);
+      if (error.response.data.message.startsWith('Duplicate')) {
+        toast.error('Email already exists in the database, please login');
+        return thunkAPI.rejectWithValue(error.response.data);
+      } else return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+
+// userLoginThunk
+export const userLoginThunk = createAsyncThunk(
+  'user/userLoginThunk',
+  async (user, thunkAPI) => {
+    try {
+      const response = await customFetch.post('/user/login', user);
+      toast.success(
+        `Welcome ${capitalize(response.data.firstName)} ${capitalize(
+          response.data.lastName
+        )}`
+      );
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
     }
   }
 );
@@ -44,7 +66,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     getStateValues: (state, { payload }) => {
-      console.log(payload);
       const { name, value } = payload;
       state[name] = value;
     },
@@ -85,13 +106,39 @@ const userSlice = createSlice({
           { secure: true },
           { sameSite: 'none' }
         );
-        setItemInLocalStorage('dryermaster_role', role);
-        setItemInLocalStorage('dryermaster_firstName', firstName);
-        setItemInLocalStorage('dryermaster_lastName', lastName);
+        Cookies.set('dryermaster_role', role);
+        Cookies.set('dryermaster_firstName', firstName);
+        Cookies.set('dryermaster_lastName', lastName);
       })
       .addCase(userRegisterThunk.rejected, (state, { payload }) => {
         console.log('promise rejected');
         console.log(payload);
+        state.isLoading = false;
+      })
+      //  userLoginThunk
+      .addCase(userLoginThunk.pending, (state, { payload }) => {
+        console.log('promise pending');
+
+        state.isLoading = true;
+      })
+      .addCase(userLoginThunk.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        const { token, role, firstName, lastName } = payload;
+        state.isLoading = false;
+        state.isMember = true;
+        Cookies.set(
+          'dryermaster_token',
+          token,
+          { expires: 30 },
+          { secure: true },
+          { sameSite: 'none' }
+        );
+        Cookies.set('dryermaster_role', role);
+        Cookies.set('dryermaster_firstName', firstName);
+        Cookies.set('dryermaster_lastName', lastName);
+      })
+      .addCase(userLoginThunk.rejected, (state, { payload }) => {
+        console.log('promise rejected');
         state.isLoading = false;
       });
   },

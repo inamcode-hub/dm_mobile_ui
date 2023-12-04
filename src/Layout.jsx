@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import useCustomTheme from './styles/theme';
 import LoadingBar from './components/LodingBar';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify';
 
 const Layout = () => {
   const { mode } = useSelector((state) => state.localStorage);
@@ -11,6 +13,7 @@ const Layout = () => {
       <CssBaseline />
       <LoadingBar />
       <Outlet />
+      <ToastContainer />
     </ThemeProvider>
   );
 };

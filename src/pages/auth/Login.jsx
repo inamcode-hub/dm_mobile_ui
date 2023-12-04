@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import {
   Button,
+  CircularProgress,
   IconButton,
   InputAdornment,
+  Snackbar,
   TextField,
   Typography,
 } from '@mui/material';
@@ -11,9 +13,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import ToggleTheme from '../../components/ToggleTheme';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { userLoginThunk } from '../../features/user/userSlice';
 
 const Login = () => {
+  const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.user);
   const { formState, validateEmail, validatePassword, handleChange } =
     useFormValidation();
@@ -41,7 +45,7 @@ const Login = () => {
     const isPasswordValid = validatePassword(password);
 
     if (isEmailValid && isPasswordValid) {
-      console.log('Form is valid');
+      dispatch(userLoginThunk({ email, password }));
     }
   };
 
@@ -133,8 +137,20 @@ const Login = () => {
               variant='contained'
               color='primary'
               type='submit'
-              size='large'>
-              Login
+              size='large'
+              disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <CircularProgress
+                    size={24}
+                    color='inherit'
+                    style={{ marginRight: '10px' }} // Add some spacing between the spinner and the text
+                  />
+                  Signing in...
+                </>
+              ) : (
+                'Sign in'
+              )}
             </Button>
             <ToggleTheme />
           </Body>
