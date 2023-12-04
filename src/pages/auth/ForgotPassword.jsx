@@ -33,7 +33,11 @@ const ForgotPassword = () => {
           <img
             src={lock}
             alt='lock'
-            style={{ width: '120px', height: '120px', margin: '0px auto' }}
+            style={{
+              width: '120px',
+              height: '120px',
+              margin: '0px auto',
+            }}
           />
           <Typography
             variant='h4'

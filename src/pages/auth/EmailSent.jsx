@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Typography } from '@mui/material';
 import { Link, useParams } from 'react-router-dom';
-import email_svg from '../../assets/images/email-is-sent.svg';
+import email_svg from '../../assets/images/check-email.svg';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 const EmailSent = () => {
