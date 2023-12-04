@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, TextField, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
 import lock from '../../assets/images/lock.svg';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useDispatch } from 'react-redux';
+import { userForgotPasswordThunk } from '../../features/user/userSlice';
 
 const ForgotPassword = () => {
+  const dispatch = useDispatch();
   const { formState, validateEmail, handleChange } = useFormValidation();
   const { email, emailError, emailErrorList } = formState;
 
@@ -19,6 +21,7 @@ const ForgotPassword = () => {
     const isEmailValid = validateEmail(email);
     if (isEmailValid) {
       console.log('Form is valid');
+      dispatch(userForgotPasswordThunk({ email }));
     }
   };
 

@@ -7,6 +7,7 @@ import Register from './pages/auth/Register.jsx';
 import ForgotPassword from './pages/auth/ForgotPassword.jsx';
 import ForgotPasswordUpdate from './pages/auth/ForgotPasswordUpdate.jsx';
 import ProtectedRoute from './pages/auth/ProtectedRoute.jsx';
+import EmailSent from './pages/auth/EmailSent.jsx';
 
 const RoutesConfig = () => {
   return (
@@ -42,6 +43,10 @@ const RoutesConfig = () => {
           <Route
             path='/forgot-password-update'
             element={<ForgotPasswordUpdate />}
+          />
+          <Route
+            path='/email-sent/:email'
+            element={<EmailSent />}
           />
           <Route
             path='/dashboard/*'

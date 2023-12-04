@@ -61,6 +61,20 @@ export const userLoginThunk = createAsyncThunk(
   }
 );
 
+// userForgotPasswordThunk
+export const userForgotPasswordThunk = createAsyncThunk(
+  'user/userForgotPasswordThunk',
+  async (user, thunkAPI) => {
+    try {
+      const response = await customFetch.post('/user/forgot_password', user);
+      window.location.href = `/email-sent/${user.email}`;
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -149,6 +163,19 @@ const userSlice = createSlice({
         Cookies.set('dryermaster_lastName', lastName);
       })
       .addCase(userLoginThunk.rejected, (state, { payload }) => {
+        console.log('promise rejected');
+        state.isLoading = false;
+      })
+      //  userForgotThunk
+      .addCase(userForgotPasswordThunk.pending, (state, { payload }) => {
+        console.log('promise pending');
+        state.isLoading = true;
+      })
+      .addCase(userForgotPasswordThunk.fulfilled, (state, { payload }) => {
+        console.log(payload);
+        state.isLoading = false;
+      })
+      .addCase(userForgotPasswordThunk.rejected, (state, { payload }) => {
         console.log('promise rejected');
         state.isLoading = false;
       });
