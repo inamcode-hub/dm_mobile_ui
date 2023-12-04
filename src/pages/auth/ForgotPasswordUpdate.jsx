@@ -10,11 +10,15 @@ import {
 import { Link, useLocation } from 'react-router-dom';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
-import sendEmail from '../../assets/images/send-email.svg';
+import sendEmail from '../../assets/images/change-password.svg';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import { useDispatch, useSelector } from 'react-redux';
+import { userForgotPasswordThunk } from '../../features/user/userSlice';
 
 const ForgotPasswordUpdate = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { isLoading } = useSelector((state) => state.user);
   const [state, setState] = useState({
     email: '',
     token: '',
@@ -47,30 +51,21 @@ const ForgotPasswordUpdate = () => {
     if (
       isPasswordValid &&
       !emailError &&
-      token.length === 6 &&
+      token &&
       password === state.confirmPassword
     ) {
       console.log('Form is valid');
     }
   };
+
+  const handleResendCode = () => {
+    dispatch(userForgotPasswordThunk({ email }));
+  };
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const token = queryParams.get('token');
     const email = queryParams.get('email');
-    if (email) {
-      setState((prevState) => ({
-        ...prevState,
-        email,
-      }));
-      handleChange('email', email);
-    }
-    if (token) {
-      setState((prevState) => ({
-        ...prevState,
-        token: token,
-        disableToken: true,
-      }));
-    }
+    setState({ ...state, token, email });
   }, []);
   return (
     <Wrapper>
@@ -84,16 +79,8 @@ const ForgotPasswordUpdate = () => {
           <Typography
             variant='h4'
             className='heading-title'>
-            Request sent successfully!
+            Change your password
           </Typography>
-          <HeadingBody>
-            <Typography
-              variant='body2'
-              className='new-user'>
-              We&apos;ve sent a 6-digit confirmation email to your email. Please
-              enter the code in below box to verify your email.
-            </Typography>
-          </HeadingBody>
         </Heading>
         <form onSubmit={handleSubmit}>
           <Body>
@@ -192,11 +179,16 @@ const ForgotPasswordUpdate = () => {
             </Button>
             {/* don't have a code ? Resend code */}
             <div className='code'>
-              <p>Don&apos;t have a code?</p>
+              <p>
+                {/* text your code expired send another */}
+                Is your token expired?
+              </p>
               <Button
                 variant='text'
-                color='primary'>
-                Resend code
+                color='primary'
+                disabled={isLoading}
+                onClick={handleResendCode}>
+                Resend another link
               </Button>
             </div>
             <Link
