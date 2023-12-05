@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import {
   AppBar,
-  Button,
   Divider,
   IconButton,
   Menu,
@@ -9,13 +8,14 @@ import {
   Toolbar,
   Typography,
 } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { AccountCircle } from '@mui/icons-material';
 import { signOut } from '../../../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
+import { getSystemStateValues } from '../../../features/system/systemSlice';
 
 const initialState = {
   firstName: '',
@@ -44,7 +44,9 @@ const NavbarMobile = () => {
   const handleClose = () => {
     setState({ ...state, anchorEl: null });
   };
-
+  const handleNavbar = () => {
+    dispatch(getSystemStateValues({ name: 'isNavbarOpen', value: true }));
+  };
   return (
     <Wrapper>
       <AppBar position='static'>
@@ -54,7 +56,8 @@ const NavbarMobile = () => {
             edge='start'
             color='inherit'
             aria-label='menu'
-            sx={{ mr: 2 }}>
+            sx={{ mr: 2 }}
+            onClick={handleNavbar}>
             <MenuIcon />
           </IconButton>
           <Typography

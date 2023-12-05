@@ -7,6 +7,7 @@ import { Link, Outlet } from 'react-router-dom';
 import { signOut } from '../../features/user/userSlice';
 import NavbarDesktop from './components/NavbarDesktop';
 import NavbarMobile from './components/NavbarMobile';
+import NavbarDrawer from './components/NavbarDrawer';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const DashboardLayout = () => {
   };
   return (
     <Wrapper>
+      <NavbarDrawer />
       <NavbarDesktop />
       <NavbarMobile />
       <Outlet />
