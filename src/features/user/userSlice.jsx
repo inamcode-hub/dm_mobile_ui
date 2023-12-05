@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { capitalize } from '@mui/material';
 import { handleGlobalError } from '../../lib/handleGlobalError';
+import { goodbyeMessage, removeUserCookies, setUserCookies } from './lib';
 
 const initialState = {
   firstName: '',
@@ -86,7 +87,6 @@ export const userForgotPasswordUpdateThunk = createAsyncThunk(
       toast.success(response.data.message);
       return response.data;
     } catch (error) {
-      console.log(error);
       return handleGlobalError(error, thunkAPI);
     }
   }
@@ -102,15 +102,8 @@ const userSlice = createSlice({
     },
     signOut: (state) => {
       state.isMember = false;
-      toast.success(
-        `Goodbye ${capitalize(
-          Cookies.get('dryermaster_firstName')
-        )} ${capitalize(Cookies.get('dryermaster_lastName'))}`
-      );
-      Cookies.remove('dryermaster_token');
-      Cookies.remove('dryermaster_role');
-      Cookies.remove('dryermaster_firstName');
-      Cookies.remove('dryermaster_lastName');
+      goodbyeMessage();
+      removeUserCookies();
     },
   },
 
@@ -118,7 +111,6 @@ const userSlice = createSlice({
     builder
       .addCase(userThunk.pending, (state, { payload }) => {
         console.log('promise pending');
-        console.log(payload);
         state.isLoading = true;
       })
       .addCase(userThunk.fulfilled, (state, { payload }) => {
@@ -133,59 +125,30 @@ const userSlice = createSlice({
       })
       //  userRegisterThunk
       .addCase(userRegisterThunk.pending, (state, { payload }) => {
-        console.log('promise pending');
-
         state.isLoading = true;
       })
       .addCase(userRegisterThunk.fulfilled, (state, { payload }) => {
-        console.log(payload);
-        const { token, role, firstName, lastName } = payload;
-        state.isLoading = false;
+        setUserCookies(payload);
         state.isMember = true;
-        Cookies.set(
-          'dryermaster_token',
-          token,
-          { expires: 30 },
-          { secure: true },
-          { sameSite: 'none' }
-        );
-        Cookies.set('dryermaster_role', role);
-        Cookies.set('dryermaster_firstName', firstName);
-        Cookies.set('dryermaster_lastName', lastName);
+        state.isLoading = false;
       })
       .addCase(userRegisterThunk.rejected, (state, { payload }) => {
-        console.log('promise rejected');
-        console.log(payload);
         state.isLoading = false;
       })
       //  userLoginThunk
       .addCase(userLoginThunk.pending, (state, { payload }) => {
-        console.log('promise pending');
         state.isLoading = true;
       })
       .addCase(userLoginThunk.fulfilled, (state, { payload }) => {
-        console.log(payload);
-        const { token, role, firstName, lastName } = payload;
+        setUserCookies(payload);
         state.isLoading = false;
         state.isMember = true;
-        Cookies.set(
-          'dryermaster_token',
-          token,
-          { expires: 30 },
-          { secure: true },
-          { sameSite: 'none' }
-        );
-        Cookies.set('dryermaster_role', role);
-        Cookies.set('dryermaster_firstName', firstName);
-        Cookies.set('dryermaster_lastName', lastName);
       })
       .addCase(userLoginThunk.rejected, (state, { payload }) => {
-        console.log('promise rejected');
         state.isLoading = false;
       })
       //  userForgotThunk
       .addCase(userForgotPasswordThunk.pending, (state, { payload }) => {
-        console.log('promise pending');
         state.isLoading = true;
       })
       .addCase(userForgotPasswordThunk.fulfilled, (state, { payload }) => {
@@ -193,34 +156,21 @@ const userSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(userForgotPasswordThunk.rejected, (state, { payload }) => {
-        console.log('promise rejected');
         state.isLoading = false;
       })
       //  userForgotThunk
       .addCase(userForgotPasswordUpdateThunk.pending, (state, { payload }) => {
-        console.log('promise pending');
         state.isLoading = true;
       })
       .addCase(
         userForgotPasswordUpdateThunk.fulfilled,
         (state, { payload }) => {
-          const { token, role, firstName, lastName } = payload;
+          setUserCookies(payload);
           state.isLoading = false;
           state.isMember = true;
-          Cookies.set(
-            'dryermaster_token',
-            token,
-            { expires: 30 },
-            { secure: true },
-            { sameSite: 'none' }
-          );
-          Cookies.set('dryermaster_role', role);
-          Cookies.set('dryermaster_firstName', firstName);
-          Cookies.set('dryermaster_lastName', lastName);
         }
       )
       .addCase(userForgotPasswordUpdateThunk.rejected, (state, { payload }) => {
-        console.log('promise rejected');
         state.isLoading = false;
       });
   },
