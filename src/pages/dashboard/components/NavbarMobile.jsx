@@ -32,7 +32,6 @@ const NavbarMobile = () => {
     const firstName = Cookies.get('dryermaster_firstName');
     const lastName = Cookies.get('dryermaster_lastName');
     const email = Cookies.get('dryermaster_email');
-    console.log(firstName, lastName, email);
     setState({
       ...state,
       anchorEl: event.currentTarget,
