@@ -23,7 +23,7 @@ const samplesSlice = createSlice({
   name: 'samples',
   initialState,
   reducers: {
-    getStateValues: (state, { payload }) => {
+    getSampleStateValues: (state, { payload }) => {
       const { name, value } = payload;
       state[name] = value;
     },
@@ -47,6 +47,6 @@ const samplesSlice = createSlice({
       });
   },
 });
-export const { getStateValues } = samplesSlice.actions;
+export const { getSampleStateValues } = samplesSlice.actions;
 
 export default samplesSlice.reducer;

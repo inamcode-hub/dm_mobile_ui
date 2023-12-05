@@ -6,7 +6,7 @@ export const handleGlobalError = (error, thunkAPI) => {
     return thunkAPI.rejectWithValue({ message: 'Network error' });
   }
 
-  const status = error.response.status;
+  const status = error.response.status || 500;
   const message = error.response.data.message || 'An error occurred';
 
   // Handle specific HTTP status codes
