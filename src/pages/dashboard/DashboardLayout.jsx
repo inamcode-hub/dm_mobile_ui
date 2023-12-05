@@ -5,6 +5,8 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, Outlet } from 'react-router-dom';
 import { signOut } from '../../features/user/userSlice';
+import NavbarDesktop from './components/NavbarDesktop';
+import NavbarMobile from './components/NavbarMobile';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
@@ -14,24 +16,12 @@ const DashboardLayout = () => {
   };
   return (
     <Wrapper>
-      <ul>
-        <li>
-          <Link to={'/dashboard'}>home</Link>
-          <Link to={'/dashboard/settings'}>settings</Link>
-          <Link to={'/dashboard/history'}>history</Link>
-        </li>
-        <Button
-          variant='contained'
-          onClick={handleLogout}>
-          Click me
-        </Button>
-      </ul>
+      <NavbarDesktop />
+      <NavbarMobile />
       <Outlet />
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  /* background-color: pink; */
-`;
+const Wrapper = styled.div``;
 export default DashboardLayout;

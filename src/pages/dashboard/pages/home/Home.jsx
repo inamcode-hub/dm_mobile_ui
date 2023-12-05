@@ -1,7 +1,11 @@
+import styled from '@emotion/styled';
 import React from 'react';
 
 const Home = () => {
-  return <div>Home</div>;
+  return <Wrapper>Home</Wrapper>;
 };
 
+const Wrapper = styled.div`
+  min-height: 300vh;
+`;
 export default Home;
