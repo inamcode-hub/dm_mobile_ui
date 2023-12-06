@@ -202,7 +202,7 @@ const NavbarDrawerMobile = () => {
   );
 };
 const Wrapper = styled.div`
-  width: 50vw;
+  width: 70vw;
   .header {
     display: flex;
     align-items: center;
