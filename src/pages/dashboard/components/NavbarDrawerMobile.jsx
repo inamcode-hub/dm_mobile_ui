@@ -79,7 +79,7 @@ const initialState = {
   openUser: false,
   openAccount: false,
 };
-const NavbarDrawer = () => {
+const NavbarDrawerMobile = () => {
   const dispatch = useDispatch();
   const [state, setState] = React.useState(initialState);
   const { openUser, openAccount } = state;
@@ -208,4 +208,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default NavbarDrawer;
+export default NavbarDrawerMobile;

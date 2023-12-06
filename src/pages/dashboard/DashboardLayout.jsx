@@ -1,23 +1,16 @@
 import styled from '@emotion/styled';
-
-import { Button } from '@mui/material';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, Outlet } from 'react-router-dom';
-import { signOut } from '../../features/user/userSlice';
+import { Outlet } from 'react-router-dom';
 import NavbarDesktop from './components/NavbarDesktop';
 import NavbarMobile from './components/NavbarMobile';
-import NavbarDrawer from './components/NavbarDrawer';
+import NavbarDrawerMobile from './components/NavbarDrawerMobile';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { getSystemStateValues } from '../../features/system/systemSlice';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
   const { width, height } = useWindowSize();
-
-  const handleLogout = () => {
-    dispatch(signOut());
-  };
 
   useEffect(() => {
     if (width > 768) {
@@ -33,7 +26,7 @@ const DashboardLayout = () => {
         <NavbarDesktop />
       </div>
       <div className='mobile'>
-        <NavbarDrawer />
+        <NavbarDrawerMobile />
         <NavbarMobile />
       </div>
       <Outlet />
