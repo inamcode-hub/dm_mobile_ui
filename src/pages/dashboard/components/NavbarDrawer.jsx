@@ -83,7 +83,7 @@ const NavbarDrawer = () => {
   const dispatch = useDispatch();
   const [state, setState] = React.useState(initialState);
   const { openUser, openAccount } = state;
-  const { isNavbarOpen } = useSelector((state) => state.system);
+  const { isMobileNavbarOpen } = useSelector((state) => state.system);
 
   const handleOpenUser = () => {
     setState({ ...state, openUser: !openUser });
@@ -93,13 +93,15 @@ const NavbarDrawer = () => {
     setState({ ...state, openAccount: !openAccount });
   };
   const closeNavbar = () => {
-    dispatch(getSystemStateValues({ name: 'isNavbarOpen', value: false }));
+    dispatch(
+      getSystemStateValues({ name: 'isMobileNavbarOpen', value: false })
+    );
   };
   return (
     <>
       <Drawer
         anchor='left'
-        open={isNavbarOpen}
+        open={isMobileNavbarOpen}
         onClose={closeNavbar}
         style={{ width: '250px' }}>
         <Wrapper className='drawer'>

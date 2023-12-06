@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
 
 const initialState = {
-  isNavbarOpen: false,
+  isMobileNavbarOpen: false,
   isLoading: false,
 };
 export const systemThunk = createAsyncThunk(

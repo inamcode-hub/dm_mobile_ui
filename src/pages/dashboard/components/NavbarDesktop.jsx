@@ -6,9 +6,6 @@ const NavbarDesktop = () => {
 };
 
 const Wrapper = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
   background-color: red;
 `;
 export default NavbarDesktop;

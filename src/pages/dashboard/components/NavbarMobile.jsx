@@ -45,7 +45,7 @@ const NavbarMobile = () => {
     setState({ ...state, anchorEl: null });
   };
   const handleNavbar = () => {
-    dispatch(getSystemStateValues({ name: 'isNavbarOpen', value: true }));
+    dispatch(getSystemStateValues({ name: 'isMobileNavbarOpen', value: true }));
   };
   return (
     <Wrapper>
@@ -124,9 +124,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   background-color: #fff;
-  @media (min-width: 769px) {
-    display: none;
-  }
+
   display: flex;
   justify-content: space-between;
   align-items: center;
