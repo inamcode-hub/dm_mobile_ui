@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import Logo from '../../../components/Logo';
@@ -32,6 +32,8 @@ const NavbarDrawerDesktop = () => {
       <div className='header'>
         <Logo />
       </div>
+      <Divider />
+      <Body></Body>
     </Wrapper>
   );
 };
@@ -54,6 +56,9 @@ const Wrapper = styled.div`
     overflow: hidden;
     transition: width 0.3s ease-in-out;
     height: 2.5rem;
+    margin: 0 auto;
   }
 `;
+
+const Body = styled.div``;
 export default NavbarDrawerDesktop;

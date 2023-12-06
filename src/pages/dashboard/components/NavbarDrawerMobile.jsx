@@ -24,6 +24,7 @@ import { BsCreditCard } from 'react-icons/bs';
 import { BiInfinite } from 'react-icons/bi';
 import { MdForwardToInbox } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
+import Logo from '../../../components/Logo';
 const listItems = [
   {
     text: 'Dashboard',
@@ -118,10 +119,7 @@ const NavbarDrawerMobile = () => {
         style={{ width: '250px' }}>
         <Wrapper className='drawer'>
           <div className='header'>
-            <h4>
-              <span>Dryer</span>
-              <span>Master</span>
-            </h4>
+            <Logo />
           </div>
           <Divider />
         </Wrapper>
@@ -194,7 +192,11 @@ const NavbarDrawerMobile = () => {
             </List>
           </Collapse>
         </List>
-        <Button onClick={closeNavbar}>close</Button>
+        <Button
+          onClick={closeNavbar}
+          variant='outlined'>
+          close
+        </Button>
       </Drawer>
     </>
   );
@@ -202,21 +204,12 @@ const NavbarDrawerMobile = () => {
 const Wrapper = styled.div`
   width: 50vw;
   .header {
-    padding-left: 1rem;
     display: flex;
-    h4 {
-    }
-    span:first-of-type {
-      color: ${({ theme }) => theme.palette.primary.main};
-    }
-    //second child
-    span:last-of-type {
-      color: ${({ theme }) => theme.palette.secondary.main};
-    }
-    h4 {
-      font-size: 1.5rem;
-      margin: 0;
-      padding: 0.86rem 0;
+    align-items: center;
+    margin-left: 1rem;
+    height: 3.6rem;
+    @media (min-width: 600px) {
+      height: 4rem;
     }
   }
 `;
