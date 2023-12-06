@@ -13,6 +13,9 @@ const Wrapper = styled.div`
   top: 0;
   width: 100%;
   .navbar {
+    height: 2.5rem;
+    /* box-shadow: ${({ theme }) => theme.shadows[3]}; */
+    background-color: ${({ theme }) => theme.palette.background.paper};
   }
 `;
 export default NavbarDesktop;

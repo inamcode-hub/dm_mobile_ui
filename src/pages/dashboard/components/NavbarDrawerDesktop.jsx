@@ -50,13 +50,15 @@ const Wrapper = styled.div`
     position: absolute;
     top: 0;
     right: 0;
+    border-right: 1px solid ${(props) => props.theme.palette.divider};
+    height: 2.5rem;
   }
   .header {
-    width: ${(props) => (props.$showDesktopDrawerText ? '9rem' : '0rem')};
+    width: ${(props) => (props.$showDesktopDrawerText ? '100%' : '0rem')};
     overflow: hidden;
     transition: width 0.3s ease-in-out;
     height: 2.5rem;
-    margin: 0 auto;
+    padding-left: 1rem;
   }
 `;
 
