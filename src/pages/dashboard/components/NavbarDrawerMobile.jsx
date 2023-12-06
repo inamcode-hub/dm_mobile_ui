@@ -23,21 +23,26 @@ import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { BsCreditCard } from 'react-icons/bs';
 import { BiInfinite } from 'react-icons/bi';
 import { MdForwardToInbox } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 const listItems = [
   {
     text: 'Dashboard',
     path: '/dashboard',
     icon: <AiOutlineDashboard size={28} />,
   },
-  { text: 'Charts', path: '/dashboard/about', icon: <FaChartLine size={28} /> },
+  {
+    text: 'Charts',
+    path: '/dashboard/history',
+    icon: <FaChartLine size={28} />,
+  },
   {
     text: 'History',
-    path: '/dashboard/contact',
+    path: '/dashboard/history',
     icon: <MdHistory size={28} />,
   },
   {
     text: 'Messages',
-    path: '/dashboard/starred',
+    path: '/dashboard/settings',
     icon: <MdForwardToInbox size={28} />,
   },
 ];
@@ -81,6 +86,7 @@ const initialState = {
 };
 const NavbarDrawerMobile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [state, setState] = React.useState(initialState);
   const { openUser, openAccount } = state;
   const { isMobileNavbarOpen } = useSelector((state) => state.system);
@@ -97,6 +103,12 @@ const NavbarDrawerMobile = () => {
       getSystemStateValues({ name: 'isMobileNavbarOpen', value: false })
     );
   };
+
+  const handleLink = (path) => {
+    navigate(path);
+    closeNavbar();
+  };
+
   return (
     <>
       <Drawer
@@ -119,7 +131,7 @@ const NavbarDrawerMobile = () => {
               <ListItemButton
                 key={index}
                 component='a'
-                href={item.path}>
+                onClick={() => handleLink(item.path)}>
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
@@ -145,7 +157,7 @@ const NavbarDrawerMobile = () => {
                   <ListItemButton
                     key={index}
                     component='a'
-                    href={item.path}>
+                    onClick={() => handleLink(item.path)}>
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText primary={item.text} />
                   </ListItemButton>
@@ -173,7 +185,7 @@ const NavbarDrawerMobile = () => {
                   <ListItemButton
                     key={index}
                     component='a'
-                    href={item.path}>
+                    onClick={() => handleLink(item.path)}>
                     <ListItemIcon>{item.icon}</ListItemIcon>
                     <ListItemText primary={item.text} />
                   </ListItemButton>
