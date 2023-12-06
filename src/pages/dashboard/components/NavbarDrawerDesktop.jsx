@@ -4,6 +4,7 @@ import { getSystemStateValues } from '../../../features/system/systemSlice';
 import { Button } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
+import Logo from '../../../components/Logo';
 const NavbarDrawerDesktop = () => {
   const dispatch = useDispatch();
 
@@ -28,8 +29,9 @@ const NavbarDrawerDesktop = () => {
           )}
         </Button>
       </div>
-
-      <div className='drawer'>Desktop drawer</div>
+      <div className='header'>
+        <Logo />
+      </div>
     </Wrapper>
   );
 };
@@ -46,6 +48,12 @@ const Wrapper = styled.div`
     position: absolute;
     top: 0;
     right: 0;
+  }
+  .header {
+    width: ${(props) => (props.$showDesktopDrawerText ? '9rem' : '0rem')};
+    overflow: hidden;
+    transition: width 0.3s ease-in-out;
+    height: 2.5rem;
   }
 `;
 export default NavbarDrawerDesktop;

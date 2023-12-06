@@ -4,7 +4,6 @@ const NavbarDesktop = () => {
   return (
     <Wrapper>
       <div className='navbar'>navbar</div>
-      <div className='toggle'>=</div>
     </Wrapper>
   );
 };
