@@ -22,6 +22,7 @@ import { ExpandLess, ExpandMore } from '@mui/icons-material';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { BsCreditCard } from 'react-icons/bs';
 import { BiInfinite } from 'react-icons/bi';
+import { MdForwardToInbox } from 'react-icons/md';
 const listItems = [
   {
     text: 'Dashboard',
@@ -33,6 +34,11 @@ const listItems = [
     text: 'History',
     path: '/dashboard/contact',
     icon: <MdHistory size={28} />,
+  },
+  {
+    text: 'Messages',
+    path: '/dashboard/starred',
+    icon: <MdForwardToInbox size={28} />,
   },
 ];
 
