@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
-import { Button, Divider } from '@mui/material';
+import { Button, Divider, IconButton } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import Logo from '../../../components/Logo';
@@ -12,8 +12,8 @@ const NavbarDrawerDesktop = () => {
   return (
     <Wrapper $showDesktopDrawerText={showDesktopDrawerText}>
       <div className='toggle-drawer'>
-        <Button
-          variant='text'
+        <IconButton
+          aria-label='show'
           onClick={() =>
             dispatch(
               getSystemStateValues({
@@ -27,7 +27,7 @@ const NavbarDrawerDesktop = () => {
           ) : (
             <KeyboardArrowRightIcon />
           )}
-        </Button>
+        </IconButton>
       </div>
       <div className='header'>
         <Logo />
@@ -50,7 +50,6 @@ const Wrapper = styled.div`
     position: absolute;
     top: 0;
     right: 0;
-    border-right: 1px solid ${(props) => props.theme.palette.divider};
     height: 2.5rem;
   }
   .header {
