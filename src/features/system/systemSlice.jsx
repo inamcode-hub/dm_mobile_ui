@@ -3,6 +3,7 @@ import { customFetch } from '../../lib/customeFetch';
 
 const initialState = {
   isMobileNavbarOpen: false,
+  showDesktopDrawerText: true,
   isLoading: false,
 };
 export const systemThunk = createAsyncThunk(
