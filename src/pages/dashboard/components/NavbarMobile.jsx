@@ -49,7 +49,7 @@ const NavbarMobile = () => {
   };
   return (
     <Wrapper>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
           <IconButton
             size='large'
@@ -122,7 +122,15 @@ const NavbarMobile = () => {
 const Wrapper = styled.div`
   position: sticky;
   top: 0;
-  background-color: #fff;
+  height: 3.5rem;
+  @media (min-width: 600px) {
+    height: 4rem;
+  }
+  z-index: 100;
+  width: 100%;
+  .MuiAppBar-root {
+    width: 100%; // Ensuring AppBar takes full width
+  }
 
   display: flex;
   justify-content: space-between;
