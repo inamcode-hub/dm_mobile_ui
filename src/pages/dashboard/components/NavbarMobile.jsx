@@ -17,7 +17,6 @@ import { signOut } from '../../../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
-import ToggleTheme from '../../../components/ToggleTheme';
 
 const initialState = {
   firstName: '',
@@ -86,7 +85,7 @@ const NavbarMobile = () => {
               color='inherit'>
               <AccountCircle fontSize='large' />
             </IconButton>
-            <ToggleTheme />
+
             <Menu
               id='menu-appbar'
               anchorEl={anchorEl}
