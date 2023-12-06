@@ -24,8 +24,9 @@ const EmailSent = () => {
           <Typography
             variant='body2'
             className='new-user'>
-            We have sent an email to <strong>{email}</strong> with a link to get
-            back into your account.
+            Check your inbox for the next steps. If you don&apos;t receive an
+            email, and it&apos;s not in your spam folder this could mean you
+            signed up with a different address.
           </Typography>
         </Heading>
         <Body>
