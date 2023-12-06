@@ -58,8 +58,9 @@ const NavbarMobile = () => {
             aria-label='menu'
             sx={{ mr: 2 }}
             onClick={handleNavbar}>
-            <MenuIcon />
+            <MenuIcon fontSize='large' />
           </IconButton>
+
           <Typography
             variant='h6'
             component='div'
@@ -74,7 +75,7 @@ const NavbarMobile = () => {
               aria-haspopup='true'
               onClick={handleMenu}
               color='inherit'>
-              <AccountCircle />
+              <AccountCircle fontSize='large' />
             </IconButton>
             <Menu
               id='menu-appbar'
@@ -128,13 +129,7 @@ const Wrapper = styled.div`
   }
   z-index: 100;
   width: 100%;
-  .MuiAppBar-root {
-    width: 100%; // Ensuring AppBar takes full width
-  }
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   .menu-logo,
   .profile {
     display: flex;
