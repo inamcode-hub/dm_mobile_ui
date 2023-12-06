@@ -9,6 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
+import { FaBell } from 'react-icons/fa6';
 
 import MenuIcon from '@mui/icons-material/Menu';
 import { AccountCircle } from '@mui/icons-material';
@@ -70,6 +71,13 @@ const NavbarMobile = () => {
           <div>
             <IconButton
               size='large'
+              aria-label='alert'
+              onClick={() => console.log('alert')}
+              color='inherit'>
+              <FaBell size={28} />
+            </IconButton>
+            <IconButton
+              size='large'
               aria-label='account of current user'
               aria-controls='menu-appbar'
               aria-haspopup='true'
@@ -77,6 +85,7 @@ const NavbarMobile = () => {
               color='inherit'>
               <AccountCircle fontSize='large' />
             </IconButton>
+
             <Menu
               id='menu-appbar'
               anchorEl={anchorEl}
