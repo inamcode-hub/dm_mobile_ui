@@ -25,6 +25,7 @@ import { BiInfinite } from 'react-icons/bi';
 import { MdForwardToInbox } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import Logo from '../../../components/Logo';
+import ToggleTheme from '../../../components/ToggleTheme';
 const listItems = [
   {
     text: 'Dashboard',
@@ -192,11 +193,14 @@ const NavbarDrawerMobile = () => {
             </List>
           </Collapse>
         </List>
-        <Button
-          onClick={closeNavbar}
-          variant='outlined'>
-          close
-        </Button>
+        <Footer>
+          <Button
+            onClick={closeNavbar}
+            variant='outlined'>
+            close
+          </Button>
+          <ToggleTheme />
+        </Footer>
       </Drawer>
     </>
   );
@@ -211,6 +215,20 @@ const Wrapper = styled.div`
     @media (min-width: 600px) {
       height: 4rem;
     }
+  }
+`;
+
+const Footer = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: center;
+  margin-top: auto;
+  padding: 1rem;
+  width: 100%;
+
+  button {
+    margin: 0;
   }
 `;
 export default NavbarDrawerMobile;
