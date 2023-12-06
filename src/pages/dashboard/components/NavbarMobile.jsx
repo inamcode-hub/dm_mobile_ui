@@ -98,9 +98,8 @@ const NavbarMobile = () => {
                 <p>{email}</p>
               </NameEmail>
               <Divider />
-              <MenuItem onClick={handleClose}>Home</MenuItem>
               <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Setting</MenuItem>
+              <MenuItem onClick={handleClose}>Inbox</MenuItem>
               <Divider />
               <MenuItem
                 onClick={() => dispatch(signOut())}
