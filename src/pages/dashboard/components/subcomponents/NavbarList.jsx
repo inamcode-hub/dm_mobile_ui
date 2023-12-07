@@ -109,7 +109,6 @@ const NavbarList = () => {
   };
   return (
     <Wrapper>
-      {' '}
       <List className='body'>
         {listItems.map((item, index) => {
           return (

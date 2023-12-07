@@ -5,6 +5,7 @@ import { Divider, IconButton } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import Logo from '../../../components/Logo';
+import NavbarList from './subcomponents/NavbarList';
 const NavbarDrawerDesktop = () => {
   const dispatch = useDispatch();
 
@@ -33,7 +34,9 @@ const NavbarDrawerDesktop = () => {
         <Logo />
       </div>
       <Divider />
-      <Body></Body>
+      <Body>
+        <NavbarList />
+      </Body>
     </Wrapper>
   );
 };
@@ -65,5 +68,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const Body = styled.div``;
+const Body = styled.div`
+  overflow: hidden;
+`;
 export default NavbarDrawerDesktop;
