@@ -51,15 +51,16 @@ const Wrapper = styled.div`
   border-right: 1px solid ${(props) => props.theme.palette.divider};
   .toggle-drawer {
     position: absolute;
-    top: 0;
+    top: 0.6rem;
     right: 0;
     height: 2.5rem;
   }
   .header {
+    display: flex;
     width: ${(props) => (props.$showDesktopDrawerText ? '100%' : '0rem')};
     overflow: hidden;
     transition: width 0.3s ease-in-out;
-    height: 2.5rem;
+    height: 3.5rem;
     padding-left: 1rem;
   }
 `;
