@@ -116,97 +116,101 @@ const NavbarDrawerMobile = () => {
       <Drawer
         anchor='left'
         open={isMobileNavbarOpen}
-        onClose={closeNavbar}
-        style={{ width: '250px' }}>
-        <Wrapper className='drawer'>
+        onClose={closeNavbar}>
+        <Wrapper>
           <div className='header'>
             <Logo />
           </div>
           <Divider />
+          <List className='body'>
+            {listItems.map((item, index) => {
+              return (
+                <ListItemButton
+                  key={index}
+                  component='a'
+                  onClick={() => handleLink(item.path)}>
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              );
+            })}
+            <Divider />
+            <ListItemButton onClick={handleOpenUser}>
+              <ListItemIcon>
+                <BsPersonVideo size={28} />
+              </ListItemIcon>
+              <ListItemText primary='User' />
+              {openUser ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse
+              in={openUser}
+              timeout='auto'
+              unmountOnExit>
+              <List
+                component='div'
+                disablePadding>
+                {collapseItems.map((item, index) => {
+                  return (
+                    <ListItemButton
+                      key={index}
+                      component='a'
+                      onClick={() => handleLink(item.path)}>
+                      <ListItemIcon>{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItemButton>
+                  );
+                })}
+              </List>
+            </Collapse>
+            <Divider />
+            <ListItemButton onClick={handleOpenAccount}>
+              <ListItemIcon>
+                <MdOutlineManageAccounts size={28} />
+              </ListItemIcon>
+              <ListItemText primary='Account' />
+              {openAccount ? <ExpandLess /> : <ExpandMore />}
+            </ListItemButton>
+            <Collapse
+              in={openAccount}
+              timeout='auto'
+              unmountOnExit>
+              <List
+                component='div'
+                disablePadding>
+                {collapseItems2.map((item, index) => {
+                  return (
+                    <ListItemButton
+                      key={index}
+                      component='a'
+                      onClick={() => handleLink(item.path)}>
+                      <ListItemIcon>{item.icon}</ListItemIcon>
+                      <ListItemText primary={item.text} />
+                    </ListItemButton>
+                  );
+                })}
+              </List>
+            </Collapse>
+          </List>
+          <Footer>
+            <Button
+              onClick={closeNavbar}
+              variant='outlined'>
+              close
+            </Button>
+            <ToggleTheme />
+          </Footer>
         </Wrapper>
-        <List className='list'>
-          {listItems.map((item, index) => {
-            return (
-              <ListItemButton
-                key={index}
-                component='a'
-                onClick={() => handleLink(item.path)}>
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
-            );
-          })}
-          <Divider />
-          <ListItemButton onClick={handleOpenUser}>
-            <ListItemIcon>
-              <BsPersonVideo size={28} />
-            </ListItemIcon>
-            <ListItemText primary='User' />
-            {openUser ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse
-            in={openUser}
-            timeout='auto'
-            unmountOnExit>
-            <List
-              component='div'
-              disablePadding>
-              {collapseItems.map((item, index) => {
-                return (
-                  <ListItemButton
-                    key={index}
-                    component='a'
-                    onClick={() => handleLink(item.path)}>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
-                  </ListItemButton>
-                );
-              })}
-            </List>
-          </Collapse>
-          <Divider />
-          <ListItemButton onClick={handleOpenAccount}>
-            <ListItemIcon>
-              <MdOutlineManageAccounts size={28} />
-            </ListItemIcon>
-            <ListItemText primary='Account' />
-            {openAccount ? <ExpandLess /> : <ExpandMore />}
-          </ListItemButton>
-          <Collapse
-            in={openAccount}
-            timeout='auto'
-            unmountOnExit>
-            <List
-              component='div'
-              disablePadding>
-              {collapseItems2.map((item, index) => {
-                return (
-                  <ListItemButton
-                    key={index}
-                    component='a'
-                    onClick={() => handleLink(item.path)}>
-                    <ListItemIcon>{item.icon}</ListItemIcon>
-                    <ListItemText primary={item.text} />
-                  </ListItemButton>
-                );
-              })}
-            </List>
-          </Collapse>
-        </List>
-        <Footer>
-          <Button
-            onClick={closeNavbar}
-            variant='outlined'>
-            close
-          </Button>
-          <ToggleTheme />
-        </Footer>
       </Drawer>
     </>
   );
 };
 const Wrapper = styled.div`
   width: 70vw;
+  height: 100vh;
+  background-color: ${(props) =>
+    props.theme.palette.mode === 'light'
+      ? props.theme.palette.background.paper
+      : props.theme.palette.grey[900]};
   .header {
     display: flex;
     align-items: center;
@@ -223,10 +227,12 @@ const Footer = styled.div`
   grid-template-columns: 1fr;
   gap: 1rem;
   align-items: center;
-  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  max-width: 70vw;
   padding: 1rem;
   width: 100%;
-
   button {
     margin: 0;
   }

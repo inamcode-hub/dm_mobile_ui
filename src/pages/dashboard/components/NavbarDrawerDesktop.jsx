@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
-import { Button, Divider, IconButton } from '@mui/material';
+import { Divider, IconButton } from '@mui/material';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import Logo from '../../../components/Logo';
@@ -45,7 +45,10 @@ const Wrapper = styled.div`
   transition: width 0.3s ease-in-out;
   width: ${(props) => (props.$showDesktopDrawerText ? '300px' : '4rem')};
   background-color: ${(props) =>
-    props.theme.mode === 'dark' ? '#333' : '#fff'};
+    props.theme.palette.mode === 'light'
+      ? props.theme.palette.background.paper
+      : props.theme.palette.grey[900]};
+  border-right: 1px solid ${(props) => props.theme.palette.divider};
   .toggle-drawer {
     position: absolute;
     top: 0;

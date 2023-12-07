@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
+import { AppBar } from '@mui/material';
 
 const NavbarDesktop = () => {
   return (
     <Wrapper>
-      <div className='navbar'>navbar</div>
+      <AppBar position='static'>AppBar</AppBar>
     </Wrapper>
   );
 };
@@ -15,7 +16,7 @@ const Wrapper = styled.div`
   .navbar {
     height: 2.5rem;
     /* box-shadow: ${({ theme }) => theme.shadows[3]}; */
-    background-color: ${({ theme }) => theme.palette.background.paper};
+    background-color: ${({ theme }) => theme.palette.primary.main};
   }
 `;
 export default NavbarDesktop;
