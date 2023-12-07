@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { AppBar } from '@mui/material';
 import ToggleTheme from '../../../components/ToggleTheme';
+import UserCard from './subcomponents/UserCard';
 
 const NavbarDesktop = () => {
   return (
@@ -8,8 +9,12 @@ const NavbarDesktop = () => {
       <AppBar
         position='static'
         className='app'>
-        <div className='theme'>
-          <ToggleTheme />
+        <div className='navbar'>
+          <div className='info'>hello</div>
+          <div className='theme'>
+            <UserCard />
+            <ToggleTheme />
+          </div>
         </div>
       </AppBar>
     </Wrapper>
@@ -22,14 +27,16 @@ const Wrapper = styled.div`
   width: 100%;
   .app {
     height: 3.5rem;
-    display: flex;
-    .theme {
+    .navbar {
+      padding: 0 1rem;
       display: flex;
-      justify-content: flex-end;
+      justify-content: space-between;
       align-items: center;
-      width: 100%;
       height: 100%;
-      padding-right: 1rem;
+      .theme {
+        display: flex;
+        align-items: center;
+      }
     }
   }
 `;
