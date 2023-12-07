@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { AppBar } from '@mui/material';
 import ToggleTheme from '../../../components/ToggleTheme';
 import UserCard from './subcomponents/UserCard';
+import Notifications from './subcomponents/Notifications';
 
 const NavbarDesktop = () => {
   return (
@@ -12,6 +13,7 @@ const NavbarDesktop = () => {
         <div className='navbar'>
           <div className='info'>hello</div>
           <div className='theme'>
+            <Notifications />
             <UserCard />
             <ToggleTheme />
           </div>

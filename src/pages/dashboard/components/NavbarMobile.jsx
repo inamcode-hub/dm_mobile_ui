@@ -5,6 +5,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { useDispatch } from 'react-redux';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
 import UserCard from './subcomponents/UserCard';
+import Notifications from './subcomponents/Notifications';
 
 const NavbarMobile = () => {
   const dispatch = useDispatch();
@@ -25,7 +26,6 @@ const NavbarMobile = () => {
             onClick={handleNavbar}>
             <MenuIcon fontSize='large' />
           </IconButton>
-
           <Typography
             variant='h6'
             component='div'
@@ -33,13 +33,7 @@ const NavbarMobile = () => {
             Dryer Master
           </Typography>
           <div className='icons'>
-            <IconButton
-              size='large'
-              aria-label='alert'
-              onClick={() => console.log('alert')}
-              color='inherit'>
-              <FaBell size={28} />
-            </IconButton>
+            <Notifications />
             <UserCard />
           </div>
         </Toolbar>
