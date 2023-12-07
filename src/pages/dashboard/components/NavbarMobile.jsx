@@ -17,34 +17,11 @@ import { signOut } from '../../../features/user/userSlice';
 import { useDispatch } from 'react-redux';
 import Cookies from 'js-cookie';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
+import UserCard from './subcomponents/UserCard';
 
-const initialState = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  anchorEl: null,
-};
 const NavbarMobile = () => {
   const dispatch = useDispatch();
-  const [state, setState] = React.useState(initialState);
-  const { anchorEl, firstName, lastName, email } = state;
 
-  const handleMenu = (event) => {
-    const firstName = Cookies.get('dryermaster_firstName');
-    const lastName = Cookies.get('dryermaster_lastName');
-    const email = Cookies.get('dryermaster_email');
-    setState({
-      ...state,
-      anchorEl: event.currentTarget,
-      firstName,
-      lastName,
-      email,
-    });
-  };
-
-  const handleClose = () => {
-    setState({ ...state, anchorEl: null });
-  };
   const handleNavbar = () => {
     dispatch(getSystemStateValues({ name: 'isMobileNavbarOpen', value: true }));
   };
@@ -68,7 +45,7 @@ const NavbarMobile = () => {
             sx={{ flexGrow: 1 }}>
             Dryer Master
           </Typography>
-          <div>
+          <div className='icons'>
             <IconButton
               size='large'
               aria-label='alert'
@@ -76,52 +53,7 @@ const NavbarMobile = () => {
               color='inherit'>
               <FaBell size={28} />
             </IconButton>
-            <IconButton
-              size='large'
-              aria-label='account of current user'
-              aria-controls='menu-appbar'
-              aria-haspopup='true'
-              onClick={handleMenu}
-              color='inherit'>
-              <AccountCircle fontSize='large' />
-            </IconButton>
-
-            <Menu
-              id='menu-appbar'
-              anchorEl={anchorEl}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorEl)}
-              onClose={handleClose}>
-              <NameEmail>
-                <p>
-                  <span>{firstName}</span>
-                  <span>{lastName}</span>
-                </p>
-                <p>{email}</p>
-              </NameEmail>
-              <Divider />
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>Inbox</MenuItem>
-              <Divider />
-              <MenuItem
-                onClick={() => dispatch(signOut())}
-                className='logout'
-                sx={{
-                  // color if theme mode is dark only than red
-                  color: (theme) =>
-                    theme.palette.mode !== 'dark' ? 'red' : 'inherit',
-                }}>
-                Logout
-              </MenuItem>
-            </Menu>
+            <UserCard />
           </div>
         </Toolbar>
       </AppBar>
@@ -145,29 +77,10 @@ const Wrapper = styled.div`
     gap: 0.5rem;
     align-items: center;
   }
-`;
-
-const NameEmail = styled.div`
-  display: flex;
-  flex-direction: column;
-  p {
-    margin: 0;
-    padding: 0rem 16px;
-  }
-  p:first-of-type {
+  .icons {
     display: flex;
-
     align-items: center;
-    gap: 0.5rem;
-    span {
-      font-weight: 500;
-      text-transform: capitalize;
-    }
-  }
-  //last child
-  p:last-child {
-    margin-top: 0rem;
-    color: #808080;
   }
 `;
+
 export default NavbarMobile;
