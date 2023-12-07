@@ -1,21 +1,8 @@
 import styled from '@emotion/styled';
-import {
-  AppBar,
-  Divider,
-  IconButton,
-  Menu,
-  MenuItem,
-  Toolbar,
-  Typography,
-} from '@mui/material';
-import React from 'react';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { FaBell } from 'react-icons/fa6';
-
 import MenuIcon from '@mui/icons-material/Menu';
-import { AccountCircle } from '@mui/icons-material';
-import { signOut } from '../../../features/user/userSlice';
 import { useDispatch } from 'react-redux';
-import Cookies from 'js-cookie';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
 import UserCard from './subcomponents/UserCard';
 
