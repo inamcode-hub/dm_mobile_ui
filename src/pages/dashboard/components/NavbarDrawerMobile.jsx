@@ -170,6 +170,7 @@ const NavbarDrawerMobile = () => {
               <ListItemText primary='Account' />
               {openAccount ? <ExpandLess /> : <ExpandMore />}
             </ListItemButton>
+
             <Collapse
               in={openAccount}
               timeout='auto'
@@ -190,6 +191,7 @@ const NavbarDrawerMobile = () => {
                 })}
               </List>
             </Collapse>
+            <Divider />
           </List>
           <Footer>
             <Button
