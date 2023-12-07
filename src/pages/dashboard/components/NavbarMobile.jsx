@@ -22,7 +22,6 @@ const NavbarMobile = () => {
             edge='start'
             color='inherit'
             aria-label='menu'
-            sx={{ mr: 2 }}
             onClick={handleNavbar}>
             <MenuIcon fontSize='large' />
           </IconButton>
