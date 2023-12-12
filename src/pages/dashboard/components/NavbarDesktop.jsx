@@ -11,7 +11,9 @@ const NavbarDesktop = () => {
         position='static'
         className='app'>
         <div className='navbar'>
-          <div className='info'>hello</div>
+          <div className='info'>
+            <h1>Dashboard</h1>
+          </div>
           <div className='theme'>
             <Notifications />
             <UserCard />
