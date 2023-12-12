@@ -18,7 +18,6 @@ export default defineConfig({
           dependencies: [
             '@emotion/react',
             '@emotion/styled',
-            '@fontsource/roboto',
             '@mui/icons-material',
             '@mui/material',
             '@reduxjs/toolkit',
