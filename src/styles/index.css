@@ -1,1 +1,72 @@
 /*background color rgba(255, 255, 255, 0.8) */
+:root {
+  /* colors */
+
+  --primary: #213966;
+  --secondary: #58a645;
+  --success: #17c964;
+  --warning: #f5a524;
+  --error: #f31260;
+  --info: #3498db;
+  --white: #ffffff;
+  --black: #000000;
+  --inlet: #5cb85c;
+  --outlet: #428bca;
+  --discharge: #f0ad4e;
+  --drying: #d9534f;
+
+  /* text size */
+
+  --text-x-small: 1.3rem;
+  --text-small: 1.6rem;
+  --text-medium: 1.8rem;
+  --text-large: 2.2rem;
+  --text-x-large: 2.6rem;
+  --text-x-x-large: 3.6rem;
+
+  /* colors */
+
+  --primary-1: #f0f3fa;
+  --primary-2: #e0e7f5;
+  --primary-3: #d1daf0;
+  --primary-4: #b2c1e6;
+  --primary-5: #93a8dc;
+  --primary-6: #748fd2;
+  --primary-7: #5676c8;
+  --primary-8: #3c5fb9;
+  --primary-9: #324f9a;
+  --primary-10: #28407b;
+  --primary-11: #1e305c;
+  --primary-12: #14203e;
+  --primary-13: #0a101f;
+
+  /* secondary  */
+  --secondary-1: #c7e4bc;
+  --secondary-2: #a9d286;
+  --secondary-3: #8bc852;
+  --secondary-4: #6db01f;
+  --secondary-5: #4faa00;
+  --secondary-6: #58a645;
+  --secondary-7: #488b33;
+  --secondary-8: #397322;
+  --secondary-9: #2b5a10;
+  --secondary-10: #1d3d00;
+
+  /* grey */
+
+  --gray-1: #ffffff;
+  --gray-2: #fafafa;
+  --gray-3: #f5f5f5;
+  --gray-4: #f0f0f0;
+  --gray-5: #d9d9d9;
+  --gray-6: #bfbfbf;
+  --gray-7: #8c8c8c;
+  --gray-8: #595959;
+  --gray-9: #434343;
+  --gray-10: #262626;
+  --gray-11: #1f1f1f;
+  --gray-12: #141414;
+  --gray-13: #000000;
+
+  /* background color */
+}

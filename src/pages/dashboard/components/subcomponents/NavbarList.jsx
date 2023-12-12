@@ -16,7 +16,7 @@ import {
   MdOutlineManageAccounts,
 } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getSystemStateValues } from '../../../../features/system/systemSlice';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { FaChartLine, FaFileInvoiceDollar } from 'react-icons/fa';
@@ -87,6 +87,8 @@ const initialState = {
 const NavbarList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
+
   const [state, setState] = React.useState(initialState);
   const { openUser, openAccount } = state;
 
@@ -115,6 +117,7 @@ const NavbarList = () => {
             <ListItemButton
               key={index}
               component='a'
+              className={location.pathname === item.path ? 'active' : ''}
               onClick={() => handleLink(item.path)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
@@ -170,6 +173,7 @@ const NavbarList = () => {
                 <ListItemButton
                   key={index}
                   component='a'
+                  className={location.pathname === item.path ? 'active' : ''}
                   onClick={() => handleLink(item.path)}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
@@ -184,6 +188,38 @@ const NavbarList = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  .active {
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? '#4a8bff'
+        : 'var(--primary-3)'} !important;
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#ffffff' : '#1f3660'} !important;
+
+    // icon color change
+    .MuiListItemIcon-root {
+      color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? '#ffffff' : '#1f3660'} !important;
+    }
+    span {
+      font-weight: 600;
+    }
+  }
+  .MuiListItemButton-root {
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    margin-bottom: 5px;
+  }
+  .MuiListItemIcon-root {
+    min-width: 40px;
+  }
+  .MuiListItemText-root {
+    margin-left: 10px;
+  }
+  .MuiCollapse-wrapperInner {
+    padding-left: 20px;
+  }
+`;
 
 export default NavbarList;
