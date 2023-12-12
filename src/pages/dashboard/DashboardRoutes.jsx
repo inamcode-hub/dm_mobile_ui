@@ -3,7 +3,7 @@ import DashboardLayout from './DashboardLayout';
 import ProtectedRoute from './ProtectedRoute';
 import Home from './pages/home/Home';
 import History from './pages/history/History';
-import Charts from './pages/charts/charts';
+import Charts from './pages/charts/Charts';
 import Messages from './pages/messages/Messages';
 
 const DashboardRoutes = () => {
