@@ -218,7 +218,7 @@ const Wrapper = styled.div`
     margin-left: 10px;
   }
   .MuiCollapse-wrapperInner {
-    padding-left: 20px;
+    padding-left: 10px;
   }
 `;
 
