@@ -58,8 +58,8 @@ const Wrapper = styled.div`
     }
   }
   .body {
-    height: calc(100vh - 11rem);
     overflow-y: auto;
+    /* background-color: pink; */
   }
 `;
 
@@ -67,10 +67,10 @@ const Footer = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   gap: 1rem;
-  align-items: center;
+  /* align-items: center;
   position: fixed;
   bottom: 0;
-  left: 0;
+  left: 0; */
   max-width: 70vw;
   padding: 1rem;
   width: 100%;
