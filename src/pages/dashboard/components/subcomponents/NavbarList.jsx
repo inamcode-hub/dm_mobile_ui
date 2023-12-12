@@ -19,7 +19,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getSystemStateValues } from '../../../../features/system/systemSlice';
 import { AiOutlineDashboard } from 'react-icons/ai';
-import { FaChartLine, FaFileInvoiceDollar } from 'react-icons/fa';
+import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { IoMdKey } from 'react-icons/io';
 import { BiInfinite } from 'react-icons/bi';
 import { FaRegChartBar } from 'react-icons/fa';
