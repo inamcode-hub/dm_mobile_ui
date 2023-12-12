@@ -3,7 +3,8 @@ import DashboardLayout from './DashboardLayout';
 import ProtectedRoute from './ProtectedRoute';
 import Home from './pages/home/Home';
 import History from './pages/history/History';
-import Settings from './pages/settings/Settings';
+import Charts from './pages/charts/charts';
+import Messages from './pages/messages/Messages';
 
 const DashboardRoutes = () => {
   return (
@@ -20,12 +21,16 @@ const DashboardRoutes = () => {
           element={<Home />}
         />
         <Route
+          path='charts'
+          element={<Charts />}
+        />
+        <Route
           path='history'
           element={<History />}
         />
         <Route
-          path='settings'
-          element={<Settings />}
+          path='messages'
+          element={<Messages />}
         />
         <Route
           path='*'

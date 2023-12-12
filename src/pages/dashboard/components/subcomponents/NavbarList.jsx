@@ -31,7 +31,7 @@ const listItems = [
   },
   {
     text: 'Charts',
-    path: '/dashboard/history',
+    path: '/dashboard/charts',
     icon: <FaChartLine size={28} />,
   },
   {
@@ -41,7 +41,7 @@ const listItems = [
   },
   {
     text: 'Messages',
-    path: '/dashboard/settings',
+    path: '/dashboard/messages',
     icon: <MdForwardToInbox size={28} />,
   },
 ];
