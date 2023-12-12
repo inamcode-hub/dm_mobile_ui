@@ -22,7 +22,7 @@ import { AiOutlineDashboard } from 'react-icons/ai';
 import { FaChartLine, FaFileInvoiceDollar } from 'react-icons/fa';
 import { IoMdKey } from 'react-icons/io';
 import { BiInfinite } from 'react-icons/bi';
-
+import { FaRegChartBar } from 'react-icons/fa';
 const listItems = [
   {
     text: 'Dashboard',
@@ -32,7 +32,7 @@ const listItems = [
   {
     text: 'Charts',
     path: '/dashboard/charts',
-    icon: <FaChartLine size={28} />,
+    icon: <FaRegChartBar size={28} />,
   },
   {
     text: 'History',
