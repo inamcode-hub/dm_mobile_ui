@@ -28,7 +28,9 @@ const NavbarDrawerMobile = () => {
             <Logo />
           </div>
           <Divider />
-          <NavbarList />
+          <div className='body'>
+            <NavbarList />
+          </div>
           <Footer>
             <Button
               onClick={closeNavbar}
@@ -54,6 +56,10 @@ const Wrapper = styled.div`
     @media (min-width: 600px) {
       height: 4rem;
     }
+  }
+  .body {
+    height: calc(100vh - 11rem);
+    overflow-y: auto;
   }
 `;
 
