@@ -28,17 +28,19 @@ const DmStatus = () => {
             </li>
             <li>
               <span>✔</span> Watch our trouble shooting video
-              <Link
-                to='/'
-                style={{ marginLeft: '.5rem', fontWeight: '500' }}>
-                <Button
-                  variant='outlined'
-                  color='primary'>
-                  Watch Video
-                </Button>
-              </Link>
             </li>
           </ul>
+          <span>
+            <Link
+              to='/'
+              style={{ marginLeft: '.5rem', fontWeight: '500' }}>
+              <Button
+                variant='outlined'
+                color='primary'>
+                Watch Video
+              </Button>
+            </Link>
+          </span>
           <p>
             If you are still having issues after watching the video, please
             contact us at 1-800-265-8521.
@@ -66,6 +68,12 @@ const Wrapper = styled.div`
       justify-content: space-between;
       align-items: center;
       margin-bottom: 1rem;
+      @media (max-width: 600px) {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-gap: 1rem;
+      }
+
       h3 {
         margin: 0;
         font-size: 1.5rem;
@@ -78,7 +86,6 @@ const Wrapper = styled.div`
         padding-top: 5px;
         margin: 0;
         list-style: none;
-
         li {
           padding: 0.5rem;
           font-size: 1rem;
