@@ -20,6 +20,6 @@ const Home = () => {
 };
 
 const Wrapper = styled.div`
-  min-height: 300vh;
+  /* min-height: 300vh; */
 `;
 export default Home;

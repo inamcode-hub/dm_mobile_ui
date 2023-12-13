@@ -31,7 +31,11 @@ const DmStatus = () => {
               <Link
                 to='/'
                 style={{ marginLeft: '.5rem', fontWeight: '500' }}>
-                here.
+                <Button
+                  variant='outlined'
+                  color='primary'>
+                  Watch Video
+                </Button>
               </Link>
             </li>
           </ul>
