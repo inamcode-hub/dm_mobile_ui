@@ -63,6 +63,8 @@ const Wrapper = styled.div`
   padding: 1rem;
   .card {
     padding: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
     .heading {
       display: flex;
       justify-content: space-between;
@@ -100,9 +102,9 @@ const Wrapper = styled.div`
       }
     }
     .footer {
-      display: flex;
-      justify-content: flex-end;
-      padding-top: 1rem;
+      display: grid;
+      grid-template-columns: 1fr;
+      margin-top: 1rem;
     }
   }
 `;
