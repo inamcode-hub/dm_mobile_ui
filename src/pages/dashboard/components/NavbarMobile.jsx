@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { getSystemStateValues } from '../../../features/system/systemSlice';
 import UserCard from './subcomponents/UserCard';
 import Notifications from './subcomponents/Notifications';
+import DmStatusChecker from '../../../components/DmStatusChecker';
 
 const NavbarMobile = () => {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const NavbarMobile = () => {
   return (
     <Wrapper>
       <AppBar position='fixed'>
-        <Toolbar>
+        <Toolbar className='bar'>
           <IconButton
             size='large'
             edge='start'
@@ -25,13 +26,8 @@ const NavbarMobile = () => {
             onClick={handleNavbar}>
             <MenuIcon fontSize='large' />
           </IconButton>
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{ flexGrow: 1 }}>
-            Dryer Master
-          </Typography>
           <div className='icons'>
+            <DmStatusChecker />
             <Notifications />
             <UserCard />
           </div>
@@ -50,7 +46,10 @@ const Wrapper = styled.div`
   }
   z-index: 100;
   width: 100%;
-
+  .bar {
+    display: flex;
+    justify-content: space-between;
+  }
   .menu-logo,
   .profile {
     display: flex;

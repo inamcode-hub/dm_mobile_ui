@@ -40,8 +40,8 @@ const DmStatusChecker = () => {
 };
 const Wrapper = styled.div`
   .MuiButton-root {
-    background-color: ${(props) => (props.isDmOnline ? green[800] : grey[700])};
-    color: white;
+    background-color: ${(props) => (props.isDmOnline ? green[800] : grey[800])};
+
     border-radius: 1rem;
     display: flex;
     align-items: center;
