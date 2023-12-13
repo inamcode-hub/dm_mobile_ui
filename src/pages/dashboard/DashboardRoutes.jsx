@@ -32,10 +32,6 @@ const DashboardRoutes = () => {
           path='messages'
           element={<Messages />}
         />
-        <Route
-          path='*'
-          element={<h1>Not Found Dashboard</h1>}
-        />
       </Route>
     </Routes>
   );
