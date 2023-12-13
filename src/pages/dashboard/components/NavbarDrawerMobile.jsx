@@ -60,7 +60,7 @@ const Wrapper = styled.div`
 
 const Footer = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 1rem;
   max-width: 70vw;
   padding: 1rem;
