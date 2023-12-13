@@ -49,13 +49,13 @@ const listItems = [
 const collapseItems = [
   {
     text: 'Profile',
-    path: '/dashboard/starred',
+    path: '/dashboard/user/profile',
     icon: <BsPersonVcard size={28} />,
   },
 
   {
     text: 'Security',
-    path: '/dashboard/starred',
+    path: '/dashboard/user/change-password',
     icon: <IoMdKey size={28} />,
   },
 ];
@@ -144,6 +144,7 @@ const NavbarList = () => {
                 <ListItemButton
                   key={index}
                   component='a'
+                  className={location.pathname === item.path ? 'active' : ''}
                   onClick={() => handleLink(item.path)}>
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />

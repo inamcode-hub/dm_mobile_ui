@@ -6,6 +6,8 @@ import History from './pages/history/History';
 import Charts from './pages/charts/Charts';
 import Messages from './pages/messages/Messages';
 import NotFound from '../NotFound';
+import Profile from './pages/user/Profile';
+import ChangePassword from './pages/user/ChangePassword';
 
 const DashboardRoutes = () => {
   return (
@@ -32,6 +34,14 @@ const DashboardRoutes = () => {
         <Route
           path='messages'
           element={<Messages />}
+        />
+        <Route
+          path='user/profile'
+          element={<Profile />}
+        />
+        <Route
+          path='user/change-password'
+          element={<ChangePassword />}
         />
         <Route
           path='*'
