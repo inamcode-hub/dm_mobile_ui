@@ -32,12 +32,12 @@ const NavbarDrawerMobile = () => {
             <NavbarList />
           </div>
           <Footer>
+            <ToggleTheme />
             <Button
               onClick={closeNavbar}
-              variant='outlined'>
+              variant='contained'>
               close
             </Button>
-            <ToggleTheme />
           </Footer>
         </Wrapper>
       </Drawer>
@@ -47,7 +47,6 @@ const NavbarDrawerMobile = () => {
 const Wrapper = styled.div`
   width: 70vw;
   height: 100vh;
-
   .header {
     display: flex;
     align-items: center;
@@ -61,7 +60,7 @@ const Wrapper = styled.div`
 
 const Footer = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 1rem;
   max-width: 70vw;
   padding: 1rem;
