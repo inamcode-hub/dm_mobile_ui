@@ -31,6 +31,7 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
+  z-index: 999;
   .info {
     h1 {
       @media (max-width: 900px) {
