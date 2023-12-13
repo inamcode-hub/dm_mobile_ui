@@ -31,6 +31,13 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   width: 100%;
+  .info {
+    h1 {
+      @media (max-width: 900px) {
+        display: none;
+      }
+    }
+  }
   .app {
     height: 3.5rem;
     .navbar {
