@@ -3,6 +3,7 @@ import { AppBar } from '@mui/material';
 import ToggleTheme from '../../../components/ToggleTheme';
 import UserCard from './subcomponents/UserCard';
 import Notifications from './subcomponents/Notifications';
+import DmStatusChecker from '../../../components/DmStatusChecker';
 
 const NavbarDesktop = () => {
   return (
@@ -15,6 +16,7 @@ const NavbarDesktop = () => {
             <h1>Dashboard</h1>
           </div>
           <div className='theme'>
+            <DmStatusChecker />
             <Notifications />
             <UserCard />
             <ToggleTheme />

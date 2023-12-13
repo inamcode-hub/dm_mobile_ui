@@ -10,6 +10,7 @@ const initialState = {
   firstName: '',
   lastName: '',
   isMember: Cookies.get('dryermaster_token') ? true : false,
+  isDmOnline: false,
   isLoading: false,
 };
 export const userThunk = createAsyncThunk(

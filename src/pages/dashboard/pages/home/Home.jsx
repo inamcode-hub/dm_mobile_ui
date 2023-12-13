@@ -1,8 +1,22 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import { useSelector } from 'react-redux';
+import Cards from './Cards';
+import DmStatus from '../DmStatus';
 
 const Home = () => {
-  return <Wrapper>Home</Wrapper>;
+  const { isDmOnline } = useSelector((state) => state.user);
+  if (!isDmOnline) {
+    return (
+      <Wrapper>
+        <DmStatus />
+      </Wrapper>
+    );
+  }
+  return (
+    <Wrapper>
+      <Cards />
+    </Wrapper>
+  );
 };
 
 const Wrapper = styled.div`
