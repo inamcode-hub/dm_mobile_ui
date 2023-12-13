@@ -8,6 +8,9 @@ import Messages from './pages/messages/Messages';
 import NotFound from '../NotFound';
 import Profile from './pages/user/Profile';
 import ChangePassword from './pages/user/ChangePassword';
+import Billing from './pages/account/Billing';
+import Invoice from './pages/account/Invoice';
+import Subscription from './pages/account/Subscription';
 
 const DashboardRoutes = () => {
   return (
@@ -42,6 +45,18 @@ const DashboardRoutes = () => {
         <Route
           path='user/change-password'
           element={<ChangePassword />}
+        />
+        <Route
+          path='account/billing'
+          element={<Billing />}
+        />
+        <Route
+          path='account/invoice'
+          element={<Invoice />}
+        />
+        <Route
+          path='account/subscription'
+          element={<Subscription />}
         />
         <Route
           path='*'

@@ -63,12 +63,12 @@ const collapseItems = [
 const collapseItems2 = [
   {
     text: 'Billing',
-    path: '/dashboard/starred',
+    path: '/dashboard/account/billing',
     icon: <BsCreditCard size={28} />,
   },
   {
     text: 'Invoices',
-    path: '/dashboard/starred',
+    path: '/dashboard/account/invoice',
     icon: <FaFileInvoiceDollar size={28} />,
   },
 
