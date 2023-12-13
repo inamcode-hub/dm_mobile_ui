@@ -66,10 +66,7 @@ const DmStatus = () => {
 
 const Wrapper = styled.div`
   padding: 1rem;
-  display: grid;
-  place-content: center;
-  min-height: calc(100vh - 64px);
-
+  margin-top: 3rem;
   .card {
     padding: 1rem;
     max-width: 600px;
