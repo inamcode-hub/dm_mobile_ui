@@ -43,7 +43,12 @@ const DmStatus = () => {
           </span>
           <p>
             If you are still having issues after watching the video, please
-            contact us at 1-800-265-8521.
+            contact us at{' '}
+            <a
+              href='mailto:1-800-265-8521'
+              style={{ display: 'block' }}>
+              1-800-265-8521
+            </a>
           </p>
         </div>
         <Divider />
