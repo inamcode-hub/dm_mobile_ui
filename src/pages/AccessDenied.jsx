@@ -1,19 +1,19 @@
 import styled from '@emotion/styled';
-import image from '../assets/images/404.svg';
+import image from '../assets/images/403.svg';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-const NotFound = () => {
+const AccessDenied = () => {
   return (
     <Wrapper>
-      <h1>Sorry, Page Not Found!</h1>
+      <h1>No permission</h1>
       <p>
-        Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve
-        mistyped the URL? Be sure to check your spelling.
+        The page you&apos;re trying access has restricted access. Please refer
+        to your system administrator.
       </p>
       <img
         src={image}
-        alt='404'
+        alt='500'
       />
       <Link to='/'>
         <Button variant='contained'>Go Back Home</Button>
@@ -49,4 +49,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default NotFound;
+export default AccessDenied;

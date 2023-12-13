@@ -1,16 +1,13 @@
 import styled from '@emotion/styled';
-import image from '../assets/images/404.svg';
+import image from '../assets/images/500.svg';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 
-const NotFound = () => {
+const ServerError = () => {
   return (
     <Wrapper>
-      <h1>Sorry, Page Not Found!</h1>
-      <p>
-        Sorry, we couldn’t find the page you’re looking for. Perhaps you’ve
-        mistyped the URL? Be sure to check your spelling.
-      </p>
+      <h1>500 Internal Server Error</h1>
+      <p>There was an error, please try again later.</p>
       <img
         src={image}
         alt='404'
@@ -49,4 +46,4 @@ const Wrapper = styled.div`
   }
 `;
 
-export default NotFound;
+export default ServerError;
