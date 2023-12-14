@@ -12,7 +12,7 @@ const CustomToast = ({ header, message }) => (
 export const handleGlobalError = (error, thunkAPI) => {
   let header = '';
   let message = '';
-
+  toast.dismiss();
   if (!error.response) {
     header = 'Network Error';
     message = 'Unable to reach the server';
