@@ -10,8 +10,6 @@ const CustomToast = ({ header, message }) => (
 );
 
 export const handleGlobalError = (error, thunkAPI) => {
-  console.log('error', error.response?.data?.message);
-
   let header = '';
   let message = '';
 
