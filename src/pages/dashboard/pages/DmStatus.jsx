@@ -39,11 +39,13 @@ const DmStatus = () => {
   return (
     <Wrapper>
       <div className='content'>
-        <img
-          src={dm_status}
-          alt='DM Status'
-          width={300}
-        />
+        <div className='image'>
+          <img
+            src={dm_status}
+            alt='DM Status'
+            width={300}
+          />
+        </div>
         <div className='actions'>
           <Button
             variant='contained'
@@ -98,13 +100,17 @@ const Wrapper = styled.div`
   max-width: 500px;
   margin: 0 auto;
   margin-bottom: 2rem;
+  .image {
+    min-height: 300px;
+    min-width: 300px;
 
-  img {
-    width: 90vw;
-    @media (min-width: 768px) {
-      max-width: 400px;
-      margin-top: -3rem;
-      margin-bottom: -3rem;
+    img {
+      width: 90vw;
+      @media (min-width: 768px) {
+        max-width: 400px;
+        margin-top: -3rem;
+        margin-bottom: -3rem;
+      }
     }
   }
   .actions {
