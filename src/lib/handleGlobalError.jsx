@@ -1,37 +1,64 @@
-import { toast } from 'react-toastify';
+import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+const CustomToast = ({ header, message }) => (
+  <div>
+    <strong>{header}</strong>
+    <div>{message}</div>
+  </div>
+);
 
 export const handleGlobalError = (error, thunkAPI) => {
+  console.log('error', error.response?.data?.message);
+
+  let header = '';
+  let message = '';
+
   if (!error.response) {
-    toast.error('Network error: Unable to reach the server');
-    return thunkAPI.rejectWithValue({ message: 'Network error' });
+    header = 'Network Error';
+    message = 'Unable to reach the server';
+    toast.error(
+      <CustomToast
+        header={header}
+        message={message}
+      />
+    );
+    return thunkAPI.rejectWithValue({ message: header });
   }
 
   const status = error.response.status || 500;
-  const message = error.response.data.message || 'An error occurred';
+  message = error.response.data.message || 'An error occurred';
 
-  // Handle specific HTTP status codes
+  // Define headers for specific HTTP status codes
   switch (status) {
-    case 400: // Bad Request
-      toast.error(`${message}`);
+    case 400:
+      header = 'Error 400';
       break;
-    case 401: // Unauthorized
-      toast.error(`${message}`);
+    case 401:
+      header = 'Error 401';
       break;
-    case 403: // Forbidden
-      toast.error(`${message}`);
+    case 403:
+      header = 'Error 403';
       break;
-    case 404: // Not Found
-      toast.error(`${message}`);
+    case 404:
+      header = 'Error 404';
       break;
-    case 500: // Internal Server Error
-      toast.error(`server error: ${message}`);
+    case 500:
+      header = 'Error 500';
       break;
-    case 503: // Service Unavailable
-      toast.error(`server error: ${message}`);
+    case 503:
+      header = 'Error 503';
       break;
-    default: // Other errors
-      toast.error(message);
+    default:
+      header = `Error ${status}`;
   }
 
+  toast.error(
+    <CustomToast
+      header={header}
+      message={message}
+    />
+  );
   return thunkAPI.rejectWithValue({ message, status });
 };
