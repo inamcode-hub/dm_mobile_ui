@@ -16,7 +16,7 @@ const NotFound = () => {
         alt='404'
       />
       <Link to='/'>
-        <Button variant='contained'>Go Back Home</Button>
+        <Button variant='contained'>Back to Home</Button>
       </Link>
     </Wrapper>
   );

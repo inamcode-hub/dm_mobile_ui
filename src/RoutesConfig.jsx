@@ -8,6 +8,7 @@ import ForgotPassword from './pages/auth/ForgotPassword.jsx';
 import ForgotPasswordUpdate from './pages/auth/ForgotPasswordUpdate.jsx';
 import ProtectedRoute from './pages/auth/ProtectedRoute.jsx';
 import EmailSent from './pages/auth/EmailSent.jsx';
+import AccessDenied from './pages/AccessDenied.jsx';
 
 const RoutesConfig = () => {
   return (
@@ -57,6 +58,10 @@ const RoutesConfig = () => {
             element={<DashboardRoutes />}
           />
 
+          <Route
+            path='/403'
+            element={<AccessDenied />}
+          />
           <Route
             path='*'
             element={<NotFound />}

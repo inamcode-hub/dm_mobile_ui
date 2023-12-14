@@ -16,7 +16,7 @@ const AccessDenied = () => {
         alt='500'
       />
       <Link to='/'>
-        <Button variant='contained'>Go Back Home</Button>
+        <Button variant='contained'>Back to Home</Button>
       </Link>
     </Wrapper>
   );
