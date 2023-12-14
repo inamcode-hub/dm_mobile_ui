@@ -95,8 +95,10 @@ const DmStatus = () => {
 const Wrapper = styled.div`
   display: grid;
   text-align: center;
-  place-content: center;
+  max-width: 500px;
+  margin: 0 auto;
   margin-bottom: 2rem;
+
   img {
     width: 90vw;
     @media (min-width: 768px) {
