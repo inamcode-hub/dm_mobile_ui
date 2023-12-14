@@ -1,117 +1,131 @@
-import styled from '@emotion/styled';
-import { Button, Divider, Paper } from '@mui/material';
 import React from 'react';
-import DmStatusChecker from '../../../components/DmStatusChecker';
-import { Link } from 'react-router-dom';
+import dm_status from '../../../assets/images/dm_status.svg';
+import styled from '@emotion/styled';
+import {
+  Button,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@mui/material';
+import WifiIcon from '@mui/icons-material/Wifi';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 const DmStatus = () => {
+  const steps = [
+    {
+      icon: <WifiIcon />,
+      text: 'Connect Your <strong>Dryer Master</strong> to the internet.',
+    },
+    {
+      icon: <AddCircleOutlineIcon />,
+      text: "Click on the '<strong>Add Serial</strong>' button.",
+    },
+    {
+      icon: <AddCircleOutlineIcon />,
+      text: "Add Your Serial Number and click on '<strong>Add</strong>'.",
+    },
+    {
+      icon: <ReplayIcon />,
+      text: "Click on the '<strong>Reconnect</strong>' button.",
+    },
+  ];
+
+  const handleClick = () => {
+    console.log('DM Status');
+  };
+
   return (
     <Wrapper>
-      <Paper
-        className='card'
-        elevation={1}>
-        <div className='heading'>
-          <h3>Dryer Master Status</h3>
-          <DmStatusChecker />
-        </div>
-        <Divider />
-        <div className='body'>
-          <ul className='list'>
-            <li>
-              <span>✔</span> Is your Dryer Master power On?
-            </li>
-            <li>
-              <span>✔</span> Is your Internet connection working?
-            </li>
-            <li>
-              <span>✔</span> Is your Dryer Master connected to the internet?
-            </li>
-            <li>
-              <span>✔</span> Watch our trouble shooting video
-            </li>
-          </ul>
-          <span>
-            <Link
-              to='/'
-              style={{ marginLeft: '.5rem', fontWeight: '500' }}>
-              <Button
-                variant='outlined'
-                color='primary'>
-                Watch Video
-              </Button>
-            </Link>
-          </span>
-          <p>
-            If you are still having issues after watching the video, please
-            contact us at{' '}
-            <a
-              href='tel:1-800-265-8521'
-              style={{ whiteSpace: 'nowrap' }}>
-              1-800-265-8521
-            </a>
-          </p>
-        </div>
-        <Divider />
-        <div className='footer'>
+      <div className='content'>
+        <img
+          src={dm_status}
+          alt='DM Status'
+          width={300}
+        />
+        <div className='actions'>
           <Button
             variant='contained'
-            color='primary'>
-            Reconnect Dryer Master
+            color='primary'
+            onClick={handleClick}>
+            Add Serial
+          </Button>
+          <Button
+            variant='contained'
+            color='primary'
+            onClick={handleClick}>
+            Reconnect
           </Button>
         </div>
-      </Paper>
+        <StyledList>
+          {steps.map((step, index) => (
+            <ListItem key={index}>
+              <ListItemIcon>{step.icon}</ListItemIcon>
+              <ListItemText
+                primary={
+                  <span
+                    className='text'
+                    dangerouslySetInnerHTML={{ __html: step.text }}
+                  />
+                }
+              />
+            </ListItem>
+          ))}
+        </StyledList>
+        <div className='actions'>
+          <Button
+            variant='outlined'
+            color='primary'
+            onClick={handleClick}>
+            Watch Video
+          </Button>
+          <Button
+            variant='outlined'
+            color='primary'
+            onClick={handleClick}>
+            Contact Us
+          </Button>
+        </div>
+      </div>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  padding: 1rem;
-  margin-top: 3rem;
-  .card {
-    padding: 1rem;
-    max-width: 600px;
-    margin: 0 auto;
-    .heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 1rem;
-      @media (max-width: 600px) {
-        display: grid;
-        grid-template-columns: 1fr;
-        grid-gap: 1rem;
-      }
+  display: grid;
+  text-align: center;
+  place-content: center;
+  margin-bottom: 2rem;
+  img {
+    width: 90vw;
+    @media (min-width: 768px) {
+      max-width: 400px;
+      margin-top: -3rem;
+      margin-bottom: -3rem;
+    }
+  }
+  .actions {
+    display: flex;
+    justify-content: space-around;
+    button {
+      width: 48%;
+    }
+  }
+  .text {
+  }
+`;
 
-      h3 {
-        margin: 0;
-        font-size: 1.5rem;
-        font-weight: 600;
-      }
-    }
-    .body {
-      .list {
-        padding: 0;
-        padding-top: 5px;
-        margin: 0;
-        list-style: none;
-        li {
-          padding: 0.5rem;
-          font-size: 1rem;
-          display: flex;
-          align-items: center;
-          span {
-            margin-right: 0.5rem;
-            color: green;
-            font-weight: bold;
-          }
-        }
-      }
-    }
-    .footer {
-      display: grid;
-      grid-template-columns: 1fr;
-      margin-top: 1rem;
-    }
+const StyledList = styled(List)`
+  border-radius: 5px;
+
+  margin-top: 1rem;
+
+  .MuiListItemIcon-root {
+    min-width: 40px;
+  }
+  li {
+    padding: 0.5rem;
   }
 `;
 
