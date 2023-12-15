@@ -12,12 +12,13 @@ export const setCookie = (name, value, options = {}) => {
 // =================== Redux functions ===================
 // Example usage within your thunks
 export const setUserCookies = (userData) => {
-  const { token, role, firstName, lastName, email } = userData;
+  const { token, role, firstName, lastName, email, dmSerial } = userData;
   setCookie('dryermaster_token', token);
   setCookie('dryermaster_role', role);
   setCookie('dryermaster_firstName', firstName);
   setCookie('dryermaster_lastName', lastName);
   setCookie('dryermaster_email', email);
+  setCookie('dryermaster_dmSerial', dmSerial);
 };
 
 // =================== Redux functions ===================
@@ -29,6 +30,7 @@ export const removeUserCookies = () => {
   Cookies.remove('dryermaster_firstName');
   Cookies.remove('dryermaster_lastName');
   Cookies.remove('dryermaster_email');
+  Cookies.remove('dryermaster_dmSerial');
 };
 
 // =================== Redux functions ===================

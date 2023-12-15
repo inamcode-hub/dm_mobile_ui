@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userRegisterThunk } from '../../../features/user/userSlice';
 
 const RegisterUserDetails = () => {
-  const { isLoading } = useSelector((state) => state.user);
+  const { isLoading, dmSerial } = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const {
@@ -69,6 +69,7 @@ const RegisterUserDetails = () => {
           lastName,
           email,
           password,
+          dmSerial,
         })
       );
     }
@@ -81,22 +82,8 @@ const RegisterUserDetails = () => {
           <Typography
             variant='h4'
             className='heading-title'>
-            Get started with DryerMaster
+            SN # <span>{dmSerial}</span>
           </Typography>
-          <HeadingBody>
-            <Typography
-              variant='body2'
-              className='new-user'>
-              Already have an account?
-            </Typography>
-            <Link to='/'>
-              <Typography
-                variant='body2'
-                sx={{ fontWeight: 500 }}>
-                Sign in
-              </Typography>
-            </Link>
-          </HeadingBody>
         </Heading>
         <form onSubmit={handleSubmit}>
           <Body>
@@ -269,41 +256,19 @@ const Container = styled.div`
 `;
 
 const Heading = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
   margin-bottom: 40px;
   .heading-title {
     margin: 0px;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 1.5;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-family: 'Public Sans', sans-serif;
-  }
-`;
-
-const HeadingBody = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 4px;
-  align-items: center;
-
-  button {
-    text-transform: capitalize;
-  }
-  a {
-    margin: 0px;
-    font-weight: 600;
-    line-height: 1.57143;
-    font-size: 0.875rem;
-    font-family: 'Public Sans', sans-serif;
-    color: ${({ theme }) => theme.palette.secondary.main};
-    text-decoration: none;
-    :hover {
-      text-decoration: underline;
+    span {
+      font-weight: 700;
     }
   }
 `;
+
 const ErrorList = styled.ul`
   color: ${({ theme }) => theme.palette.error.main};
   margin: 0px;

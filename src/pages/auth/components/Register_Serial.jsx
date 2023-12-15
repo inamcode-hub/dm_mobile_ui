@@ -19,7 +19,7 @@ const RegisterSerial = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(getUserStateValues({ name: 'isDmRegistered', value: 'true' }));
-    dispatch(getUserStateValues({ name: 'serial', value: serial }));
+    dispatch(getUserStateValues({ name: 'dmSerial', value: serial }));
   };
 
   return (
