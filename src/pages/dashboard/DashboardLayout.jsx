@@ -9,8 +9,6 @@ import NavbarDrawerMobile from './components/NavbarDrawerMobile';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { getSystemStateValues } from '../../features/system/systemSlice';
 import NavbarDrawerDesktop from './components/NavbarDrawerDesktop';
-import Cookies from 'js-cookie';
-import { getUserStateValues } from '../../features/user/userSlice';
 import { subscriptionExpiryCheck } from '../../features/user/lib';
 
 const DashboardLayout = () => {
