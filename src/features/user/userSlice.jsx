@@ -10,6 +10,8 @@ const initialState = {
   firstName: '',
   lastName: '',
   isMember: Cookies.get('dryermaster_token') ? true : false,
+  isDmRegistered: false,
+  isSubscriptionActive: false,
   isDmOnline: false,
   isLoading: false,
 };

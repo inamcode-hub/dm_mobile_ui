@@ -1,16 +1,14 @@
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
 import Cards from './Cards';
-import DmStatus from '../DmStatus';
+import DmStatus from '../dmstatus/DmStatus';
 
 const Home = () => {
-  const { isDmOnline } = useSelector((state) => state.user);
-  if (!isDmOnline) {
-    return (
-      <Wrapper>
-        <DmStatus />
-      </Wrapper>
-    );
+  const { isDmOnline, isSubscriptionActive, isDmRegistered } = useSelector(
+    (state) => state.user
+  );
+  if (!isDmRegistered || !isSubscriptionActive || !isDmOnline) {
+    return <DmStatus />;
   }
   return (
     <Wrapper>
