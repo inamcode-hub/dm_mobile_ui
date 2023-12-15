@@ -9,12 +9,16 @@ import NavbarDrawerMobile from './components/NavbarDrawerMobile';
 import { useWindowSize } from '../../hooks/useWindowSize';
 import { getSystemStateValues } from '../../features/system/systemSlice';
 import NavbarDrawerDesktop from './components/NavbarDrawerDesktop';
+import Cookies from 'js-cookie';
+import { getUserStateValues } from '../../features/user/userSlice';
+import { subscriptionExpiryCheck } from '../../features/user/lib';
 
 const DashboardLayout = () => {
   const dispatch = useDispatch();
   const { width, height } = useWindowSize();
 
   useEffect(() => {
+    subscriptionExpiryCheck(dispatch);
     if (width > 768) {
       dispatch(
         getSystemStateValues({ name: 'isMobileNavbarOpen', value: false })

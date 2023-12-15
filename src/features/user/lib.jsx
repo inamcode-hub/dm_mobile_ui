@@ -1,6 +1,7 @@
 import Cookies from 'js-cookie';
 import { capitalize } from '../../lib/helpers';
 import { toast } from 'react-toastify';
+import { getUserStateValues } from './userSlice';
 
 // Utility function to set a cookie
 export const setCookie = (name, value, options = {}) => {
@@ -12,13 +13,22 @@ export const setCookie = (name, value, options = {}) => {
 // =================== Redux functions ===================
 // Example usage within your thunks
 export const setUserCookies = (userData) => {
-  const { token, role, firstName, lastName, email, dmSerial } = userData;
+  const {
+    token,
+    role,
+    firstName,
+    lastName,
+    email,
+    dmSerial,
+    subscriptionExpiry,
+  } = userData;
   setCookie('dryermaster_token', token);
   setCookie('dryermaster_role', role);
   setCookie('dryermaster_firstName', firstName);
   setCookie('dryermaster_lastName', lastName);
   setCookie('dryermaster_email', email);
   setCookie('dryermaster_dmSerial', dmSerial);
+  setCookie('dryermaster_subscriptionExpiry', subscriptionExpiry);
 };
 
 // =================== Redux functions ===================
@@ -31,6 +41,7 @@ export const removeUserCookies = () => {
   Cookies.remove('dryermaster_lastName');
   Cookies.remove('dryermaster_email');
   Cookies.remove('dryermaster_dmSerial');
+  Cookies.remove('dryermaster_subscriptionExpiry');
 };
 
 // =================== Redux functions ===================
@@ -43,4 +54,24 @@ export const goodbyeMessage = () => {
   const capitalizedLastName = lastName ? capitalize(lastName) : '';
   const goodbyeMessage = `Goodbye ${capitalizedFirstName} ${capitalizedLastName} 👋🏼`;
   toast.info(goodbyeMessage);
+};
+
+// =================== Redux functions ===================
+
+export const subscriptionExpiryCheck = (dispatch) => {
+  const expiryDate = Cookies.get('dryermaster_subscriptionExpiry');
+  if (!expiryDate) {
+    return removeUserCookies();
+  }
+  const now = new Date();
+  const expiry = new Date(expiryDate);
+  if (expiry < now) {
+    dispatch(
+      getUserStateValues({ name: 'isSubscriptionActive', value: false })
+    );
+
+    return;
+  } else {
+    dispatch(getUserStateValues({ name: 'isSubscriptionActive', value: true }));
+  }
 };
