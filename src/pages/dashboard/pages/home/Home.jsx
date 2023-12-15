@@ -4,10 +4,10 @@ import Cards from './Cards';
 import DmStatus from '../dmstatus/DmStatus';
 
 const Home = () => {
-  const { isDmOnline, isSubscriptionActive, isDmRegistered } = useSelector(
+  const { isDmOnline, isSubscriptionActive } = useSelector(
     (state) => state.user
   );
-  if (!isDmRegistered || !isSubscriptionActive || !isDmOnline) {
+  if (!isSubscriptionActive || !isDmOnline) {
     return <DmStatus />;
   }
   return (
