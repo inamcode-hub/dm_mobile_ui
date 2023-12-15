@@ -35,8 +35,8 @@ const Wrapper = styled.div`
     padding: 1rem;
     margin: 1rem;
     border-radius: 0.5rem;
-    box-shadow: 0 0 0.5rem 0.25rem rgba(0, 0, 0, 0.1);
-    background-color: #fff;
+    box-shadow: ${({ theme }) => theme.shadows[1]};
+    background-color: ${({ theme }) => theme.palette.background.paper};
     max-width: 40rem;
     margin: 0 auto;
     margin-top: 2rem;
