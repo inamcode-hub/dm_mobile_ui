@@ -6,17 +6,22 @@ import { green, grey, orange } from '@mui/material/colors';
 import { TbDeviceDesktopCheck } from 'react-icons/tb';
 import { TbDeviceDesktopX } from 'react-icons/tb';
 import { getUserStateValues } from '../features/user/userSlice';
+import Cookies from 'js-cookie';
 const DmStatusChecker = () => {
   const dispatch = useDispatch();
   const { isDmOnline } = useSelector((state) => state.user);
   const handleAction = () => {
     dispatch(getUserStateValues({ name: 'isDmOnline', value: !isDmOnline }));
   };
+  const dmSerial = Cookies.get('dryermaster_dmSerial');
   const Online = () => {
     return (
       <div>
         <TbDeviceDesktopCheck size={20} />
-        <span>Online</span>
+        <div className='span'>
+          <span>SN#{dmSerial}</span>
+          <span>Online</span>
+        </div>
       </div>
     );
   };
@@ -24,7 +29,10 @@ const DmStatusChecker = () => {
     return (
       <div>
         <TbDeviceDesktopX size={20} />
-        <span>Offline</span>
+        <div className='span'>
+          <span>SN#{dmSerial}</span>
+          <span>Offline</span>
+        </div>
       </div>
     );
   };
@@ -51,10 +59,19 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       gap: 0.1rem;
+      .span {
+        display: flex;
+        flex-direction: column;
+        gap: 0.1rem;
+      }
     }
     span {
-      font-weight: 400;
+      &:nth-of-type(1) {
+        order: 2;
+      }
+      line-height: 0.8rem;
       margin-left: 0.5rem;
+      font-size: 0.8rem;
     }
   }
 `;

@@ -4,7 +4,6 @@ import ToggleTheme from '../../../components/ToggleTheme';
 import UserCard from './subcomponents/UserCard';
 import Notifications from './subcomponents/Notifications';
 import DmStatusChecker from '../../../components/DmStatusChecker';
-import Cookies from 'js-cookie';
 
 const NavbarDesktop = () => {
   return (
@@ -14,8 +13,7 @@ const NavbarDesktop = () => {
         className='app'>
         <div className='navbar'>
           <div className='info'>
-            <h3>Dashboard</h3>
-            <span>SN#{Cookies.get('dryermaster_dmSerial')}</span>
+            <h1>Dashboard</h1>
           </div>
           <div className='theme'>
             <DmStatusChecker />
@@ -35,13 +33,7 @@ const Wrapper = styled.div`
   width: 100%;
   z-index: 999;
   .info {
-    display: flex;
-    align-items: center;
-    h3 {
-      font-size: 1.5rem;
-      margin-right: 1rem;
-    }
-    h3 {
+    h1 {
       @media (max-width: 900px) {
         display: none;
       }
