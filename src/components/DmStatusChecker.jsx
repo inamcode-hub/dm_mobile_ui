@@ -1,15 +1,16 @@
 import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getStateValues } from '../features/user/userSlice';
+
 import styled from '@emotion/styled';
 import { green, grey, orange } from '@mui/material/colors';
 import { TbDeviceDesktopCheck } from 'react-icons/tb';
 import { TbDeviceDesktopX } from 'react-icons/tb';
+import { getUserStateValues } from '../features/user/userSlice';
 const DmStatusChecker = () => {
   const dispatch = useDispatch();
   const { isDmOnline } = useSelector((state) => state.user);
   const handleAction = () => {
-    dispatch(getStateValues({ name: 'isDmOnline', value: !isDmOnline }));
+    dispatch(getUserStateValues({ name: 'isDmOnline', value: !isDmOnline }));
   };
   const Online = () => {
     return (

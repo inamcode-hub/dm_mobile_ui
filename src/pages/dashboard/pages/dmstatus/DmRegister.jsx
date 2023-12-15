@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
 import { Button, Divider, TextField } from '@mui/material';
-import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getUserStateValues } from '../../../../features/user/userSlice';
 
 const DmRegister = () => {
+  const dispatch = useDispatch();
+  const handleClick = () => {
+    dispatch(getUserStateValues({ name: 'isDmRegistered', value: true }));
+    console.log('clicked');
+  };
   return (
     <Wrapper>
       <div className='card'>
@@ -17,7 +23,11 @@ const DmRegister = () => {
             className='input'
             size='small'
           />
-          <Button variant='contained'>Register</Button>
+          <Button
+            variant='contained'
+            onClick={handleClick}>
+            Register
+          </Button>
         </div>
         <Divider />
         <p>Need help finding your serial number?</p>
@@ -31,6 +41,7 @@ const DmRegister = () => {
 };
 
 const Wrapper = styled.div`
+  padding: 1rem;
   .card {
     padding: 1rem;
     margin: 1rem;
@@ -54,6 +65,15 @@ const Wrapper = styled.div`
       margin-bottom: 1rem;
       .input {
         width: 100%;
+      }
+      @media (max-width: 600px) {
+        flex-direction: column;
+        .input {
+          width: 100%;
+        }
+        button {
+          width: 100%;
+        }
       }
     }
     .actions {

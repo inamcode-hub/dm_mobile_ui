@@ -99,7 +99,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    getStateValues: (state, { payload }) => {
+    getUserStateValues: (state, { payload }) => {
       const { name, value } = payload;
       state[name] = value;
     },
@@ -178,6 +178,6 @@ const userSlice = createSlice({
       });
   },
 });
-export const { getStateValues, signOut } = userSlice.actions;
+export const { getUserStateValues, signOut } = userSlice.actions;
 
 export default userSlice.reducer;
