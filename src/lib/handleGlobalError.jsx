@@ -15,7 +15,7 @@ export const handleGlobalError = (error, thunkAPI) => {
   toast.dismiss();
   if (!error.response) {
     header = 'Network Error';
-    message = 'Unable to reach the server';
+    message = 'Please check your internet connection and try again.';
     toast.error(
       <CustomToast
         header={header}
