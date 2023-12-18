@@ -1,30 +1,54 @@
 import styled from '@emotion/styled';
 import { Button, Typography } from '@mui/material';
-import AutorenewIcon from '@mui/icons-material/Autorenew'; // Importing the icon
-import React from 'react';
-import Cookies from 'js-cookie';
-import { format } from 'date-fns';
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import WifiOffIcon from '@mui/icons-material/WifiOff';
+import WifiIcon from '@mui/icons-material/Wifi';
+import SpeedIcon from '@mui/icons-material/Speed';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 
 const DmReconnect = () => {
-  const expiryDate = new Date(Cookies.get('dryermaster_subscriptionExpiry'));
-  const expiry = format(expiryDate, 'do MMMM yyyy');
   return (
     <Wrapper>
       <div className='body'>
         <Typography
           variant='h4'
           component='h2'>
-          Offline
+          <WifiOffIcon sx={{ fontSize: 35, marginRight: '.5rem' }} />
+          Connection Issue
         </Typography>
         <Typography variant='body1'>
-          Your DryerMaster is offline. Check your internet connection.
+          We&apos;re having trouble connecting to your DryerMaster device.
+          Please check the following:
         </Typography>
+        <ul>
+          <li>
+            <WifiIcon sx={{ verticalAlign: 'middle', marginRight: '.5rem' }} />
+            Ensure your WiFi is on and connected to the internet.
+          </li>
+          <li>
+            <SpeedIcon sx={{ verticalAlign: 'middle', marginRight: '.5rem' }} />
+            Check if your internet connection is stable and strong.
+          </li>
+          <li>
+            <RestartAltIcon
+              sx={{ verticalAlign: 'middle', marginRight: '.5rem' }}
+            />
+            Restart your DryerMaster device and router if necessary.
+          </li>
+          <li>
+            <ContactSupportIcon
+              sx={{ verticalAlign: 'middle', marginRight: '.5rem' }}
+            />
+            If your connection issues persist, please contact our support team
+            for assistance.
+          </li>
+        </ul>
         <Button
           variant='contained'
           size='large'
-          startIcon={<AutorenewIcon />} // Adding the icon to the button
-        >
-          Reconnect Now
+          startIcon={<AutorenewIcon />}>
+          Reconnect
         </Button>
       </div>
     </Wrapper>
@@ -43,12 +67,21 @@ const Wrapper = styled.div`
   }
   h2 {
     font-weight: 500;
-
+    display: flex;
+    align-items: center;
     color: ${({ theme }) => theme.palette.error.main};
   }
   .body {
     display: grid;
     gap: 1rem;
+    ul {
+      margin: 0;
+      padding-left: 0px;
+      list-style: none;
+    }
+    li {
+      margin-bottom: 10px;
+    }
   }
 `;
 
