@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 import NavbarDesktop from './components/NavbarDesktop';
 import NavbarMobile from './components/NavbarMobile';
@@ -14,15 +14,22 @@ import { subscriptionExpiryCheck } from '../../features/user/lib';
 const DashboardLayout = () => {
   const dispatch = useDispatch();
   const { width, height } = useWindowSize();
+  const { pathname } = useLocation();
 
+  // close mobile navbar on desktop view
   useEffect(() => {
-    subscriptionExpiryCheck(dispatch);
     if (width > 768) {
       dispatch(
         getSystemStateValues({ name: 'isMobileNavbarOpen', value: false })
       );
     }
+    subscriptionExpiryCheck(dispatch);
   }, [width, height]);
+
+  // check subscription expiry on every route change
+  useEffect(() => {
+    subscriptionExpiryCheck(dispatch);
+  }, [pathname]);
 
   return (
     <Wrapper>
