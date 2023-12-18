@@ -1,7 +1,8 @@
 import Cookies from 'js-cookie';
 import { capitalize } from '../../lib/helpers';
 import { toast } from 'react-toastify';
-import { getUserStateValues } from './userSlice';
+import { getUserStateValues, userSubscriptionStatusThunk } from './userSlice';
+import { customFetch } from '../../lib/customeFetch';
 
 // Utility function to set a cookie
 export const setCookie = (name, value, options = {}) => {
@@ -68,7 +69,7 @@ export const goodbyeMessage = () => {
 
 // =================== Redux functions ===================
 
-export const subscriptionExpiryCheck = (dispatch) => {
+export const subscriptionExpiryCheck = async (dispatch) => {
   const expiryDate = getUserCookies('dryermaster_subscriptionExpiry');
   if (!expiryDate) {
     return;
@@ -76,10 +77,7 @@ export const subscriptionExpiryCheck = (dispatch) => {
   const now = new Date();
   const expiry = new Date(expiryDate);
   if (expiry < now) {
-    dispatch(
-      getUserStateValues({ name: 'isSubscriptionActive', value: false })
-    );
-
+    dispatch(userSubscriptionStatusThunk());
     return;
   } else {
     dispatch(getUserStateValues({ name: 'isSubscriptionActive', value: true }));

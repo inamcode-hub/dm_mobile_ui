@@ -96,6 +96,23 @@ export const userForgotPasswordUpdateThunk = createAsyncThunk(
   }
 );
 
+// user subscription status thunk
+
+export const userSubscriptionStatusThunk = createAsyncThunk(
+  'user/userSubscriptionStatusThunk',
+  async (_, thunkAPI) => {
+    try {
+      const token = Cookies.get('dryermaster_token');
+      const response = await customFetch.get('/user/subscription_status', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -175,6 +192,23 @@ const userSlice = createSlice({
         }
       )
       .addCase(userForgotPasswordUpdateThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+      })
+
+      //  userSubscriptionStatusThunk
+      .addCase(userSubscriptionStatusThunk.pending, (state, { payload }) => {
+        state.isLoading = true;
+      })
+      .addCase(userSubscriptionStatusThunk.fulfilled, (state, { payload }) => {
+        const { isExpired, expiryDate } = payload;
+        if (!isExpired) {
+          Cookies.set('dryermaster_subscriptionExpiry', expiryDate);
+        } else {
+          state.isSubscriptionActive = false;
+        }
+        state.isLoading = false;
+      })
+      .addCase(userSubscriptionStatusThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
       });
   },
