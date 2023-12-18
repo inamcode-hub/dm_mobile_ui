@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material';
-import { grey } from '@mui/material/colors';
+import { blueGrey, grey } from '@mui/material/colors';
 
 const getTheme = (mode) => {
   return createTheme({
@@ -14,7 +14,7 @@ const getTheme = (mode) => {
 
       background: {
         default: mode === 'dark' ? grey[900] : '#f0f2f5',
-        paper: mode === 'dark' ? grey[900] : '#ffffff',
+        paper: mode === 'dark' ? blueGrey[900] : '#ffffff',
       },
     },
   });

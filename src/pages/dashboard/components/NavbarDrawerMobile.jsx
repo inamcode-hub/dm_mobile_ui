@@ -47,6 +47,10 @@ const NavbarDrawerMobile = () => {
 const Wrapper = styled.div`
   width: 70vw;
   height: 100vh;
+  background-color: ${(props) =>
+    props.theme.palette.mode === 'light'
+      ? props.theme.palette.background.paper
+      : props.theme.palette.grey[900]};
   .header {
     display: flex;
     align-items: center;
