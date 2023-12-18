@@ -81,6 +81,8 @@ const Wrapper = styled.div`
     }
     li {
       margin-bottom: 10px;
+      display: flex;
+      align-items: center;
     }
   }
 `;
