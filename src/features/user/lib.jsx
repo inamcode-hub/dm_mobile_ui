@@ -44,6 +44,16 @@ export const removeUserCookies = () => {
   Cookies.remove('dryermaster_subscriptionExpiry');
 };
 
+export const getUserCookies = (name) => {
+  const value = Cookies.get(name);
+  if (!value) {
+    console.log(`No cookie found for ${name}`);
+    removeUserCookies();
+    return null;
+  }
+  return value;
+};
+
 // =================== Redux functions ===================
 
 // Utility function to produce goodby message
@@ -59,9 +69,9 @@ export const goodbyeMessage = () => {
 // =================== Redux functions ===================
 
 export const subscriptionExpiryCheck = (dispatch) => {
-  const expiryDate = Cookies.get('dryermaster_subscriptionExpiry');
+  const expiryDate = getUserCookies('dryermaster_subscriptionExpiry');
   if (!expiryDate) {
-    return removeUserCookies();
+    return;
   }
   const now = new Date();
   const expiry = new Date(expiryDate);
@@ -75,3 +85,5 @@ export const subscriptionExpiryCheck = (dispatch) => {
     dispatch(getUserStateValues({ name: 'isSubscriptionActive', value: true }));
   }
 };
+
+// =================== Redux functions ===================

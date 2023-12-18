@@ -2,22 +2,16 @@ import styled from '@emotion/styled';
 import { Button, Typography } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew'; // Importing the icon
 import React from 'react';
-import Cookies from 'js-cookie';
-import { format } from 'date-fns';
-import { removeUserCookies } from '../../../../features/user/lib';
+import { format, set } from 'date-fns';
+import { getUserCookies } from '../../../../features/user/lib';
 
 const DmSubscription = () => {
   const [expiryDate, setExpiryDate] = React.useState('');
 
   React.useEffect(() => {
-    const expiry = Cookies.get('dryermaster_subscriptionExpiry');
-    if (!expiry) {
-      removeUserCookies();
-      return;
-    }
+    const expiry = getUserCookies('dryermaster_subscriptionExpiry');
     if (expiry) {
-      const formattedExpiry = format(new Date(expiry), 'dd MMM yyyy');
-      setExpiryDate(formattedExpiry);
+      setExpiryDate(format(new Date(expiry), 'dd MMMM yyyy'));
     }
   }, []);
   return (
