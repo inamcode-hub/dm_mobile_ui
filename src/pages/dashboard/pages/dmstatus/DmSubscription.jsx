@@ -14,7 +14,7 @@ const DmSubscription = () => {
         <Typography
           variant='h4'
           component='h2'>
-          Subscription <span>Expired</span>
+          Subscription Expired
         </Typography>
         <Typography variant='body1'>
           Thank you for using Dryer Master. Your subscription period has ended
@@ -45,9 +45,8 @@ const Wrapper = styled.div`
   }
   h2 {
     font-weight: 500;
-    span {
-      color: ${({ theme }) => theme.palette.error.main};
-    }
+
+    color: ${({ theme }) => theme.palette.error.main};
   }
   .body {
     display: grid;
