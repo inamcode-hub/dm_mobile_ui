@@ -2,7 +2,6 @@ import Cookies from 'js-cookie';
 import { capitalize } from '../../lib/helpers';
 import { toast } from 'react-toastify';
 import { getUserStateValues, userSubscriptionStatusThunk } from './userSlice';
-import { customFetch } from '../../lib/customeFetch';
 
 // Utility function to set a cookie
 export const setCookie = (name, value, options = {}) => {
