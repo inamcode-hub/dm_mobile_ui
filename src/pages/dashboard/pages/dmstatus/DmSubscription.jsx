@@ -54,6 +54,7 @@ const Wrapper = styled.div`
     gap: 1rem;
     strong {
       color: ${({ theme }) => theme.palette.error.main};
+      white-space: nowrap;
     }
   }
 `;
