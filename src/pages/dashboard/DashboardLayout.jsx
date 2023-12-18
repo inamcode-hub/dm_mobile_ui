@@ -23,7 +23,6 @@ const DashboardLayout = () => {
         getSystemStateValues({ name: 'isMobileNavbarOpen', value: false })
       );
     }
-    subscriptionExpiryCheck(dispatch);
   }, [width, height]);
 
   // check subscription expiry on every route change
