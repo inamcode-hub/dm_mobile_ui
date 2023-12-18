@@ -4,10 +4,22 @@ import AutorenewIcon from '@mui/icons-material/Autorenew'; // Importing the icon
 import React from 'react';
 import Cookies from 'js-cookie';
 import { format } from 'date-fns';
+import { removeUserCookies } from '../../../../features/user/lib';
 
 const DmSubscription = () => {
-  const expiryDate = new Date(Cookies.get('dryermaster_subscriptionExpiry'));
-  const expiry = format(expiryDate, 'do MMMM yyyy');
+  const [expiryDate, setExpiryDate] = React.useState('');
+
+  React.useEffect(() => {
+    const expiry = Cookies.get('dryermaster_subscriptionExpiry');
+    if (!expiry) {
+      removeUserCookies();
+      return;
+    }
+    if (expiry) {
+      const formattedExpiry = format(new Date(expiry), 'dd MMM yyyy');
+      setExpiryDate(formattedExpiry);
+    }
+  }, []);
   return (
     <Wrapper>
       <div className='body'>
@@ -18,7 +30,7 @@ const DmSubscription = () => {
         </Typography>
         <Typography variant='body1'>
           Thank you for using Dryer Master. Your subscription period has ended
-          on <strong>{expiry}</strong>. To continue enjoying our services,
+          on <strong>{expiryDate}</strong>. To continue enjoying our services,
           please renew your subscription.
         </Typography>
         <Button
