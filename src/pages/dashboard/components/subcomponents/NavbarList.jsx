@@ -74,7 +74,7 @@ const collapseItems2 = [
 
   {
     text: 'Subscription',
-    path: '/dashboard/starred',
+    path: '/dashboard/account/subscription',
     icon: <BiInfinite size={28} />,
   },
 ];
