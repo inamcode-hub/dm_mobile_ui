@@ -4,14 +4,14 @@ import { green } from '@mui/material/colors';
 import { FaCheck } from 'react-icons/fa';
 import { format, sub } from 'date-fns';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
 
 const Subscription = () => {
   const { isSubscriptionActive, subscriptionExpiry } = useSelector(
     (state) => state.user
   );
   const date =
-    subscriptionExpiry &&
-    format(sub(new Date(subscriptionExpiry), { days: 1 }), 'MMM dd, yyyy');
+    subscriptionExpiry && format(new Date(subscriptionExpiry), 'PPP');
   const features = [
     'Remote Access to your Dryer Master 24/7',
     'Change Moisture Set Points remotely',
@@ -19,7 +19,7 @@ const Subscription = () => {
     'Track your dryer’s performance',
     'Access to your dryer’s historical data',
   ];
-
+  useEffect(() => {}, []);
   return (
     <Wrapper $isSubscriptionActive={isSubscriptionActive}>
       <div className='heading'>
