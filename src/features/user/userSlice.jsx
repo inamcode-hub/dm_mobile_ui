@@ -202,11 +202,8 @@ const userSlice = createSlice({
       })
       .addCase(userSubscriptionStatusThunk.fulfilled, (state, { payload }) => {
         const { isExpired, expiryDate } = payload;
-        if (!isExpired) {
-          Cookies.set('dryermaster_subscriptionExpiry', expiryDate);
-        } else {
-          state.isSubscriptionActive = false;
-        }
+        Cookies.set('dryermaster_subscriptionExpiry', expiryDate);
+        state.isSubscriptionActive = false;
         state.isLoading = false;
       })
       .addCase(userSubscriptionStatusThunk.rejected, (state, { payload }) => {
