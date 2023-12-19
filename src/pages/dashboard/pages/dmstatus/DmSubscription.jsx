@@ -58,7 +58,7 @@ const Wrapper = styled.div`
     display: grid;
     gap: 1rem;
     strong {
-      color: ${({ theme }) => theme.palette.error.main};
+      color: ${({ theme }) => theme.palette.info.main};
       white-space: nowrap;
     }
   }
