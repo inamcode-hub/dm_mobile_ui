@@ -69,7 +69,7 @@ const Wrapper = styled.div`
     font-weight: 500;
     display: flex;
     align-items: center;
-    color: ${({ theme }) => theme.palette.error.main};
+    color: ${({ theme }) => theme.palette.info.main};
   }
   .body {
     display: grid;
