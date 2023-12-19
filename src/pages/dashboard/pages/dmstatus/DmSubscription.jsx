@@ -52,7 +52,7 @@ const Wrapper = styled.div`
   h2 {
     font-weight: 500;
 
-    color: ${({ theme }) => theme.palette.error.main};
+    color: ${({ theme }) => theme.palette.info.main};
   }
   .body {
     display: grid;
