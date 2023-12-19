@@ -13,11 +13,11 @@ const Subscription = () => {
     subscriptionExpiry &&
     format(sub(new Date(subscriptionExpiry), { days: 1 }), 'MMM dd, yyyy');
   const features = [
-    'Access to your Dryer Master 24/7',
-    'Track your dryer’s performance',
-    'Receive alerts and notifications',
-    'Access to your dryer’s historical data',
+    'Remote Access to your Dryer Master 24/7',
     'Change Moisture Set Points remotely',
+    'Receive alerts and notifications',
+    'Track your dryer’s performance',
+    'Access to your dryer’s historical data',
   ];
 
   return (
