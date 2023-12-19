@@ -80,8 +80,11 @@ const Wrapper = styled.div`
   .heading {
     text-align: center;
     padding: 1rem 0;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 1rem;
     h1 {
       font-size: 2.5rem;
+      margin: 0;
     }
     strong {
       color: ${(props) => (props.$isSubscriptionActive ? green[500] : 'red')};
