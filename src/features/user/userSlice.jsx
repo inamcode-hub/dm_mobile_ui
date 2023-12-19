@@ -13,6 +13,7 @@ const initialState = {
   isDmRegistered: false,
   dmSerial: '',
   isSubscriptionActive: false,
+  subscriptionExpiry: '',
   isDmOnline: false,
   isLoading: false,
 };

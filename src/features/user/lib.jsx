@@ -77,9 +77,15 @@ export const subscriptionExpiryCheck = async (dispatch) => {
   const expiry = new Date(expiryDate);
   if (expiry < now) {
     dispatch(userSubscriptionStatusThunk());
+    dispatch(
+      getUserStateValues({ name: 'subscriptionExpiry', value: expiryDate })
+    );
     return;
   } else {
     dispatch(getUserStateValues({ name: 'isSubscriptionActive', value: true }));
+    dispatch(
+      getUserStateValues({ name: 'subscriptionExpiry', value: expiryDate })
+    );
   }
 };
 
