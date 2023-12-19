@@ -50,6 +50,7 @@
   --primary-22: #0f182e;
   --primary-23: #0a101f;
   --primary-24: #05080f;
+  --primary-text: var(--primary-17);
 
   /* secondary  */
   --secondary-1: #c7e4bc;
