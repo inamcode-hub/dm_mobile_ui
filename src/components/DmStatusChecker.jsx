@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styled from '@emotion/styled';
-import { green, grey, orange } from '@mui/material/colors';
+import { blueGrey, green, grey, orange } from '@mui/material/colors';
 import { TbDeviceDesktopCheck } from 'react-icons/tb';
 import { TbDeviceDesktopX } from 'react-icons/tb';
 import { getUserStateValues } from '../features/user/userSlice';
@@ -49,7 +49,8 @@ const DmStatusChecker = () => {
 };
 const Wrapper = styled.div`
   .MuiButton-root {
-    background-color: ${(props) => (props.isDmOnline ? green[800] : grey[800])};
+    background-color: ${(props) =>
+      props.isDmOnline ? green[800] : blueGrey[800]};
 
     border-radius: 1rem;
     display: flex;
