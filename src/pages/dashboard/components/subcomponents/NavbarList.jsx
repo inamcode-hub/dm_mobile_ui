@@ -21,8 +21,8 @@ import { getSystemStateValues } from '../../../../features/system/systemSlice';
 import { AiOutlineDashboard } from 'react-icons/ai';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { IoMdKey } from 'react-icons/io';
-import { BiInfinite } from 'react-icons/bi';
 import { FaRegChartBar } from 'react-icons/fa';
+import { AiOutlineSchedule } from 'react-icons/ai';
 const listItems = [
   {
     text: 'Dashboard',
@@ -75,7 +75,7 @@ const collapseItems2 = [
   {
     text: 'Subscription',
     path: '/dashboard/account/subscription',
-    icon: <BiInfinite size={28} />,
+    icon: <AiOutlineSchedule size={28} />,
   },
 ];
 
