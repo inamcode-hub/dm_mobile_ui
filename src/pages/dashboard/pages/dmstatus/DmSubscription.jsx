@@ -3,17 +3,13 @@ import { Button, Typography } from '@mui/material';
 import AutorenewIcon from '@mui/icons-material/Autorenew'; // Importing the icon
 import React from 'react';
 import { format, set } from 'date-fns';
-import { getUserCookies } from '../../../../features/user/lib';
+
+import { useSelector } from 'react-redux';
 
 const DmSubscription = () => {
-  const [expiryDate, setExpiryDate] = React.useState('');
-
-  React.useEffect(() => {
-    const expiry = getUserCookies('dryermaster_subscriptionExpiry');
-    if (expiry) {
-      setExpiryDate(format(new Date(expiry), 'dd MMMM yyyy'));
-    }
-  }, []);
+  const { subscriptionExpiry } = useSelector((state) => state.user);
+  const expiryDate =
+    subscriptionExpiry && format(new Date(subscriptionExpiry), 'dd MMMM yyyy');
   return (
     <Wrapper>
       <div className='body'>
