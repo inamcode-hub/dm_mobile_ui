@@ -13,10 +13,13 @@ const Logo = () => {
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: 600;
   span:first-of-type {
-    color: ${({ theme }) => theme.palette.primary.main};
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.info.main
+        : 'var(--primary-text)'};
   }
   span:last-of-type {
     color: ${({ theme }) => theme.palette.secondary.main};
