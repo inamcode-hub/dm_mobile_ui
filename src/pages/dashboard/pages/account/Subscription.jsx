@@ -78,6 +78,7 @@ const Wrapper = styled.div`
     margin-bottom: 1rem;
     h1 {
       font-size: 2.5rem;
+      font-weight: 500;
       margin: 0;
     }
     strong {
