@@ -48,7 +48,10 @@ const Wrapper = styled.div`
   h2 {
     font-weight: 500;
 
-    color: ${({ theme }) => theme.palette.info.main};
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.info.main
+        : 'var(--primary-text)'};
   }
   .body {
     display: grid;

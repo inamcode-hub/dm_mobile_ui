@@ -69,7 +69,10 @@ const Wrapper = styled.div`
     font-weight: 500;
     display: flex;
     align-items: center;
-    color: ${({ theme }) => theme.palette.info.main};
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.info.main
+        : 'var(--primary-text)'};
   }
   .body {
     display: grid;
