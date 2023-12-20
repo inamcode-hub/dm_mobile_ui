@@ -55,13 +55,7 @@ const Subscription = () => {
             </ul>
           </div>
           <div className='card-footer'>
-            {isSubscriptionActive ? (
-              <Button
-                variant='contained'
-                color='error'>
-                Cancel Subscription
-              </Button>
-            ) : (
+            {!isSubscriptionActive && (
               <Button
                 variant='contained'
                 color='success'>
