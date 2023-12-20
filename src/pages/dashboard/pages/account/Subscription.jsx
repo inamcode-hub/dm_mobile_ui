@@ -5,7 +5,7 @@ import { FaCheck } from 'react-icons/fa';
 import { format, sub } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
-
+import { MdOutlineWorkspacePremium } from 'react-icons/md';
 const Subscription = () => {
   const { isSubscriptionActive, subscriptionExpiry } = useSelector(
     (state) => state.user
@@ -35,11 +35,19 @@ const Subscription = () => {
         <Paper elevation={3}>
           <div className='card-heading'>
             <div className='title'>
-              <h3>Premium</h3>
-              <small>{isSubscriptionActive ? 'Active' : 'Expired'}</small>
+              <h3>
+                Premium
+                <MdOutlineWorkspacePremium />
+              </h3>
+
+              {isSubscriptionActive ? (
+                <small className='active'>Active</small>
+              ) : (
+                <small className='expired'>Expired</small>
+              )}
             </div>
             <div className='card-heading-price'>
-              $100<span>/Year</span>
+              100 USD<span>/year</span>
             </div>
             <small>New customers get 1 year free trial</small>
           </div>
@@ -100,23 +108,44 @@ const Wrapper = styled.div`
         justify-content: space-between;
         small {
           font-size: 0.75rem;
-          color: #fff;
-          background-color: ${(props) =>
-            props.$isSubscriptionActive ? green[500] : blue[500]};
+          font-weight: 500;
           padding: 0.25rem 0.5rem;
           border-radius: 5px;
+          &.active {
+            background-color: ${green[500]};
+            color: #fff;
+          }
+          &.expired {
+            background-color: ${blue[500]};
+            color: #fff;
+          }
         }
       }
       h3 {
         margin: 0;
-        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.6rem;
+        font-weight: 500;
+        background-color: ${({ theme }) =>
+          theme.palette.mode === 'dark'
+            ? 'var(--primary-16)'
+            : 'var(--primary-2)'};
+        color: ${({ theme }) =>
+          theme.palette.mode === 'dark'
+            ? 'var(--primary-2)'
+            : 'var(--primary-text)'};
+        padding: 0 0.5rem;
+        border-radius: 5px;
+        margin-bottom: 0.5rem;
       }
       .card-heading-price {
         font-size: 1.5rem;
-        font-weight: 700;
+        font-weight: 500;
         span {
-          font-size: 0.75rem;
-          font-weight: 400;
+          font-size: 0.85rem;
+          margin-left: 0.25rem;
+          font-weight: 500;
         }
       }
     }
