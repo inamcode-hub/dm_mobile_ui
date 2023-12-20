@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button, Divider, Icon, Paper } from '@mui/material';
-import { green } from '@mui/material/colors';
+import { blue, green } from '@mui/material/colors';
 import { FaCheck } from 'react-icons/fa';
 import { format, sub } from 'date-fns';
 import { useSelector } from 'react-redux';
@@ -81,7 +81,8 @@ const Wrapper = styled.div`
       margin: 0;
     }
     strong {
-      color: ${(props) => (props.$isSubscriptionActive ? green[500] : 'red')};
+      color: ${(props) =>
+        props.$isSubscriptionActive ? green[500] : blue[500]};
     }
   }
   .card {
@@ -100,7 +101,7 @@ const Wrapper = styled.div`
           font-size: 0.75rem;
           color: #fff;
           background-color: ${(props) =>
-            props.$isSubscriptionActive ? green[500] : 'red'};
+            props.$isSubscriptionActive ? green[500] : blue[500]};
           padding: 0.25rem 0.5rem;
           border-radius: 5px;
         }
