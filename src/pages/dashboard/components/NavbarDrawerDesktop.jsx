@@ -46,7 +46,7 @@ const Wrapper = styled.div`
   top: 0;
   height: 100vh;
   transition: width 0.3s ease-in-out;
-  overflow: auto;
+  overflow: hidden;
   width: ${(props) => (props.$showDesktopDrawerText ? '300px' : '4rem')};
   background-color: ${(props) =>
     props.theme.palette.mode === 'light'
