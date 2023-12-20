@@ -196,12 +196,16 @@ const Wrapper = styled.div`
         ? 'var(--primary-15)'
         : 'var(--primary-2)'} !important;
     color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? '#ffffff' : '#1f3660'} !important;
+      theme.palette.mode === 'dark'
+        ? '#ffffff'
+        : 'var(--primary-text)'} !important;
 
     // icon color change
     .MuiListItemIcon-root {
       color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? '#ffffff' : '#1f3660'} !important;
+        theme.palette.mode === 'dark'
+          ? '#ffffff'
+          : 'var(--primary-text)'} !important;
     }
     span {
       font-weight: 600;
