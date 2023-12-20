@@ -107,8 +107,8 @@ const Wrapper = styled.div`
         align-items: center;
         justify-content: space-between;
         small {
-          font-size: 0.75rem;
-          font-weight: 500;
+          font-size: 0.85rem;
+          font-weight: 400;
           padding: 0.25rem 0.5rem;
           border-radius: 5px;
           &.active {
