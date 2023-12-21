@@ -8,7 +8,7 @@ const CardWrapper = styled.div`
   padding: 40px 24px;
   z-index: 0;
   background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#333' : 'white'};
+    theme.palette.mode === 'dark' ? theme.palette.background.paper : 'white'};
   border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
   @media (max-width: 600px) {
     width: 90%;

@@ -14,7 +14,7 @@ const getTheme = (mode) => {
 
       background: {
         default: mode === 'dark' ? grey[900] : '#f0f2f5',
-        paper: mode === 'dark' ? blueGrey[900] : '#ffffff',
+        paper: mode === 'dark' ? '#333' : '#ffffff',
       },
     },
   });
