@@ -4,7 +4,12 @@ import Cookies from 'js-cookie';
 import { toast } from 'react-toastify';
 import { capitalize } from '@mui/material';
 import { handleGlobalError } from '../../lib/handleGlobalError';
-import { goodbyeMessage, removeUserCookies, setUserCookies } from './lib';
+import {
+  getUserCookies,
+  goodbyeMessage,
+  removeUserCookies,
+  setUserCookies,
+} from './lib';
 
 const initialState = {
   firstName: '',
@@ -67,6 +72,26 @@ export const userLoginThunk = createAsyncThunk(
   }
 );
 
+// user change password thunk
+export const userChangePasswordThunk = createAsyncThunk(
+  'user/userChangePasswordThunk',
+  async (user, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    const { setState, initialState, setFormState, initialFormState } = user;
+    try {
+      const response = await customFetch.put('/user/change_password', user, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success(response.data.message);
+      setState(initialState);
+      setFormState(initialFormState);
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+
 // userForgotPasswordThunk
 export const userForgotPasswordThunk = createAsyncThunk(
   'user/userForgotPasswordThunk',
@@ -103,7 +128,7 @@ export const userSubscriptionStatusThunk = createAsyncThunk(
   'user/userSubscriptionStatusThunk',
   async (_, thunkAPI) => {
     try {
-      const token = Cookies.get('dryermaster_token');
+      const token = getUserCookies('dryermaster_token');
       const response = await customFetch.get('/user/subscription_status', {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -167,6 +192,16 @@ const userSlice = createSlice({
         state.isMember = true;
       })
       .addCase(userLoginThunk.rejected, (state, { payload }) => {
+        state.isLoading = false;
+      })
+      //  userChangePasswordThunk
+      .addCase(userChangePasswordThunk.pending, (state, { payload }) => {
+        state.isLoading = true;
+      })
+      .addCase(userChangePasswordThunk.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+      })
+      .addCase(userChangePasswordThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
       })
       //  userForgotThunk

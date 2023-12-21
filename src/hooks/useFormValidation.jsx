@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
 
+const initialFormState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  emailError: false,
+  passwordError: false,
+  firstNameError: false,
+  lastNameError: false,
+  firstNameErrorList: [],
+  lastNameErrorList: [],
+  emailErrorList: [],
+  passwordErrorList: [],
+};
 const useFormValidation = () => {
-  const [formState, setFormState] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    emailError: false,
-    passwordError: false,
-    firstNameError: false,
-    lastNameError: false,
-    firstNameErrorList: [],
-    lastNameErrorList: [],
-    emailErrorList: [],
-    passwordErrorList: [],
-  });
+  const [formState, setFormState] = useState(initialFormState);
 
   const handleChange = (field, value) => {
     setFormState((prevState) => ({
@@ -124,6 +125,8 @@ const useFormValidation = () => {
   ]);
   return {
     formState,
+    setFormState,
+    initialFormState,
     handleChange,
     validateFirstName,
     validateLastName,
