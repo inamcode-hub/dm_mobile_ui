@@ -54,7 +54,7 @@ const collapseItems = [
   },
 
   {
-    text: 'Security',
+    text: 'Change Password',
     path: '/dashboard/user/change-password',
     icon: <IoMdKey size={28} />,
   },
