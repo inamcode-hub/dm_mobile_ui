@@ -215,6 +215,8 @@ const Wrapper = styled.div`
     border-radius: 10px;
     transition: all 0.3s ease;
     margin-bottom: 5px;
+    max-height: 50px;
+    overflow: hidden;
   }
   .MuiListItemIcon-root {
     min-width: 40px;
@@ -223,7 +225,7 @@ const Wrapper = styled.div`
     margin-left: 10px;
   }
   .MuiCollapse-wrapperInner {
-    padding-left: 10px;
+    /* padding-left: 10px; */
   }
 `;
 
