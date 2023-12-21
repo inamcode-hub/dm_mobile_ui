@@ -10,7 +10,6 @@ const CardWrapper = styled.div`
   background-color: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '#333' : 'white'};
   border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
-
   @media (max-width: 600px) {
     width: 90%;
   }
