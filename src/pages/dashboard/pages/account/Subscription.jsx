@@ -79,7 +79,6 @@ const Subscription = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 1rem;
   .heading {
     text-align: center;
     padding: 1rem 0;
@@ -98,8 +97,10 @@ const Wrapper = styled.div`
   .card {
     border-radius: 10px;
     width: 100%;
+    display: flex;
     max-width: 500px;
     margin: 0 auto;
+    justify-content: center;
     .card-heading {
       border-radius: 10px 10px 0 0;
       .title {
