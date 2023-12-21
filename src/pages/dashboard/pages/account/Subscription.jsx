@@ -6,6 +6,7 @@ import { format, sub } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { MdOutlineWorkspacePremium } from 'react-icons/md';
+import CardWrapper from '../../../../styles/warppers/CardWrapper';
 const Subscription = () => {
   const { isSubscriptionActive, subscriptionExpiry } = useSelector(
     (state) => state.user
@@ -32,7 +33,7 @@ const Subscription = () => {
         </span>
       </div>
       <div className='card'>
-        <Paper elevation={3}>
+        <CardWrapper>
           <div className='card-heading'>
             <div className='title'>
               <h3>
@@ -71,7 +72,7 @@ const Subscription = () => {
               </Button>
             )}
           </div>
-        </Paper>
+        </CardWrapper>
       </div>
     </Wrapper>
   );
@@ -100,7 +101,6 @@ const Wrapper = styled.div`
     max-width: 500px;
     margin: 0 auto;
     .card-heading {
-      padding: 1rem;
       border-radius: 10px 10px 0 0;
       .title {
         display: flex;
@@ -150,7 +150,7 @@ const Wrapper = styled.div`
       }
     }
     .card-body {
-      padding: 1rem;
+      padding: 1rem 0;
       ul {
         list-style: none;
         padding: 0;
@@ -167,7 +167,6 @@ const Wrapper = styled.div`
       }
     }
     .card-footer {
-      padding: 1rem;
       button {
         width: 100%;
       }
