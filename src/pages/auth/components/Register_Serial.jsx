@@ -14,6 +14,7 @@ import { getUserStateValues } from '../../../features/user/userSlice';
 const RegisterSerial = () => {
   const { isLoading } = useSelector((state) => state.user);
   const [serial, setSerial] = useState('');
+  const [password, setPassword] = useState('');
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -56,6 +57,16 @@ const RegisterSerial = () => {
               name='email'
               value={serial}
               onChange={(e) => setSerial(e.target.value)}
+              required
+            />
+            <TextField
+              fullWidth
+              type='password'
+              label='Password'
+              variant='outlined'
+              name='password'
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               required
             />
             <Button

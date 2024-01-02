@@ -84,7 +84,7 @@ const RegisterUserDetails = () => {
           <Typography
             variant='h4'
             className='heading-title'>
-            Get started with DryerMaster
+            Let&apos;s setup your account
           </Typography>
           <HeadingBody>
             <Typography
@@ -102,7 +102,7 @@ const RegisterUserDetails = () => {
           </HeadingBody>
           <Typography
             variant='h4'
-            className='heading-title'>
+            className='serial'>
             SN # <span>{dmSerial}</span>
           </Typography>
         </Heading>
@@ -289,14 +289,26 @@ const Container = styled.div`
 `;
 
 const Heading = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   margin-bottom: 40px;
   .heading-title {
+    margin: 0px;
+    font-weight: 700;
+    line-height: 1.5;
+    font-size: 1.5rem;
+    font-family: 'Public Sans', sans-serif;
+  }
+  .serial {
     margin: 0px;
     font-weight: 500;
     line-height: 1.5;
     font-size: 1.3rem;
     font-family: 'Public Sans', sans-serif;
+
     span {
+      color: ${({ theme }) => theme.palette.secondary.main};
       font-weight: 700;
     }
   }
