@@ -9,23 +9,60 @@ import {
 } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import { customFetch } from '../../../../lib/customeFetch';
+import Cookies from 'js-cookie';
 
 const initialState = {
   firstName: '',
   lastName: '',
+  farmName: '',
   email: '',
+  cellPhone: '',
 };
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
   const { isLoading } = useSelector((state) => state.user);
   const [state, setState] = useState(initialState);
-  const { firstName, lastName } = state;
+  const { firstName, lastName, farmName, email, cellPhone } = state;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('submit');
+    try {
+      const res = await customFetch.put('/user/profile', state, {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Cookies.get('dryermaster_token')}`,
+        },
+      });
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  const getUser = async () => {
+    try {
+      const res = await customFetch.get('/user/profile', {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Cookies.get('dryermaster_token')}`,
+        },
+      });
 
+      setState({
+        firstName: res.data.data.firstName || '',
+        lastName: res.data.data.lastName || '',
+        farmName: res.data.data.farmName || '',
+        email: res.data.data.email || '',
+        cellPhone: res.data.data.cellPhone || '',
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getUser();
+  }, []);
   return (
     <Wrapper>
       <Container>
@@ -67,6 +104,39 @@ const ForgotPasswordUpdate = () => {
                   setState({ ...state, lastName: e.target.value })
                 }
                 required
+              />
+              <TextField
+                fullWidth
+                label='Farm Name'
+                type='text'
+                variant='outlined'
+                name='farmName'
+                value={farmName}
+                onChange={(e) =>
+                  setState({ ...state, farmName: e.target.value })
+                }
+                required
+              />
+              <TextField
+                fullWidth
+                label='Email'
+                type='email'
+                variant='outlined'
+                name='email'
+                value={email}
+                onChange={(e) => setState({ ...state, email: e.target.value })}
+                required
+              />
+              <TextField
+                fullWidth
+                label='Cell Phone'
+                type='text'
+                variant='outlined'
+                name='cellPhone'
+                value={cellPhone}
+                onChange={(e) =>
+                  setState({ ...state, cellPhone: e.target.value })
+                }
               />
             </InputFields>
             <Button
