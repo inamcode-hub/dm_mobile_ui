@@ -16,6 +16,7 @@ import { userRegisterThunk } from '../../../features/user/userSlice';
 
 const RegisterUserDetails = () => {
   const { isLoading, dmSerial } = useSelector((state) => state.user);
+  const [farmName, setFarmName] = useState('');
   const dispatch = useDispatch();
 
   const {
@@ -67,6 +68,7 @@ const RegisterUserDetails = () => {
         userRegisterThunk({
           firstName,
           lastName,
+          farmName,
           email,
           password,
           dmSerial,
@@ -129,6 +131,17 @@ const RegisterUserDetails = () => {
                 )}
               </div>
             </div>
+            <TextField
+              fullWidth
+              label='Farm Name'
+              type='text'
+              variant='outlined'
+              name='farmName'
+              value={farmName}
+              onChange={(e) => setFarmName(e.target.value)}
+              required
+            />
+
             <TextField
               fullWidth
               type='email'
