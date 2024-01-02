@@ -84,9 +84,29 @@ const RegisterUserDetails = () => {
           <Typography
             variant='h4'
             className='heading-title'>
+            Get started with DryerMaster
+          </Typography>
+          <HeadingBody>
+            <Typography
+              variant='body2'
+              className='new-user'>
+              Already have an account?
+            </Typography>
+            <Link to='/'>
+              <Typography
+                variant='body2'
+                sx={{ fontWeight: 500 }}>
+                Sign in
+              </Typography>
+            </Link>
+          </HeadingBody>
+          <Typography
+            variant='h4'
+            className='heading-title'>
             SN # <span>{dmSerial}</span>
           </Typography>
         </Heading>
+
         <form onSubmit={handleSubmit}>
           <Body>
             <div className='name'>
@@ -278,6 +298,28 @@ const Heading = styled.div`
     font-family: 'Public Sans', sans-serif;
     span {
       font-weight: 700;
+    }
+  }
+`;
+const HeadingBody = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+
+  button {
+    text-transform: capitalize;
+  }
+  a {
+    margin: 0px;
+    font-weight: 600;
+    line-height: 1.57143;
+    font-size: 0.875rem;
+    font-family: 'Public Sans', sans-serif;
+    color: ${({ theme }) => theme.palette.secondary.main};
+    text-decoration: none;
+    :hover {
+      text-decoration: underline;
     }
   }
 `;
