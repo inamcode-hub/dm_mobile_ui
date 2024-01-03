@@ -1,21 +1,26 @@
 import styled from '@emotion/styled';
 import { Button, CircularProgress, TextField } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserProfileStateValues } from '../../../../../features/user/userProfileSlice';
 
 const Address = () => {
-  const [address, setAddress] = useState({
-    formattedAddress: '',
-    apartment: '',
-    building: '',
-    street: '',
-    city: '',
-    state: '',
-    country: '',
-    zipCode: '',
-    latitude: null,
-    longitude: null,
-    isLoading: false,
-  });
+  const dispatch = useDispatch();
+  const {
+    formattedAddress,
+    apartment,
+    building,
+    street,
+    city,
+    state,
+    country,
+    zipCode,
+    isLoading,
+  } = useSelector((state) => state.userProfile);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(getUserProfileStateValues({ name, value }));
+  };
   const autocompleteRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -42,40 +47,73 @@ const Address = () => {
       const doorNumber =
         components.find((c) => c.types.includes('street_number'))?.long_name ||
         '';
-
-      setAddress({
-        ...address,
-        building: doorNumber,
-        formattedAddress: place.formatted_address,
-        street:
-          components.find((c) => c.types.includes('route'))?.long_name || '',
-        city:
-          components.find((c) => c.types.includes('locality'))?.long_name || '',
-        state:
-          components.find((c) =>
-            c.types.includes('administrative_area_level_1')
-          )?.long_name || '',
-        country:
-          components.find((c) => c.types.includes('country'))?.long_name || '',
-        zipCode:
-          components.find((c) => c.types.includes('postal_code'))?.long_name ||
-          '',
-        latitude,
-        longitude,
-      });
+      dispatch(
+        getUserProfileStateValues({
+          name: 'formattedAddress',
+          value: place.formatted_address,
+        })
+      );
+      dispatch(
+        getUserProfileStateValues({ name: 'building', value: doorNumber })
+      );
+      dispatch(
+        getUserProfileStateValues({
+          name: 'street',
+          value:
+            components.find((c) => c.types.includes('route'))?.long_name || '',
+        })
+      );
+      dispatch(
+        getUserProfileStateValues({
+          name: 'city',
+          value:
+            components.find((c) => c.types.includes('locality'))?.long_name ||
+            '',
+        })
+      );
+      dispatch(
+        getUserProfileStateValues({
+          name: 'state',
+          value:
+            components.find((c) =>
+              c.types.includes('administrative_area_level_1')
+            )?.long_name || '',
+        })
+      );
+      dispatch(
+        getUserProfileStateValues({
+          name: 'country',
+          value:
+            components.find((c) => c.types.includes('country'))?.long_name ||
+            '',
+        })
+      );
+      dispatch(
+        getUserProfileStateValues({
+          name: 'zipCode',
+          value:
+            components.find((c) => c.types.includes('postal_code'))
+              ?.long_name || '',
+        })
+      );
+      dispatch(
+        getUserProfileStateValues({ name: 'latitude', value: latitude })
+      );
+      dispatch(
+        getUserProfileStateValues({ name: 'longitude', value: longitude })
+      );
     }
   };
-  useEffect(() => {
-    console.log(address);
-  }, [address]);
+
   return (
     <Wrapper>
       <AddressInput
         className=''
         ref={inputRef}
         type='text'
-        value={address.formattedAddress}
-        onChange={(e) => setAddress(e.target.value)}
+        name='formattedAddress'
+        value={formattedAddress}
+        onChange={(e) => handleChange(e)}
         placeholder='Enter your address'
       />
 
@@ -85,16 +123,16 @@ const Address = () => {
           type='text'
           variant='outlined'
           name='apartment'
-          value={address.apartment}
-          onChange={(e) => setAddress(e.target.value)}
+          value={apartment}
+          onChange={(e) => handleChange(e)}
         />
         <TextField
           label='Building'
           type='text'
           variant='outlined'
           name='building'
-          value={address.building}
-          onChange={(e) => setAddress(e.target.value)}
+          value={building}
+          onChange={(e) => handleChange(e)}
           required
           InputLabelProps={{ shrink: true }}
         />
@@ -103,8 +141,8 @@ const Address = () => {
           type='text'
           variant='outlined'
           name='street'
-          value={address.street}
-          onChange={(e) => setAddress(e.target.value)}
+          value={street}
+          onChange={(e) => handleChange(e)}
           required
           InputLabelProps={{ shrink: true }}
         />
@@ -113,8 +151,8 @@ const Address = () => {
           type='text'
           variant='outlined'
           name='city'
-          value={address.city}
-          onChange={(e) => setAddress(e.target.value)}
+          value={city}
+          onChange={(e) => handleChange(e)}
           required
           InputLabelProps={{ shrink: true }}
         />
@@ -123,8 +161,8 @@ const Address = () => {
           type='text'
           variant='outlined'
           name='state'
-          value={address.state}
-          onChange={(e) => setAddress(e.target.value)}
+          value={state}
+          onChange={(e) => handleChange(e)}
           required
           InputLabelProps={{ shrink: true }}
         />
@@ -133,8 +171,8 @@ const Address = () => {
           type='text'
           variant='outlined'
           name='country'
-          value={address.country}
-          onChange={(e) => setAddress(e.target.value)}
+          value={country}
+          onChange={(e) => handleChange(e)}
           required
           InputLabelProps={{ shrink: true }}
         />
@@ -143,33 +181,12 @@ const Address = () => {
           type='text'
           variant='outlined'
           name='zipCode'
-          value={address.zipCode}
-          onChange={(e) => setAddress(e.target.value)}
+          value={zipCode}
+          onChange={(e) => handleChange(e)}
           required
           InputLabelProps={{ shrink: true }}
         />
       </TextFields>
-      <Button
-        fullWidth
-        variant='contained'
-        color='primary'
-        type='submit'
-        size='large'
-        style={{ marginTop: '1rem' }}
-        disabled={address.isLoading}>
-        {address.isLoading ? (
-          <>
-            <CircularProgress
-              size={24}
-              color='inherit'
-              style={{ marginRight: '10px' }} // Add some spacing between the spinner and the text
-            />
-            Updating...
-          </>
-        ) : (
-          'Update address'
-        )}
-      </Button>
     </Wrapper>
   );
 };

@@ -17,14 +17,21 @@
   <body>
     <div id="root"></div>
     <!-- script for google -->
+    <script>
+      // Define the initMap or initAutocomplete function globally
+      function initMap() {
+        // Initialization logic for your map
+      }
+    </script>
     <script
       async
       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC59s6kwolJJzSY_IVEdhByj5K7Np8ltUg&libraries=places&callback=initMap"></script>
+    <!-- script for google -->
     <script
       type="module"
       src="/src/main.jsx"></script>
     <!-- script for PWA  -->
-    <script>
+    <!-- <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker
           .register('/sw.js', { scope: '/' })
@@ -33,6 +40,7 @@
             console.log('Service Worker registration failed:', error)
           );
       }
-    </script>
+    </script> -->
+    <!-- script for PWA  -->
   </body>
 </html>

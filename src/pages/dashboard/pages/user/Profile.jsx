@@ -9,61 +9,36 @@ import {
 } from '@mui/material';
 
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
-import { customFetch } from '../../../../lib/customeFetch';
-import Cookies from 'js-cookie';
 import Address from './component/profile_address';
+import {
+  getUserProfileStateValues,
+  userProfileReadThunk,
+  userProfileUpdateThunk,
+} from '../../../../features/user/userProfileSlice';
 
-const initialState = {
-  firstName: '',
-  lastName: '',
-  farmName: '',
-  email: '',
-  cellPhone: '',
-  // address
-};
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.user);
-  const [state, setState] = useState(initialState);
-  const { firstName, lastName, farmName, email, cellPhone } = state;
+  const {
+    isLoading,
+    isUpdating,
+    firstName,
+    lastName,
+    farmName,
+    email,
+    cellPhone,
+  } = useSelector((state) => state.userProfile);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch(getUserProfileStateValues({ name, value }));
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await customFetch.put('/user/profile', state, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Cookies.get('dryermaster_token')}`,
-        },
-      });
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(userProfileUpdateThunk());
   };
-  const getUser = async () => {
-    try {
-      const res = await customFetch.get('/user/profile', {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Cookies.get('dryermaster_token')}`,
-        },
-      });
 
-      setState({
-        firstName: res.data.data.firstName || '',
-        lastName: res.data.data.lastName || '',
-        farmName: res.data.data.farmName || '',
-        email: res.data.data.email || '',
-        cellPhone: res.data.data.cellPhone || '',
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    getUser();
+    dispatch(userProfileReadThunk());
   }, []);
   return (
     <Wrapper>
@@ -85,9 +60,7 @@ const ForgotPasswordUpdate = () => {
                 variant='outlined'
                 name='firstName'
                 value={firstName}
-                onChange={(e) =>
-                  setState({ ...state, firstName: e.target.value })
-                }
+                onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
               />
@@ -99,9 +72,7 @@ const ForgotPasswordUpdate = () => {
                 variant='outlined'
                 name='lastName'
                 value={lastName}
-                onChange={(e) =>
-                  setState({ ...state, lastName: e.target.value })
-                }
+                onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
               />
@@ -112,9 +83,7 @@ const ForgotPasswordUpdate = () => {
                 variant='outlined'
                 name='farmName'
                 value={farmName}
-                onChange={(e) =>
-                  setState({ ...state, farmName: e.target.value })
-                }
+                onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
               />
@@ -125,7 +94,7 @@ const ForgotPasswordUpdate = () => {
                 variant='outlined'
                 name='email'
                 value={email}
-                onChange={(e) => setState({ ...state, email: e.target.value })}
+                onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
               />
@@ -136,21 +105,26 @@ const ForgotPasswordUpdate = () => {
                 variant='outlined'
                 name='cellPhone'
                 value={cellPhone}
-                onChange={(e) =>
-                  setState({ ...state, cellPhone: e.target.value })
-                }
+                onChange={(e) => handleChange(e)}
                 InputLabelProps={{ shrink: true }}
               />
             </InputFields>
 
+            <Divider
+              sx={{
+                margin: '10px 0',
+              }}>
+              Address
+            </Divider>
+            <Address />
             <Button
               fullWidth
               variant='contained'
               color='primary'
               type='submit'
               size='large'
-              disabled={isLoading}>
-              {isLoading ? (
+              disabled={isLoading || isUpdating}>
+              {isUpdating ? (
                 <>
                   <CircularProgress
                     size={24}
@@ -163,13 +137,6 @@ const ForgotPasswordUpdate = () => {
                 'Update Profile'
               )}
             </Button>
-            <Divider
-              sx={{
-                margin: '10px 0',
-              }}>
-              Address
-            </Divider>
-            <Address />
           </Body>
         </form>
       </Container>
