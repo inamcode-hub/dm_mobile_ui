@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 import { customFetch } from '../../../../lib/customeFetch';
 import Cookies from 'js-cookie';
+import Address from './component/profile_address';
 
 const initialState = {
   firstName: '',
@@ -19,6 +20,7 @@ const initialState = {
   farmName: '',
   email: '',
   cellPhone: '',
+  // address
 };
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -87,12 +89,9 @@ const ForgotPasswordUpdate = () => {
                   setState({ ...state, firstName: e.target.value })
                 }
                 required
+                InputLabelProps={{ shrink: true }}
               />
-              {/* <Divider
-              sx={{
-                margin: '10px 0',
-              }}
-            /> */}
+
               <TextField
                 fullWidth
                 label='Last Name'
@@ -104,6 +103,7 @@ const ForgotPasswordUpdate = () => {
                   setState({ ...state, lastName: e.target.value })
                 }
                 required
+                InputLabelProps={{ shrink: true }}
               />
               <TextField
                 fullWidth
@@ -116,6 +116,7 @@ const ForgotPasswordUpdate = () => {
                   setState({ ...state, farmName: e.target.value })
                 }
                 required
+                InputLabelProps={{ shrink: true }}
               />
               <TextField
                 fullWidth
@@ -126,6 +127,7 @@ const ForgotPasswordUpdate = () => {
                 value={email}
                 onChange={(e) => setState({ ...state, email: e.target.value })}
                 required
+                InputLabelProps={{ shrink: true }}
               />
               <TextField
                 fullWidth
@@ -137,8 +139,17 @@ const ForgotPasswordUpdate = () => {
                 onChange={(e) =>
                   setState({ ...state, cellPhone: e.target.value })
                 }
+                InputLabelProps={{ shrink: true }}
               />
             </InputFields>
+            <Divider
+              sx={{
+                margin: '10px 0',
+              }}>
+              Address
+            </Divider>
+            <Address />
+
             <Button
               fullWidth
               variant='contained'
@@ -170,7 +181,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 3rem;
-  /* min-height: 100vh; */
+  margin-bottom: 3rem;
 `;
 
 const Container = styled.div`
