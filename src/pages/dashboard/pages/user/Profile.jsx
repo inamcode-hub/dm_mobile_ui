@@ -142,13 +142,6 @@ const ForgotPasswordUpdate = () => {
                 InputLabelProps={{ shrink: true }}
               />
             </InputFields>
-            <Divider
-              sx={{
-                margin: '10px 0',
-              }}>
-              Address
-            </Divider>
-            <Address />
 
             <Button
               fullWidth
@@ -167,9 +160,16 @@ const ForgotPasswordUpdate = () => {
                   Updating...
                 </>
               ) : (
-                'Save changes'
+                'Update Profile'
               )}
             </Button>
+            <Divider
+              sx={{
+                margin: '10px 0',
+              }}>
+              Address
+            </Divider>
+            <Address />
           </Body>
         </form>
       </Container>

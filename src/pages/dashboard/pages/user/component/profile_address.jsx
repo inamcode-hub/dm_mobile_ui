@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { TextField } from '@mui/material';
+import { Button, CircularProgress, TextField } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 
 const Address = () => {
@@ -11,9 +11,10 @@ const Address = () => {
     city: '',
     state: '',
     country: '',
-    zip: '',
+    zipCode: '',
     latitude: null,
     longitude: null,
+    isLoading: false,
   });
   const autocompleteRef = useRef(null);
   const inputRef = useRef(null);
@@ -56,7 +57,7 @@ const Address = () => {
           )?.long_name || '',
         country:
           components.find((c) => c.types.includes('country'))?.long_name || '',
-        zip:
+        zipCode:
           components.find((c) => c.types.includes('postal_code'))?.long_name ||
           '',
         latitude,
@@ -64,7 +65,9 @@ const Address = () => {
       });
     }
   };
-
+  useEffect(() => {
+    console.log(address);
+  }, [address]);
   return (
     <Wrapper>
       <AddressInput
@@ -136,16 +139,37 @@ const Address = () => {
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          label='Zip'
+          label='Zip Code'
           type='text'
           variant='outlined'
-          name='zip'
-          value={address.zip}
+          name='zipCode'
+          value={address.zipCode}
           onChange={(e) => setAddress(e.target.value)}
           required
           InputLabelProps={{ shrink: true }}
         />
       </TextFields>
+      <Button
+        fullWidth
+        variant='contained'
+        color='primary'
+        type='submit'
+        size='large'
+        style={{ marginTop: '1rem' }}
+        disabled={address.isLoading}>
+        {address.isLoading ? (
+          <>
+            <CircularProgress
+              size={24}
+              color='inherit'
+              style={{ marginRight: '10px' }} // Add some spacing between the spinner and the text
+            />
+            Updating...
+          </>
+        ) : (
+          'Update address'
+        )}
+      </Button>
     </Wrapper>
   );
 };
