@@ -4,7 +4,6 @@ import { blue, green } from '@mui/material/colors';
 import { FaCheck } from 'react-icons/fa';
 import { format, sub } from 'date-fns';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { MdOutlineWorkspacePremium } from 'react-icons/md';
 import CardWrapper from '../../../../styles/warppers/CardWrapper';
 const Subscription = () => {
@@ -20,7 +19,7 @@ const Subscription = () => {
     'Track your dryer’s performance',
     'Access to your dryer’s historical data',
   ];
-  useEffect(() => {}, []);
+
   return (
     <Wrapper $isSubscriptionActive={isSubscriptionActive}>
       <div className='heading'>

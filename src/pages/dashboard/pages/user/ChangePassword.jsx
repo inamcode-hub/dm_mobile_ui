@@ -71,7 +71,9 @@ const ForgotPasswordUpdate = () => {
       );
     }
   };
-
+  useEffect(() => {
+    console.log('change password page');
+  }, []);
   return (
     <Wrapper>
       <Container>
