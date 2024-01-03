@@ -38,13 +38,13 @@ const DashboardLayout = () => {
         </div>
         <div className='nav-outlet'>
           <NavbarDesktop />
-          <Outlet />
+          {width > 768 && <Outlet />}
         </div>
       </div>
       <div className='mobile'>
         <NavbarDrawerMobile />
         <NavbarMobile />
-        <Outlet />
+        {width < 769 && <Outlet />}
       </div>
     </Wrapper>
   );
