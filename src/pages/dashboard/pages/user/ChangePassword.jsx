@@ -13,6 +13,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../../../hooks/useFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { userChangePasswordThunk } from '../../../../features/user/userSlice';
+import CardWrapper from '../../../../styles/warppers/CardWrapper';
 
 const initialState = {
   confirmPassword: '',
@@ -76,14 +77,8 @@ const ForgotPasswordUpdate = () => {
   }, []);
   return (
     <Wrapper>
-      <Container>
-        <Heading>
-          <Typography
-            variant='h4'
-            className='heading-title'>
-            Change your password
-          </Typography>
-        </Heading>
+      <CardWrapper>
+        <div className='title'>Change your password</div>
         <form onSubmit={handleSubmit}>
           <Body>
             <TextField
@@ -208,7 +203,7 @@ const ForgotPasswordUpdate = () => {
             </Button>
           </Body>
         </form>
-      </Container>
+      </CardWrapper>
     </Wrapper>
   );
 };
@@ -217,25 +212,6 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   margin-top: 3rem;
-  /* min-height: 100vh; */
-`;
-
-const Container = styled.div`
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
-    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
-  border-radius: 16px;
-  padding: 40px 24px;
-  z-index: 0;
-  background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#333' : 'white'};
-  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
-  @media (max-width: 600px) {
-    width: 90%;
-  }
-  @media (min-width: 600px) {
-    width: 500px;
-  }
   .link {
     text-decoration: none;
     color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
@@ -259,21 +235,7 @@ const Container = styled.div`
       color: ${({ theme }) => theme.palette.secondary.main};
     }
   }
-`;
-
-const Heading = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
-  text-align: center;
-  .heading-title {
-    margin: 0px;
-    font-weight: 700;
-    line-height: 1.5;
-    font-size: 1.5rem;
-    font-family: 'Public Sans', sans-serif;
-  }
+  /* min-height: 100vh; */
 `;
 
 const Body = styled.div`
