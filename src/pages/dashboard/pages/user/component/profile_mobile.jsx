@@ -35,7 +35,6 @@ const Wrapper = styled.div`
     display: block;
     font-size: 12px;
     font-weight: 400;
-    /* color: #6b6b6b; */
     color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#c9c3c3' : '#6b6b6b'};
   }
@@ -51,7 +50,7 @@ const Wrapper = styled.div`
     margin-bottom: 1rem;
 
     .PhoneInputInput {
-      border: 1px solid #e2e2e1;
+      border: 1px solid #b1b1af;
       border-radius: 4px;
       padding: 16.5px 14px;
       font-size: 16px;
@@ -67,7 +66,7 @@ const Wrapper = styled.div`
     }
 
     .PhoneInputCountry {
-      border: 1px solid #e2e2e1;
+      border: 1px solid #b1b1af;
       border-radius: 4px 0 0 4px;
       /* position: absolute; */
       top: 0;
