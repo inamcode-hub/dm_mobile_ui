@@ -35,7 +35,9 @@ const Wrapper = styled.div`
     display: block;
     font-size: 12px;
     font-weight: 400;
-    color: #6b6b6b;
+    /* color: #6b6b6b; */
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#c9c3c3' : '#6b6b6b'};
   }
   span {
     display: block;
@@ -55,7 +57,9 @@ const Wrapper = styled.div`
       font-size: 16px;
       width: 100%;
       box-sizing: border-box;
-
+      background-color: ${({ theme }) =>
+        theme.palette.mode === 'dark' && '#333'};
+      color: ${({ theme }) => theme.palette.text.primary};
       &:focus {
         outline: none;
         border-color: ${({ theme }) => theme.palette.primary.main};
@@ -73,7 +77,7 @@ const Wrapper = styled.div`
       align-items: center;
       justify-content: center;
       padding: 0 12px;
-      background-color: white;
+
       box-sizing: border-box;
 
       &:hover {
