@@ -15,6 +15,7 @@ import {
   userProfileReadThunk,
   userProfileUpdateThunk,
 } from '../../../../features/user/userProfileSlice';
+import MobilePicker from './component/profile_mobile';
 
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -108,8 +109,8 @@ const ForgotPasswordUpdate = () => {
                 onChange={(e) => handleChange(e)}
                 InputLabelProps={{ shrink: true }}
               />
+              <MobilePicker />
             </InputFields>
-
             <Divider
               sx={{
                 margin: '10px 0',
