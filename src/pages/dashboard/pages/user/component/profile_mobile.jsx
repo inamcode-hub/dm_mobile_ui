@@ -1,22 +1,26 @@
-import React, { useEffect, useState } from 'react';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
 import styled from '@emotion/styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserProfileStateValues } from '../../../../../features/user/userProfileSlice';
 
 const MobilePicker = () => {
-  const [value, setValue] = useState('');
+  const { cellPhone } = useSelector((state) => state.userProfile);
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    setValue(e);
+    dispatch(getUserProfileStateValues({ name: 'cellPhone', value: e }));
   };
-  useEffect(() => {
-    console.log(value);
-  }, [value]);
+
   return (
     <Wrapper>
+      <span>
+        Mobile Number
+        <small>( Also used for SMS notifications )</small>
+      </span>
       <PhoneInput
         placeholder='+1 416 123 4567'
-        value={value}
+        value={cellPhone}
         onChange={handleChange}
         defaultCountry='US'
         international
@@ -27,6 +31,18 @@ const MobilePicker = () => {
 };
 
 const Wrapper = styled.div`
+  small {
+    display: block;
+    font-size: 12px;
+    font-weight: 400;
+    color: #6b6b6b;
+  }
+  span {
+    display: block;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
   position: relative;
   .PhoneInput {
     width: 100%;

@@ -99,16 +99,6 @@ const ForgotPasswordUpdate = () => {
                 required
                 InputLabelProps={{ shrink: true }}
               />
-              <TextField
-                fullWidth
-                label='Cell Phone'
-                type='text'
-                variant='outlined'
-                name='cellPhone'
-                value={cellPhone}
-                onChange={(e) => handleChange(e)}
-                InputLabelProps={{ shrink: true }}
-              />
               <MobilePicker />
             </InputFields>
             <Divider
