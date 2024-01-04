@@ -15,11 +15,7 @@ const DmSubscription = () => {
     <Wrapper>
       <CardWrapper>
         <div className='body'>
-          <Typography
-            variant='h4'
-            component='h2'>
-            Subscription Expired
-          </Typography>
+          <div className='title'>Subscription Expired</div>
           <Typography variant='body1'>
             Thank you for using Dryer Master. Your subscription period has ended
             on <strong>{expiryDate}</strong>. To continue enjoying our services,

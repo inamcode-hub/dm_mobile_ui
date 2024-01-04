@@ -13,12 +13,7 @@ const DmReconnect = () => {
     <Wrapper>
       <CardWrapper>
         <div className='body'>
-          <Typography
-            variant='h4'
-            component='h2'>
-            <WifiOffIcon sx={{ fontSize: 35, marginRight: '.5rem' }} />
-            Connection Issue
-          </Typography>
+          <div className='title'>Connection Issue</div>
           <Typography variant='body1'>
             We&apos;re having trouble connecting to your DryerMaster device.
             Please check the following:
