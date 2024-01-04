@@ -10,9 +10,7 @@ const CardWrapper = styled.div`
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? grey[900] : 'var(--primary-2)'};
     color: ${({ theme }) =>
-      theme.palette.mode === 'dark'
-        ? 'var(--primary-2)'
-        : 'var(--primary-text)'};
+      theme.palette.mode === 'dark' ? 'var(--primary-2)' : 'var(--primary-18)'};
     padding: 0.5rem 1rem;
     border-radius: 5px;
   }
