@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { signOut } from '../../../../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 
 const initialState = {
   firstName: '',
@@ -14,6 +15,7 @@ const initialState = {
 };
 const UserCard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [state, setState] = React.useState(initialState);
   const { anchorEl, firstName, lastName, email } = state;
 
@@ -29,8 +31,13 @@ const UserCard = () => {
       email,
     });
   };
-  const handleClose = () => {
+  const handleClose = (e) => {
     setState({ ...state, anchorEl: null });
+    if (e === 'profile') {
+      navigate('/dashboard/user/profile');
+    } else if (e === 'inbox') {
+      navigate('/dashboard/messages');
+    }
   };
   return (
     <Wrapper>
@@ -66,8 +73,8 @@ const UserCard = () => {
           <p>{email}</p>
         </NameEmail>
         <Divider />
-        <MenuItem onClick={handleClose}>Profile</MenuItem>
-        <MenuItem onClick={handleClose}>Inbox</MenuItem>
+        <MenuItem onClick={() => handleClose('profile')}>Profile</MenuItem>
+        <MenuItem onClick={() => handleClose('inbox')}>Inbox</MenuItem>
         <Divider />
         <MenuItem
           onClick={() => dispatch(signOut())}
