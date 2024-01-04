@@ -31,6 +31,13 @@ export const setUserCookies = (userData) => {
   setCookie('dryermaster_subscriptionExpiry', subscriptionExpiry);
 };
 
+export const updateUserCookies = (userData) => {
+  const { firstName, lastName, email } = userData;
+  setCookie('dryermaster_firstName', firstName);
+  setCookie('dryermaster_lastName', lastName);
+  setCookie('dryermaster_email', email);
+};
+
 // =================== Redux functions ===================
 
 // Utility function to remove user cookies

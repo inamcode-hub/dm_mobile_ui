@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
-import { getUserCookies } from './lib';
+import { getUserCookies, setUserCookies, updateUserCookies } from './lib';
 import { handleGlobalError } from '../../lib/handleGlobalError';
 import { toast } from 'react-toastify';
 
@@ -56,8 +56,17 @@ export const userProfileReadThunk = createAsyncThunk(
 export const userProfileUpdateThunk = createAsyncThunk(
   'userProfile/userProfileUpdateThunk',
   async (_, thunkAPI) => {
-    // get this state from store by using getState()
     const { userProfile } = thunkAPI.getState();
+    const firstName = getUserCookies('dryermaster_firstName');
+    const lastName = getUserCookies('dryermaster_lastName');
+    const email = getUserCookies('dryermaster_email');
+    if (
+      firstName !== userProfile.firstName ||
+      lastName !== userProfile.lastName ||
+      email !== userProfile.email
+    ) {
+      updateUserCookies(userProfile);
+    }
     try {
       const response = await customFetch.put('/user/profile', userProfile, {
         headers: {
@@ -129,17 +138,17 @@ const userProfileSlice = createSlice({
       })
       .addCase(userProfileUpdateThunk.pending, (state, { payload }) => {
         console.log('promise pending');
-        state.isLoading = true;
+        state.isUpdating = true;
       })
       .addCase(userProfileUpdateThunk.fulfilled, (state, { payload }) => {
         console.log('promise fulfilled');
         console.log(payload);
-        state.isLoading = false;
+        state.isUpdating = false;
       })
       .addCase(userProfileUpdateThunk.rejected, (state, { payload }) => {
         console.log('promise rejected');
         console.log(payload);
-        state.isLoading = false;
+        state.isUpdating = false;
       });
   },
 });
