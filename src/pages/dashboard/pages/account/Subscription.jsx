@@ -22,7 +22,7 @@ const Subscription = () => {
 
   return (
     <Wrapper $isSubscriptionActive={isSubscriptionActive}>
-      <div className='heading'>
+      {/* <div className='heading'>
         <h1>Subscription Plan</h1>
         <span>
           {isSubscriptionActive
@@ -30,7 +30,7 @@ const Subscription = () => {
             : `Your subscription expired on `}
           <strong>{date}</strong>
         </span>
-      </div>
+      </div> */}
       <div className='card'>
         <CardWrapper>
           <div className='card-heading'>
@@ -46,6 +46,12 @@ const Subscription = () => {
                 <small className='expired'>Expired</small>
               )}
             </div>
+            <strong>
+              {isSubscriptionActive
+                ? `Your subscription expires on `
+                : `Your subscription expired on `}
+              {date}
+            </strong>
             <div className='card-heading-price'>
               100 USD<span>/year</span>
             </div>
@@ -64,11 +70,7 @@ const Subscription = () => {
           </div>
           <div className='card-footer'>
             {!isSubscriptionActive && (
-              <Button
-                variant='contained'
-                color='success'>
-                Renew Subscription
-              </Button>
+              <Button variant='contained'>Renew Subscription</Button>
             )}
           </div>
         </CardWrapper>
@@ -78,27 +80,17 @@ const Subscription = () => {
 };
 
 const Wrapper = styled.div`
-  .heading {
-    text-align: center;
-    padding: 1rem 0;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 1rem;
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 500;
-      margin: 0;
-    }
+  .card {
     strong {
       color: ${(props) =>
         props.$isSubscriptionActive ? green[500] : blue[500]};
+      font-size: 0.9rem;
     }
-  }
-  .card {
     border-radius: 10px;
     width: 100%;
     display: flex;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 3rem auto;
     justify-content: center;
     .card-heading {
       border-radius: 10px 10px 0 0;
