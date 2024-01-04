@@ -159,7 +159,7 @@ const Container = styled.div`
     width: 500px;
   }
   @media (min-width: 960px) {
-    width: 800px;
+    width: 60vw;
   }
   .link {
     text-decoration: none;
