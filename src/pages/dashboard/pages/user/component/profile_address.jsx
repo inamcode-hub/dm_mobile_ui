@@ -15,7 +15,6 @@ const Address = () => {
     state,
     country,
     zipCode,
-    isLoading,
   } = useSelector((state) => state.userProfile);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,10 +29,9 @@ const Address = () => {
       console.error('Google Maps JavaScript API not loaded');
       return;
     }
+    const input = inputRef.current.querySelector('input');
+    autocompleteRef.current = new window.google.maps.places.Autocomplete(input);
 
-    autocompleteRef.current = new window.google.maps.places.Autocomplete(
-      inputRef.current
-    );
     autocompleteRef.current.addListener('place_changed', onPlaceChanged);
   }, []);
 
@@ -107,16 +105,19 @@ const Address = () => {
 
   return (
     <Wrapper>
-      <AddressInput
-        className=''
-        ref={inputRef}
+      <TextField
+        label='Search Address'
         type='text'
+        variant='outlined'
         name='formattedAddress'
         value={formattedAddress}
         onChange={(e) => handleChange(e)}
-        placeholder='Enter your address'
+        ref={inputRef}
+        required
+        InputLabelProps={{ shrink: true }}
+        fullWidth
+        style={{ marginBottom: '1rem' }}
       />
-
       <TextFields>
         <TextField
           label='Apartment'
@@ -125,9 +126,10 @@ const Address = () => {
           name='apartment'
           value={apartment}
           onChange={(e) => handleChange(e)}
+          InputLabelProps={{ shrink: true }}
         />
         <TextField
-          label='Building'
+          label='Building / House Number'
           type='text'
           variant='outlined'
           name='building'
@@ -157,7 +159,7 @@ const Address = () => {
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          label='State'
+          label='State / Province / Region'
           type='text'
           variant='outlined'
           name='state'
@@ -177,7 +179,7 @@ const Address = () => {
           InputLabelProps={{ shrink: true }}
         />
         <TextField
-          label='Zip Code'
+          label='Zip Code / Postal Code'
           type='text'
           variant='outlined'
           name='zipCode'
@@ -191,15 +193,7 @@ const Address = () => {
   );
 };
 const Wrapper = styled.div``;
-const AddressInput = styled.input`
-  width: 100%;
-  padding: 1rem;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-  outline: none;
-  font-size: 1rem;
-  margin-bottom: 1rem;
-`;
+
 const TextFields = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
