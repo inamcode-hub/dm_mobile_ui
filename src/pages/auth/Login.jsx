@@ -15,6 +15,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../hooks/useFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { userLoginThunk } from '../../features/user/userSlice';
+import CardWrapper from '../../styles/warppers/CardWrapper';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -51,13 +52,9 @@ const Login = () => {
 
   return (
     <Wrapper>
-      <Container>
+      <CardWrapper>
         <Heading>
-          <Typography
-            variant='h4'
-            className='heading-title'>
-            Sign in to DryerMaster
-          </Typography>
+          <div className='title'>Sign in to DryerMaster</div>
           <HeadingBody>
             <Typography
               variant='body2'
@@ -155,7 +152,7 @@ const Login = () => {
             <ToggleTheme />
           </Body>
         </form>
-      </Container>
+      </CardWrapper>
     </Wrapper>
   );
 };
@@ -164,24 +161,6 @@ const Wrapper = styled.div`
   width: 100vw;
   display: grid;
   place-items: center;
-`;
-
-const Container = styled.div`
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
-    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
-  border-radius: 16px;
-  padding: 40px 24px;
-  z-index: 0;
-  background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#333' : 'white'};
-  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
-  @media (max-width: 600px) {
-    width: 90%;
-  }
-  @media (min-width: 600px) {
-    width: 500px;
-  }
 `;
 
 const Heading = styled.div`

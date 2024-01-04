@@ -22,19 +22,11 @@ const Subscription = () => {
 
   return (
     <Wrapper $isSubscriptionActive={isSubscriptionActive}>
-      {/* <div className='heading'>
-        <h1>Subscription Plan</h1>
-        <span>
-          {isSubscriptionActive
-            ? `Your subscription expires on `
-            : `Your subscription expired on `}
-          <strong>{date}</strong>
-        </span>
-      </div> */}
       <div className='card'>
         <CardWrapper>
+          <div className='title'>Subscription</div>
           <div className='card-heading'>
-            <div className='title'>
+            <div className='card-title'>
               <h3>
                 Premium
                 <MdOutlineWorkspacePremium />
@@ -81,20 +73,22 @@ const Subscription = () => {
 
 const Wrapper = styled.div`
   .card {
-    strong {
-      color: ${(props) =>
-        props.$isSubscriptionActive ? green[500] : blue[500]};
-      font-size: 0.9rem;
-    }
     border-radius: 10px;
     width: 100%;
     display: flex;
     max-width: 500px;
     margin: 3rem auto;
     justify-content: center;
+    
+    }
+    strong {
+      color: ${(props) =>
+        props.$isSubscriptionActive ? green[500] : blue[500]};
+      font-size: 0.9rem;
+    }
     .card-heading {
       border-radius: 10px 10px 0 0;
-      .title {
+      .card-title {
         display: flex;
         align-items: center;
         justify-content: space-between;
