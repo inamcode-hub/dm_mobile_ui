@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   height: 100vh;
   background: ${({ theme }) =>
     theme.palette.mode === 'dark'
-      ? '#333'
+      ? theme.palette.background.default
       : `radial-gradient(
         circle,
         rgba(237, 233, 254, 1) 0%,
