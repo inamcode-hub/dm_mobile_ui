@@ -3,7 +3,7 @@ import PhoneInput from 'react-phone-number-input';
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfileStateValues } from '../../../../../features/user/userProfileSlice';
-
+import { grey } from '@mui/material/colors';
 const MobilePicker = () => {
   const { cellPhone } = useSelector((state) => state.userProfile);
   const dispatch = useDispatch();
@@ -50,7 +50,10 @@ const Wrapper = styled.div`
     margin-bottom: 1rem;
 
     .PhoneInputInput {
-      border: 1px solid #b1b1af;
+      border: ${({ theme }) =>
+        theme.palette.mode === 'dark'
+          ? `1px solid ${grey[700]}`
+          : `1px solid ${grey[400]}`};
       border-radius: 4px;
       padding: 16.5px 14px;
       font-size: 16px;
@@ -66,7 +69,10 @@ const Wrapper = styled.div`
     }
 
     .PhoneInputCountry {
-      border: 1px solid #b1b1af;
+      border: ${({ theme }) =>
+        theme.palette.mode === 'dark'
+          ? `1px solid ${grey[700]}`
+          : `1px solid ${grey[400]}`};
       border-radius: 4px 0 0 4px;
       /* position: absolute; */
       top: 0;
