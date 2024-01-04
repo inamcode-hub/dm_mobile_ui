@@ -1,8 +1,14 @@
 import styled from '@emotion/styled';
-import { Button, CircularProgress, TextField } from '@mui/material';
+import {
+  Button,
+  CircularProgress,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserProfileStateValues } from '../../../../../features/user/userProfileSlice';
+import SearchIcon from '@mui/icons-material/Search'; // Importing the search icon
 
 const Address = () => {
   const dispatch = useDispatch();
@@ -117,6 +123,13 @@ const Address = () => {
         InputLabelProps={{ shrink: true }}
         fullWidth
         style={{ marginBottom: '1rem' }}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position='start'>
+              <SearchIcon /> {/* The search icon */}
+            </InputAdornment>
+          ),
+        }}
       />
       <TextFields>
         <TextField
