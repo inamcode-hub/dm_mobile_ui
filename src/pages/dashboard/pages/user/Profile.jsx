@@ -17,6 +17,7 @@ import {
 } from '../../../../features/user/userProfileSlice';
 import MobilePicker from './component/profile_mobile';
 import Loading from '../../../../components/Loading';
+import { grey } from '@mui/material/colors';
 
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -48,13 +49,7 @@ const ForgotPasswordUpdate = () => {
   return (
     <Wrapper>
       <Container>
-        <Heading>
-          <Typography
-            variant='h4'
-            className='heading-title'>
-            User Profile
-          </Typography>
-        </Heading>
+        <div className='title'>User Profile</div>
         <form onSubmit={handleSubmit}>
           <Body>
             <InputFields>
@@ -151,7 +146,7 @@ const Container = styled.div`
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 16px;
-  padding: 40px 24px;
+  padding: 20px 20px;
   z-index: 0;
   background-color: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '#333' : 'white'};
@@ -165,43 +160,18 @@ const Container = styled.div`
   @media (min-width: 960px) {
     width: 60vw;
   }
-  .link {
-    text-decoration: none;
-    color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
-    :hover {
-      text-decoration: underline;
-    }
-    p {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-  }
-  .code {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    p {
-      margin: 0px;
-    }
-    button {
-      color: ${({ theme }) => theme.palette.secondary.main};
-    }
-  }
-`;
-
-const Heading = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-bottom: 40px;
-  text-align: center;
-  .heading-title {
-    margin: 0px;
-    font-weight: 700;
-    line-height: 1.5;
-    font-size: 1.5rem;
-    font-family: 'Public Sans', sans-serif;
+  .title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-align: center;
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? grey[900] : 'var(--primary-2)'};
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? 'var(--primary-2)' : 'var(--primary-18)'};
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    margin-bottom: 3rem;
   }
 `;
 
