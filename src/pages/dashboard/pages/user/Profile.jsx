@@ -42,7 +42,7 @@ const ForgotPasswordUpdate = () => {
   useEffect(() => {
     dispatch(userProfileReadThunk());
   }, []);
-  if (!isLoading) {
+  if (isLoading) {
     return <Loading />;
   }
   return (
