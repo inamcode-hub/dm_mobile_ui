@@ -16,6 +16,7 @@ import {
   userProfileUpdateThunk,
 } from '../../../../features/user/userProfileSlice';
 import MobilePicker from './component/profile_mobile';
+import Loading from '../../../../components/Loading';
 
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -41,6 +42,9 @@ const ForgotPasswordUpdate = () => {
   useEffect(() => {
     dispatch(userProfileReadThunk());
   }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Wrapper>
       <Container>
