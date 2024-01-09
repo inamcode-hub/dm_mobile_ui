@@ -18,6 +18,7 @@ import {
 import MobilePicker from './component/profile_mobile';
 import Loading from '../../../../components/Loading';
 import { grey } from '@mui/material/colors';
+import CardWrapper from '../../../../styles/warppers/CardWrapper';
 
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();
@@ -48,7 +49,7 @@ const ForgotPasswordUpdate = () => {
   }
   return (
     <Wrapper>
-      <Container>
+      <CardWrapperStyle>
         <div className='title'>User Profile</div>
         <form onSubmit={handleSubmit}>
           <Body>
@@ -129,7 +130,7 @@ const ForgotPasswordUpdate = () => {
             </Button>
           </Body>
         </form>
-      </Container>
+      </CardWrapperStyle>
     </Wrapper>
   );
 };
@@ -140,17 +141,8 @@ const Wrapper = styled.div`
   margin-top: 3rem;
   margin-bottom: 3rem;
 `;
-
-const Container = styled.div`
-  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
-    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
-  border-radius: 16px;
-  padding: 20px 20px;
-  z-index: 0;
-  background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#333' : 'white'};
-  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
+// card wrapper
+const CardWrapperStyle = styled(CardWrapper)`
   @media (max-width: 600px) {
     width: 90%;
   }
@@ -160,21 +152,7 @@ const Container = styled.div`
   @media (min-width: 960px) {
     width: 60vw;
   }
-  .title {
-    font-size: 2rem;
-    font-weight: 500;
-    margin-bottom: 1rem;
-    text-align: center;
-    background-color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? grey[900] : 'var(--primary-2)'};
-    color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? 'var(--primary-2)' : 'var(--primary-18)'};
-    padding: 0.5rem 1rem;
-    border-radius: 5px;
-    margin-bottom: 3rem;
-  }
 `;
-
 const Body = styled.div`
   display: flex;
   flex-direction: column;
