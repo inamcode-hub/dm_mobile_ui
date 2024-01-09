@@ -1,33 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import CardWrapper from '../../../../styles/warppers/CardWrapper';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { TbMoodEmpty } from 'react-icons/tb';
 import { grey } from '@mui/material/colors';
+import { operatorsThunk } from '../../../../features/user/userOperatorSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import Loading from '../../../../components/Loading';
 
 const AddUser = () => {
-  const user = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'jhon@gmail.com',
-    },
-    {
-      id: 2,
-      name: 'John Doe',
-      email: 'chris@gmail.com',
-    },
-    {
-      id: 3,
-      name: 'John Doe',
-      email: 'jhon@gmail.com',
-    },
-    {
-      id: 4,
-      name: 'John Doe',
-      email: 'chris@gmail.com',
-    },
-  ];
+  const { isLoading, users } = useSelector((state) => state.operators);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(operatorsThunk());
+  }, []);
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <Wrapper>
       <CardWrapperStyle>
@@ -38,7 +28,7 @@ const AddUser = () => {
         <div className='body'>
           {
             // if no user found
-            user.length === 0 ? (
+            users.length === 0 ? (
               <div className='no-user'>
                 <div className='icon'>
                   <TbMoodEmpty />
@@ -52,15 +42,22 @@ const AddUser = () => {
                     <tr>
                       <th>Name</th>
                       <th>Email</th>
-                      <th>Actions</th>
+                      <th className='actions'>Actions</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {user.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.name}</td>
+                    {users.map((item) => (
+                      <tr key={item._id}>
+                        <td>
+                          <span style={{ textTransform: 'capitalize' }}>
+                            {item.firstName}
+                          </span>{' '}
+                          <span style={{ textTransform: 'capitalize' }}>
+                            {item.lastName}
+                          </span>
+                        </td>
                         <td>{item.email}</td>
-                        <td className='buttons'>
+                        <td className='buttons actions'>
                           <Button
                             variant='outlined'
                             color='primary'>
@@ -124,10 +121,16 @@ const Wrapper = styled.div`
   }
   .body {
     .table {
-      // button box need only 130px width
-
-      th:nth-child(3) {
+      overflow-x: auto;
+      th:nth-of-type(3) {
         width: 130px;
+      }
+
+      @media (max-width: 600px) {
+        th:nth-of-type(2),
+        td:nth-last-of-type(2) {
+          display: none;
+        }
       }
       table {
         width: 100%;
@@ -139,7 +142,7 @@ const Wrapper = styled.div`
           border: 1px solid #ddd;
           padding: 8px;
         }
-        tr:nth-child(even) {
+        tr:nth-of-type(even) {
           background-color: ${({ theme }) =>
             theme.palette.mode === 'dark' ? '#424242' : '#f2f2f2'};
         }
