@@ -78,7 +78,7 @@ const ForgotPasswordUpdate = () => {
   return (
     <Wrapper>
       <CardWrapper>
-        <div className='title'>Change your password</div>
+        <div className='title'>Change password</div>
         <form onSubmit={handleSubmit}>
           <Body>
             <TextField

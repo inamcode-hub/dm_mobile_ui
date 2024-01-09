@@ -50,7 +50,7 @@ const ForgotPasswordUpdate = () => {
   return (
     <Wrapper>
       <CardWrapperStyle>
-        <div className='title'>User Profile</div>
+        <div className='title'>Profile</div>
         <form onSubmit={handleSubmit}>
           <Body>
             <InputFields>
