@@ -23,6 +23,7 @@ import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { IoMdKey } from 'react-icons/io';
 import { FaRegChartBar } from 'react-icons/fa';
 import { AiOutlineSchedule } from 'react-icons/ai';
+import { FaUserPlus } from 'react-icons/fa';
 const listItems = [
   {
     text: 'Dashboard',
@@ -57,6 +58,11 @@ const collapseItems = [
     text: 'Change Password',
     path: '/dashboard/user/change-password',
     icon: <IoMdKey size={28} />,
+  },
+  {
+    text: 'Add Staff',
+    path: '/dashboard/user/add-user',
+    icon: <FaUserPlus size={28} />,
   },
 ];
 
