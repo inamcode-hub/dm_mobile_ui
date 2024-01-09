@@ -54,7 +54,7 @@ const Login = () => {
     <Wrapper>
       <CardWrapper>
         <Heading>
-          <div className='title'>Sign in to DryerMaster</div>
+          <div className='title'>Sign in</div>
           <HeadingBody>
             <Typography
               variant='body2'

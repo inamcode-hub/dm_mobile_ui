@@ -28,7 +28,7 @@ const RegisterSerial = () => {
     <Wrapper>
       <CardWrapper>
         <Heading>
-          <div className='title'>Get started with DryerMaster</div>
+          <div className='title'>Register Account</div>
           <HeadingBody>
             <Typography
               variant='body2'

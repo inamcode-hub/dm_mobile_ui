@@ -82,7 +82,7 @@ const RegisterUserDetails = () => {
     <Wrapper>
       <CardWrapper>
         <Heading>
-          <div className='title'>Let&apos;s setup your account</div>
+          <div className='title'>Register Account</div>
           <HeadingBody>
             <Typography
               variant='body2'
