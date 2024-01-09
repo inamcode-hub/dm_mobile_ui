@@ -15,7 +15,7 @@ import {
   MdHistory,
   MdOutlineManageAccounts,
 } from 'react-icons/md';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getSystemStateValues } from '../../../../features/system/systemSlice';
 import { AiOutlineDashboard } from 'react-icons/ai';
@@ -24,66 +24,6 @@ import { IoMdKey } from 'react-icons/io';
 import { FaRegChartBar } from 'react-icons/fa';
 import { AiOutlineSchedule } from 'react-icons/ai';
 import { FaUserPlus } from 'react-icons/fa';
-const listItems = [
-  {
-    text: 'Dashboard',
-    path: '/dashboard',
-    icon: <AiOutlineDashboard size={28} />,
-  },
-  {
-    text: 'Charts',
-    path: '/dashboard/charts',
-    icon: <FaRegChartBar size={28} />,
-  },
-  {
-    text: 'History',
-    path: '/dashboard/history',
-    icon: <MdHistory size={28} />,
-  },
-  {
-    text: 'Messages',
-    path: '/dashboard/messages',
-    icon: <MdForwardToInbox size={28} />,
-  },
-];
-
-const collapseItems = [
-  {
-    text: 'Profile',
-    path: '/dashboard/user/profile',
-    icon: <BsPersonVcard size={28} />,
-  },
-
-  {
-    text: 'Change Password',
-    path: '/dashboard/user/change-password',
-    icon: <IoMdKey size={28} />,
-  },
-  {
-    text: 'Add Staff',
-    path: '/dashboard/user/add-user',
-    icon: <FaUserPlus size={28} />,
-  },
-];
-
-const collapseItems2 = [
-  {
-    text: 'Billing',
-    path: '/dashboard/account/billing',
-    icon: <BsCreditCard size={28} />,
-  },
-  {
-    text: 'Invoices',
-    path: '/dashboard/account/invoice',
-    icon: <FaFileInvoiceDollar size={28} />,
-  },
-
-  {
-    text: 'Subscription',
-    path: '/dashboard/account/subscription',
-    icon: <AiOutlineSchedule size={28} />,
-  },
-];
 
 const initialState = {
   openUser: false,
@@ -91,6 +31,74 @@ const initialState = {
 };
 
 const NavbarList = () => {
+  const { role } = useSelector((state) => state.user);
+  const listItems = [
+    {
+      text: 'Dashboard',
+      path: '/dashboard',
+      icon: <AiOutlineDashboard size={28} />,
+    },
+    {
+      text: 'Charts',
+      path: '/dashboard/charts',
+      icon: <FaRegChartBar size={28} />,
+    },
+    {
+      text: 'History',
+      path: '/dashboard/history',
+      icon: <MdHistory size={28} />,
+    },
+    {
+      text: 'Messages',
+      path: '/dashboard/messages',
+      icon: <MdForwardToInbox size={28} />,
+    },
+  ];
+
+  const collapseItems = [
+    {
+      text: 'Profile',
+      path: '/dashboard/user/profile',
+      icon: <BsPersonVcard size={28} />,
+    },
+    {
+      text: 'Change Password',
+      path: '/dashboard/user/change-password',
+      icon: <IoMdKey size={28} />,
+    },
+  ];
+  // if role is admin, add admin menu items
+  if (role === 'user') {
+    collapseItems.push({
+      text: 'Add Operators',
+      path: '/dashboard/user/add-user',
+      icon: <FaUserPlus size={28} />,
+    });
+  }
+
+  const collapseItems2 = [
+    {
+      text: 'Subscription',
+      path: '/dashboard/account/subscription',
+      icon: <AiOutlineSchedule size={28} />,
+    },
+  ];
+
+  // if role is admin, add admin menu items
+  if (role === 'user') {
+    collapseItems2.push(
+      {
+        text: 'Billing',
+        path: '/dashboard/account/billing',
+        icon: <BsCreditCard size={28} />,
+      },
+      {
+        text: 'Invoices',
+        path: '/dashboard/account/invoice',
+        icon: <FaFileInvoiceDollar size={28} />,
+      }
+    );
+  }
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();

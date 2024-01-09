@@ -4,12 +4,14 @@ import localStorageSlice from './features/localStorage/localStorageSlice';
 import UserSlice from './features/user/userSlice';
 import systemSlice from './features/system/systemSlice';
 import userProfileSlice from './features/user/userProfileSlice';
+import userOperatorSlice from './features/user/userOperatorSlice';
 
 const reducers = {
   sample: samplesSlice,
   localStorage: localStorageSlice,
   user: UserSlice,
   userProfile: userProfileSlice,
+  operators: userOperatorSlice,
   system: systemSlice,
 };
 

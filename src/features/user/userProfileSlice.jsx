@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 const initialState = {
   firstName: '',
   lastName: '',
+  role: '',
   farmName: '',
   email: '',
   cellPhone: '',
@@ -113,6 +114,7 @@ const userProfileSlice = createSlice({
       .addCase(userProfileReadThunk.fulfilled, (state, { payload }) => {
         state.firstName = payload.data.firstName || '';
         state.lastName = payload.data.lastName || '';
+        state.role = payload.data.role || '';
         state.farmName = payload.data.farmName || '';
         state.email = payload.data.email || '';
         state.cellPhone = payload.data?.cellPhone || '';

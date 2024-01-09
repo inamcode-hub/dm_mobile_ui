@@ -15,6 +15,7 @@ const initialState = {
   firstName: '',
   lastName: '',
   isMember: Cookies.get('dryermaster_token') ? true : false,
+  role: getUserCookies('dryermaster_role'),
   isDmRegistered: false,
   dmSerial: '',
   isSubscriptionActive: false,
@@ -178,6 +179,7 @@ const userSlice = createSlice({
         setUserCookies(payload);
         state.isMember = true;
         state.isLoading = false;
+        state.role = payload.role;
       })
       .addCase(userRegisterThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
@@ -190,6 +192,7 @@ const userSlice = createSlice({
         setUserCookies(payload);
         state.isLoading = false;
         state.isMember = true;
+        state.role = payload.role;
       })
       .addCase(userLoginThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
