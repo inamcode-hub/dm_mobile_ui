@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../../components/Loading';
 import NewOperatorDialog from './component/addOperator_new';
 import DeleteOperatorDialog from './component/addOperator_delete';
+import OperatorInfo from './component/addOperator_info';
 
 const AddUser = () => {
   const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
@@ -114,11 +115,7 @@ const AddUser = () => {
             onClick={handleClickOpen}>
             Add Operator
           </Button>
-          <small>
-            <i>
-              <b>Note:</b> Only admin can add upto 5 operators
-            </i>
-          </small>
+          <OperatorInfo />
         </div>
       </CardWrapperStyle>
     </Wrapper>
@@ -214,4 +211,5 @@ const CardWrapperStyle = styled(CardWrapper)`
     width: 700px;
   }
 `;
+
 export default AddUser;
