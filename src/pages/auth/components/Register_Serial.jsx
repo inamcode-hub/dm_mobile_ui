@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserStateValues } from '../../../features/user/userSlice';
-import CardWrapper from '../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../styles/wrappers/CardWrapper';
 
 const RegisterSerial = () => {
   const { isLoading } = useSelector((state) => state.user);

@@ -9,6 +9,7 @@ const initialState = {
   email: '',
   users: [],
   isLoading: false,
+  openDialog: false,
 };
 export const operatorsThunk = createAsyncThunk(
   'operators/operatorsThunk',
@@ -30,7 +31,7 @@ const operatorsSlice = createSlice({
   name: 'operators',
   initialState,
   reducers: {
-    getSampleStateValues: (state, { payload }) => {
+    getUserOperatorStateValues: (state, { payload }) => {
       const { name, value } = payload;
       state[name] = value;
     },
@@ -54,6 +55,6 @@ const operatorsSlice = createSlice({
       });
   },
 });
-export const { getSampleStateValues } = operatorsSlice.actions;
+export const { getUserOperatorStateValues } = operatorsSlice.actions;
 
 export default operatorsSlice.reducer;

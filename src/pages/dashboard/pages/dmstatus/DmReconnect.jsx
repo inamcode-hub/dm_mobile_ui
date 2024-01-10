@@ -6,7 +6,7 @@ import WifiIcon from '@mui/icons-material/Wifi';
 import SpeedIcon from '@mui/icons-material/Speed';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
-import CardWrapper from '../../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 
 const DmReconnect = () => {
   return (

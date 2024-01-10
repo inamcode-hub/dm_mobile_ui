@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
-import CardWrapper from '../../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 import styled from '@emotion/styled';
 import { Button } from '@mui/material';
 import { TbMoodEmpty } from 'react-icons/tb';
 import { grey } from '@mui/material/colors';
-import { operatorsThunk } from '../../../../features/user/userOperatorSlice';
+import {
+  getUserOperatorStateValues,
+  operatorsThunk,
+} from '../../../../features/user/userOperatorSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../../components/Loading';
+import NewOperatorDialog from './component/addOperator_new';
 
 const AddUser = () => {
   const { isLoading, users } = useSelector((state) => state.operators);
@@ -18,8 +22,12 @@ const AddUser = () => {
   if (isLoading) {
     return <Loading />;
   }
+  const handleClickOpen = () => {
+    dispatch(getUserOperatorStateValues({ name: 'openDialog', value: true }));
+  };
   return (
     <Wrapper>
+      <NewOperatorDialog />
       <CardWrapperStyle>
         <div className='title'>
           Operators
@@ -81,7 +89,9 @@ const AddUser = () => {
           <Button
             variant='contained'
             color='primary'
-            sx={{ width: '100%' }}>
+            sx={{ width: '100%' }}
+            disabled={users.length >= 5 ? true : false}
+            onClick={handleClickOpen}>
             Add Operator
           </Button>
           <small>

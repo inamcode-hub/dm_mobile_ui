@@ -5,7 +5,7 @@ import { FaCheck } from 'react-icons/fa';
 import { format, sub } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { MdOutlineWorkspacePremium } from 'react-icons/md';
-import CardWrapper from '../../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 const Subscription = () => {
   const { isSubscriptionActive, subscriptionExpiry } = useSelector(
     (state) => state.user

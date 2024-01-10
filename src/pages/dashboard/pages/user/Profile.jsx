@@ -18,7 +18,7 @@ import {
 import MobilePicker from './component/profile_mobile';
 import Loading from '../../../../components/Loading';
 import { grey } from '@mui/material/colors';
-import CardWrapper from '../../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 
 const ForgotPasswordUpdate = () => {
   const dispatch = useDispatch();

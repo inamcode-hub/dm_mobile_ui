@@ -5,7 +5,7 @@ import React from 'react';
 import { format, set } from 'date-fns';
 
 import { useSelector } from 'react-redux';
-import CardWrapper from '../../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 
 const DmSubscription = () => {
   const { subscriptionExpiry } = useSelector((state) => state.user);

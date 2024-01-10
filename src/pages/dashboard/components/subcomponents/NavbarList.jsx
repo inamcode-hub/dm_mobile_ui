@@ -71,7 +71,7 @@ const NavbarList = () => {
   if (role === 'user') {
     collapseItems.push({
       text: 'Add Operators',
-      path: '/dashboard/user/add-user',
+      path: '/dashboard/user/add-operator',
       icon: <FaUserPlus size={28} />,
     });
   }

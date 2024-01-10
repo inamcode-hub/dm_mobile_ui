@@ -13,7 +13,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import useFormValidation from '../../../../hooks/useFormValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { userChangePasswordThunk } from '../../../../features/user/userSlice';
-import CardWrapper from '../../../../styles/warppers/CardWrapper';
+import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 
 const initialState = {
   confirmPassword: '',

@@ -11,7 +11,7 @@ import ChangePassword from './pages/user/ChangePassword';
 import Billing from './pages/account/Billing';
 import Invoice from './pages/account/Invoice';
 import Subscription from './pages/account/Subscription';
-import AddUser from './pages/user/AddUser';
+import AddOperator from './pages/user/AddOperator';
 
 const DashboardRoutes = () => {
   return (
@@ -48,8 +48,8 @@ const DashboardRoutes = () => {
           element={<ChangePassword />}
         />
         <Route
-          path='user/add-user'
-          element={<AddUser />}
+          path='user/add-operator'
+          element={<AddOperator />}
         />
         <Route
           path='account/billing'
