@@ -68,7 +68,7 @@ const NavbarList = () => {
     },
   ];
   // if role is admin, add admin menu items
-  if (role === 'user') {
+  if (role === 'user' || role === 'admin') {
     collapseItems.push({
       text: 'Add Operators',
       path: '/dashboard/user/add-operator',
@@ -85,7 +85,7 @@ const NavbarList = () => {
   ];
 
   // if role is admin, add admin menu items
-  if (role === 'user') {
+  if (role === 'user' || role === 'admin') {
     collapseItems2.push(
       {
         text: 'Billing',
