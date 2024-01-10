@@ -79,11 +79,11 @@ const AddUser = () => {
                         </td>
                         <td>{item.email}</td>
                         <td className='buttons actions'>
-                          {/* <Button
+                          <Button
                             variant='outlined'
                             color='primary'>
                             Edit
-                          </Button> */}
+                          </Button>
                           <Button
                             variant='outlined'
                             color='error'
