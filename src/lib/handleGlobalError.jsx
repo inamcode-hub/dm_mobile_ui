@@ -1,6 +1,8 @@
 import React from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { removeUserCookies } from '../features/user/lib';
+import { getUserStateValues } from '../features/user/userSlice';
 
 const CustomToast = ({ header, message }) => (
   <div>
@@ -10,6 +12,7 @@ const CustomToast = ({ header, message }) => (
 );
 
 export const handleGlobalError = (error, thunkAPI) => {
+  const dispatch = thunkAPI.dispatch;
   let header = '';
   let message = '';
   toast.dismiss();
@@ -35,6 +38,8 @@ export const handleGlobalError = (error, thunkAPI) => {
       break;
     case 401:
       header = 'Error 401';
+      removeUserCookies();
+      dispatch(getUserStateValues({ name: 'isMember', value: false }));
       break;
     case 403:
       header = 'Error 403';

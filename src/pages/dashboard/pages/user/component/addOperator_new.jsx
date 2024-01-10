@@ -118,7 +118,7 @@ const NewOperatorDialog = () => {
               margin='dense'
               name='password'
               label='Password'
-              type='password'
+              type='text'
               fullWidth
               required
               value={password}

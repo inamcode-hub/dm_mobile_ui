@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserOperatorStateValues,
   operatorsEditThunk,
-  operatorsRegisterThunk,
 } from '../../../../../features/user/userOperatorSlice';
 import styled from '@emotion/styled';
 import {
@@ -20,7 +19,13 @@ import {
 
 const initialState = {
   passwordError: false,
+  passwordRequirements: {
+    minLength: false,
+    oneCapital: false,
+    oneNumber: false,
+  },
 };
+
 const EditOperatorDialog = () => {
   const {
     openEditDialog,
@@ -43,19 +48,32 @@ const EditOperatorDialog = () => {
     dispatch(getUserOperatorStateValues({ name: 'email', value: '' }));
     dispatch(getUserOperatorStateValues({ name: 'password', value: '' }));
   };
-
   const handleChange = (e) => {
-    dispatch(
-      getUserOperatorStateValues({
-        name: e.target.name,
-        value: e.target.value,
-      })
-    );
+    const { name, value } = e.target;
+    dispatch(getUserOperatorStateValues({ name, value }));
+
+    if (name === 'password') {
+      const minLength = value.length >= 8;
+      const oneCapital = /[A-Z]/.test(value);
+      const oneNumber = /\d/.test(value);
+
+      setState({
+        ...state,
+        passwordRequirements: { minLength, oneCapital, oneNumber },
+        passwordError:
+          value.length > 0 && !(minLength && oneCapital && oneNumber),
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password.length > 0 && password.length < 8) {
+    if (
+      password.length > 0 &&
+      (!state.passwordRequirements.minLength ||
+        !state.passwordRequirements.oneCapital ||
+        !state.passwordRequirements.oneNumber)
+    ) {
       setState({ ...state, passwordError: true });
       return;
     }
@@ -108,16 +126,17 @@ const EditOperatorDialog = () => {
               margin='dense'
               name='password'
               label='New Password'
-              type='text'
+              type='password'
               fullWidth
               value={password}
+              error={state.passwordError}
+              helperText={
+                state.passwordError && 'Please meet all password requirements'
+              }
               onChange={handleChange}
             />
-
-            {state.passwordError && (
-              <Typography color='error'>
-                Password must be at least 8 characters
-              </Typography>
+            {password.length > 0 && (
+              <PasswordRequirements requirements={state.passwordRequirements} />
             )}
             <DialogActions>
               <Button
@@ -139,5 +158,33 @@ const EditOperatorDialog = () => {
 };
 
 const Wrapper = styled.div``;
+
+import PropTypes from 'prop-types';
+
+const PasswordRequirements = ({ requirements }) => (
+  <List>
+    <li style={{ color: requirements.minLength ? 'green' : 'black' }}>
+      At least 8 characters
+    </li>
+    <li style={{ color: requirements.oneCapital ? 'green' : 'black' }}>
+      At least one uppercase letter
+    </li>
+    <li style={{ color: requirements.oneNumber ? 'green' : 'black' }}>
+      At least one number
+    </li>
+  </List>
+);
+
+PasswordRequirements.propTypes = {
+  requirements: PropTypes.shape({
+    minLength: PropTypes.bool,
+    oneCapital: PropTypes.bool,
+    oneNumber: PropTypes.bool,
+  }).isRequired,
+};
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
 
 export default EditOperatorDialog;
