@@ -12,6 +12,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../../components/Loading';
 import NewOperatorDialog from './component/addOperator_new';
+import DeleteOperatorDialog from './component/addOperator_delete';
 
 const AddUser = () => {
   const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
@@ -23,8 +24,12 @@ const AddUser = () => {
     dispatch(getUserOperatorStateValues({ name: 'openDialog', value: true }));
   };
 
-  const handleDelete = (id) => {
-    dispatch(operatorsDeleteThunk(id));
+  const handleDelete = ({ id, name }) => {
+    dispatch(
+      getUserOperatorStateValues({ name: 'showDeleteDialog', value: true })
+    );
+    dispatch(getUserOperatorStateValues({ name: 'deleteId', value: id }));
+    dispatch(getUserOperatorStateValues({ name: 'deleteName', value: name }));
   };
   useEffect(() => {
     dispatch(operatorsThunk());
@@ -35,6 +40,7 @@ const AddUser = () => {
   return (
     <Wrapper>
       <NewOperatorDialog />
+      <DeleteOperatorDialog />
       <CardWrapperStyle>
         <div className='title'>
           Operators
@@ -81,7 +87,12 @@ const AddUser = () => {
                           <Button
                             variant='outlined'
                             color='error'
-                            onClick={() => handleDelete(item._id)}
+                            onClick={() =>
+                              handleDelete({
+                                id: item._id,
+                                name: item.firstName + ' ' + item.lastName,
+                              })
+                            }
                             disabled={isLoadingDelete ? true : false}>
                             Delete
                           </Button>

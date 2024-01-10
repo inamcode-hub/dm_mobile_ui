@@ -10,6 +10,8 @@ const initialState = {
   email: '',
   password: '',
   users: [],
+  deleteId: '',
+  deleteName: '',
   isLoading: false,
   isLoadingRegister: false,
   isLoadingDelete: false,
@@ -114,6 +116,7 @@ const operatorsSlice = createSlice({
         toast.success('Operator deleted successfully');
         state.refreshData = !state.refreshData;
         state.isLoadingDelete = false;
+        state.showDeleteDialog = false;
       })
       .addCase(operatorsDeleteThunk.rejected, (state, { payload }) => {
         state.isLoadingDelete = false;
