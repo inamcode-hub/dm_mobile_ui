@@ -13,13 +13,19 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-  CircularProgress,
   Typography,
+  CircularProgress,
 } from '@mui/material';
 
 const initialState = {
   passwordError: false,
+  passwordRequirements: {
+    minLength: false,
+    oneCapital: false,
+    oneNumber: false,
+  },
 };
+
 const NewOperatorDialog = () => {
   const {
     openDialog,
@@ -37,17 +43,29 @@ const NewOperatorDialog = () => {
   };
 
   const handleChange = (e) => {
-    dispatch(
-      getUserOperatorStateValues({
-        name: e.target.name,
-        value: e.target.value,
-      })
-    );
+    const { name, value } = e.target;
+    dispatch(getUserOperatorStateValues({ name, value }));
+
+    if (name === 'password') {
+      const minLength = value.length >= 8;
+      const oneCapital = /[A-Z]/.test(value);
+      const oneNumber = /\d/.test(value);
+
+      setState({
+        ...state,
+        passwordRequirements: { minLength, oneCapital, oneNumber },
+        passwordError: !(minLength && oneCapital && oneNumber),
+      });
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password.length < 8) {
+    if (
+      !state.passwordRequirements.minLength ||
+      !state.passwordRequirements.oneCapital ||
+      !state.passwordRequirements.oneNumber
+    ) {
       setState({ ...state, passwordError: true });
       return;
     }
@@ -100,18 +118,19 @@ const NewOperatorDialog = () => {
               margin='dense'
               name='password'
               label='Password'
-              type='text'
+              type='password'
               fullWidth
               required
               value={password}
+              error={state.passwordError}
               onChange={handleChange}
             />
-
             {state.passwordError && (
               <Typography color='error'>
-                Password must be at least 8 characters
+                Please meet all password requirements
               </Typography>
             )}
+            <PasswordRequirements requirements={state.passwordRequirements} />
             <DialogActions>
               <Button
                 onClick={handleClose}
@@ -132,5 +151,33 @@ const NewOperatorDialog = () => {
 };
 
 const Wrapper = styled.div``;
+
+import PropTypes from 'prop-types';
+
+const PasswordRequirements = ({ requirements }) => (
+  <List>
+    <li style={{ color: requirements.minLength ? 'green' : 'black' }}>
+      At least 8 characters
+    </li>
+    <li style={{ color: requirements.oneCapital ? 'green' : 'black' }}>
+      At least one uppercase letter
+    </li>
+    <li style={{ color: requirements.oneNumber ? 'green' : 'black' }}>
+      At least one number
+    </li>
+  </List>
+);
+
+const List = styled.ul`
+  list-style: none;
+  padding: 0;
+`;
+PasswordRequirements.propTypes = {
+  requirements: PropTypes.shape({
+    minLength: PropTypes.bool,
+    oneCapital: PropTypes.bool,
+    oneNumber: PropTypes.bool,
+  }).isRequired,
+};
 
 export default NewOperatorDialog;
