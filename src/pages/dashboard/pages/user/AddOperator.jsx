@@ -13,12 +13,14 @@ import Loading from '../../../../components/Loading';
 import NewOperatorDialog from './component/addOperator_new';
 
 const AddUser = () => {
-  const { isLoading, users } = useSelector((state) => state.operators);
+  const { isLoading, users, refreshData } = useSelector(
+    (state) => state.operators
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(operatorsThunk());
-  }, []);
+  }, [refreshData]);
   if (isLoading) {
     return <Loading />;
   }
