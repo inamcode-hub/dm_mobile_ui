@@ -10,11 +10,13 @@ const initialState = {
   email: '',
   password: '',
   users: [],
+  operatorId: '',
   deleteId: '',
   deleteName: '',
   isLoading: false,
   isLoadingRegister: false,
   isLoadingDelete: false,
+  isLoadingEdit: false,
   refreshData: false,
   openDialog: false,
   showDeleteDialog: false,
@@ -71,6 +73,27 @@ export const operatorsDeleteThunk = createAsyncThunk(
     }
   }
 );
+
+export const operatorsEditThunk = createAsyncThunk(
+  'operators/operatorsEditThunk',
+  async (_, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    const { operators } = thunkAPI.getState();
+
+    try {
+      const response = await customFetch.put(
+        `/user/edit_operator`,
+        { ...operators },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
 const operatorsSlice = createSlice({
   name: 'operators',
   initialState,
@@ -121,6 +144,22 @@ const operatorsSlice = createSlice({
       })
       .addCase(operatorsDeleteThunk.rejected, (state, { payload }) => {
         state.isLoadingDelete = false;
+      })
+      .addCase(operatorsEditThunk.pending, (state, { payload }) => {
+        state.isLoadingEdit = true;
+      })
+      .addCase(operatorsEditThunk.fulfilled, (state, { payload }) => {
+        toast.success('Operator updated successfully');
+        state.refreshData = !state.refreshData;
+        state.isLoadingEdit = false;
+        state.openEditDialog = false;
+        state.firstName = '';
+        state.lastName = '';
+        state.email = '';
+        state.password = '';
+      })
+      .addCase(operatorsEditThunk.rejected, (state, { payload }) => {
+        state.isLoadingEdit = false;
       });
   },
 });

@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserOperatorStateValues,
+  operatorsEditThunk,
   operatorsRegisterThunk,
 } from '../../../../../features/user/userOperatorSlice';
 import styled from '@emotion/styled';
@@ -22,18 +23,25 @@ const initialState = {
 };
 const EditOperatorDialog = () => {
   const {
-    openDialog,
+    openEditDialog,
     firstName,
     lastName,
     email,
     password,
-    isLoadingRegister,
+    isLoadingEdit,
   } = useSelector((state) => state.operators);
   const dispatch = useDispatch();
   const [state, setState] = React.useState(initialState);
 
   const handleClose = () => {
-    dispatch(getUserOperatorStateValues({ name: 'openDialog', value: false }));
+    dispatch(
+      getUserOperatorStateValues({ name: 'openEditDialog', value: false })
+    );
+    dispatch(getUserOperatorStateValues({ name: 'operatorId', value: '' }));
+    dispatch(getUserOperatorStateValues({ name: 'firstName', value: '' }));
+    dispatch(getUserOperatorStateValues({ name: 'lastName', value: '' }));
+    dispatch(getUserOperatorStateValues({ name: 'email', value: '' }));
+    dispatch(getUserOperatorStateValues({ name: 'password', value: '' }));
   };
 
   const handleChange = (e) => {
@@ -47,22 +55,22 @@ const EditOperatorDialog = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password.length < 8) {
+    if (password.length > 0 && password.length < 8) {
       setState({ ...state, passwordError: true });
       return;
     }
-    dispatch(operatorsRegisterThunk());
+    dispatch(operatorsEditThunk());
   };
 
   return (
     <Wrapper>
       <Dialog
-        open={openDialog}
+        open={openEditDialog}
         onClose={handleClose}>
-        <DialogTitle>Add New Operator</DialogTitle>
+        <DialogTitle>Edit Operator</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Fill in the details of the new operator.
+            Please fill out the form below to edit an operator.
           </DialogContentText>
           <form onSubmit={handleSubmit}>
             <TextField
@@ -99,10 +107,9 @@ const EditOperatorDialog = () => {
             <TextField
               margin='dense'
               name='password'
-              label='Password'
+              label='New Password'
               type='text'
               fullWidth
-              required
               value={password}
               onChange={handleChange}
             />
@@ -121,7 +128,7 @@ const EditOperatorDialog = () => {
               <Button
                 type='submit'
                 variant='contained'>
-                {isLoadingRegister ? <CircularProgress size={24} /> : 'Submit'}
+                {isLoadingEdit ? <CircularProgress size={24} /> : 'Update'}
               </Button>
             </DialogActions>
           </form>

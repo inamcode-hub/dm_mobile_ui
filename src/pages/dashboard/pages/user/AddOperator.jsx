@@ -26,6 +26,22 @@ const AddUser = () => {
     dispatch(getUserOperatorStateValues({ name: 'openDialog', value: true }));
   };
 
+  const handleEdit = (item) => {
+    dispatch(
+      getUserOperatorStateValues({ name: 'openEditDialog', value: true })
+    );
+    dispatch(
+      getUserOperatorStateValues({ name: 'firstName', value: item.firstName })
+    );
+    dispatch(
+      getUserOperatorStateValues({ name: 'lastName', value: item.lastName })
+    );
+    dispatch(getUserOperatorStateValues({ name: 'email', value: item.email }));
+    dispatch(
+      getUserOperatorStateValues({ name: 'operatorId', value: item._id })
+    );
+  };
+
   const handleDelete = ({ id, name }) => {
     dispatch(
       getUserOperatorStateValues({ name: 'showDeleteDialog', value: true })
@@ -84,7 +100,8 @@ const AddUser = () => {
                         <td className='buttons actions'>
                           <Button
                             variant='outlined'
-                            color='primary'>
+                            color='primary'
+                            onClick={() => handleEdit(item)}>
                             Edit
                           </Button>
                           <Button
