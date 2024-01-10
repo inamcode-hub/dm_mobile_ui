@@ -79,11 +79,11 @@ const AddUser = () => {
                         </td>
                         <td>{item.email}</td>
                         <td className='buttons actions'>
-                          <Button
+                          {/* <Button
                             variant='outlined'
                             color='primary'>
                             Edit
-                          </Button>
+                          </Button> */}
                           <Button
                             variant='outlined'
                             color='error'
@@ -153,7 +153,7 @@ const Wrapper = styled.div`
     .table {
       overflow-x: auto;
       th:nth-of-type(3) {
-        width: 130px;
+        width: 80px;
       }
 
       @media (max-width: 600px) {
