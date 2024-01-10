@@ -17,6 +17,18 @@ const getTheme = (mode) => {
         paper: mode === 'dark' ? '#333' : '#ffffff',
       },
     },
+    components: {
+      MuiButton: {
+        styleOverrides: {
+          outlined: {
+            ...(mode === 'dark' && {
+              borderColor: 'var(--primary-10)', // Replace with your desired color
+              color: 'var(--white)', // Replace with your desired color
+            }),
+          },
+        },
+      },
+    },
   });
 };
 

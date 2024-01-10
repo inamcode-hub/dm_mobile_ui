@@ -113,10 +113,14 @@ const NewOperatorDialog = () => {
               </Typography>
             )}
             <DialogActions>
-              <Button onClick={handleClose}>Cancel</Button>
+              <Button
+                onClick={handleClose}
+                variant='outlined'>
+                Cancel
+              </Button>
               <Button
                 type='submit'
-                color='primary'>
+                variant='contained'>
                 {isLoadingRegister ? <CircularProgress size={24} /> : 'Submit'}
               </Button>
             </DialogActions>
