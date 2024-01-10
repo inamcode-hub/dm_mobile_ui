@@ -6,6 +6,7 @@ import { TbMoodEmpty } from 'react-icons/tb';
 import { grey } from '@mui/material/colors';
 import {
   getUserOperatorStateValues,
+  operatorsDeleteThunk,
   operatorsThunk,
 } from '../../../../features/user/userOperatorSlice';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,20 +14,24 @@ import Loading from '../../../../components/Loading';
 import NewOperatorDialog from './component/addOperator_new';
 
 const AddUser = () => {
-  const { isLoading, users, refreshData } = useSelector(
+  const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
     (state) => state.operators
   );
   const dispatch = useDispatch();
 
+  const handleClickOpen = () => {
+    dispatch(getUserOperatorStateValues({ name: 'openDialog', value: true }));
+  };
+
+  const handleDelete = (id) => {
+    dispatch(operatorsDeleteThunk(id));
+  };
   useEffect(() => {
     dispatch(operatorsThunk());
   }, [refreshData]);
   if (isLoading) {
     return <Loading />;
   }
-  const handleClickOpen = () => {
-    dispatch(getUserOperatorStateValues({ name: 'openDialog', value: true }));
-  };
   return (
     <Wrapper>
       <NewOperatorDialog />
@@ -75,7 +80,9 @@ const AddUser = () => {
                           </Button>
                           <Button
                             variant='outlined'
-                            color='error'>
+                            color='error'
+                            onClick={() => handleDelete(item._id)}
+                            disabled={isLoadingDelete ? true : false}>
                             Delete
                           </Button>
                         </td>

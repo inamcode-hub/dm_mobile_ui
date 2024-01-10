@@ -12,8 +12,10 @@ const initialState = {
   users: [],
   isLoading: false,
   isLoadingRegister: false,
+  isLoadingDelete: false,
   openDialog: false,
   refreshData: false,
+  showDeleteDialog: false,
 };
 export const operatorsThunk = createAsyncThunk(
   'operators/operatorsThunk',
@@ -51,6 +53,21 @@ export const operatorsRegisterThunk = createAsyncThunk(
   }
 );
 
+export const operatorsDeleteThunk = createAsyncThunk(
+  'operators/operatorsDeleteThunk',
+  async (id, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+
+    try {
+      const response = await customFetch.delete(`/user/delete_operator/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
 const operatorsSlice = createSlice({
   name: 'operators',
   initialState,
@@ -89,6 +106,17 @@ const operatorsSlice = createSlice({
       })
       .addCase(operatorsRegisterThunk.rejected, (state, { payload }) => {
         state.isLoadingRegister = false;
+      })
+      .addCase(operatorsDeleteThunk.pending, (state, { payload }) => {
+        state.isLoadingDelete = true;
+      })
+      .addCase(operatorsDeleteThunk.fulfilled, (state, { payload }) => {
+        toast.success('Operator deleted successfully');
+        state.refreshData = !state.refreshData;
+        state.isLoadingDelete = false;
+      })
+      .addCase(operatorsDeleteThunk.rejected, (state, { payload }) => {
+        state.isLoadingDelete = false;
       });
   },
 });
