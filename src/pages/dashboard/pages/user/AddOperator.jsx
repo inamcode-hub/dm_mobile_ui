@@ -14,6 +14,7 @@ import Loading from '../../../../components/Loading';
 import NewOperatorDialog from './component/addOperator_new';
 import DeleteOperatorDialog from './component/addOperator_delete';
 import OperatorInfo from './component/addOperator_info';
+import EditOperatorDialog from './component/addOperator_edit';
 
 const AddUser = () => {
   const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
@@ -42,6 +43,7 @@ const AddUser = () => {
     <Wrapper>
       <NewOperatorDialog />
       <DeleteOperatorDialog />
+      <EditOperatorDialog />
       <CardWrapperStyle>
         <div className='title'>
           Operators

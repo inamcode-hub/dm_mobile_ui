@@ -15,9 +15,10 @@ const initialState = {
   isLoading: false,
   isLoadingRegister: false,
   isLoadingDelete: false,
-  openDialog: false,
   refreshData: false,
+  openDialog: false,
   showDeleteDialog: false,
+  openEditDialog: false,
 };
 export const operatorsThunk = createAsyncThunk(
   'operators/operatorsThunk',

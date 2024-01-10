@@ -43,8 +43,16 @@ const DeleteOperatorDialog = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleDelete}>Delete</Button>
+          <Button
+            onClick={handleClose}
+            variant='outlined'>
+            Cancel
+          </Button>
+          <Button
+            onClick={handleDelete}
+            variant='contained'>
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </Wrapper>
