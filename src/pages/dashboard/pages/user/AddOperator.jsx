@@ -19,9 +19,8 @@ import OperatorActionHistory from './component/addOperator/OperatorActionHistory
 import RemoveOperators from './component/addOperator/RemoveOperators';
 
 const AddUser = () => {
-  const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
-    (state) => state.operators
-  );
+  const { isLoading, users, removedUsers, refreshData, isLoadingDelete } =
+    useSelector((state) => state.operators);
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -137,7 +136,7 @@ const AddUser = () => {
             Add Operator
           </Button>
           <OperatorInfo />
-          <RemoveOperators />
+          {removedUsers.length > 0 && <RemoveOperators />}
         </div>
       </CardWrapperStyle>
       <OperatorActionHistory />
