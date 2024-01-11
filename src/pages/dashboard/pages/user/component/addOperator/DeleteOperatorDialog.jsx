@@ -12,7 +12,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserOperatorStateValues,
   operatorsDeleteThunk,
-} from '../../../../../features/user/userOperatorSlice';
+} from '../../../../../../features/user/userOperatorSlice';
 
 const DeleteOperatorDialog = () => {
   const { showDeleteDialog, deleteName, deleteId } = useSelector(

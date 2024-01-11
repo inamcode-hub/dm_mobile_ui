@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Divider } from '@mui/material';
 import React from 'react';
-import CardWrapper from '../../../../../styles/wrappers/CardWrapper';
-import TableWrapper from '../../../../../styles/wrappers/TableWrapper';
+import CardWrapper from '../../../../../../styles/wrappers/CardWrapper';
+import TableWrapper from '../../../../../../styles/wrappers/TableWrapper';
 
 const OperatorActionHistory = () => {
   return (

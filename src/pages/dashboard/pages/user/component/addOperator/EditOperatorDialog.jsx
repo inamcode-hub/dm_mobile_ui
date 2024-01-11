@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserOperatorStateValues,
   operatorsEditThunk,
-} from '../../../../../features/user/userOperatorSlice';
+} from '../../../../../../features/user/userOperatorSlice';
 import styled from '@emotion/styled';
 import {
   Button,

@@ -11,11 +11,12 @@ import {
 } from '../../../../features/user/userOperatorSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../../components/Loading';
-import NewOperatorDialog from './component/addOperator_new';
-import DeleteOperatorDialog from './component/addOperator_delete';
-import OperatorInfo from './component/addOperator_info';
-import EditOperatorDialog from './component/addOperator_edit';
-import OperatorActionHistory from './component/addOperator_history';
+import NewOperatorDialog from './component/addOperator/NewOperatorDialog';
+import DeleteOperatorDialog from './component/addOperator/DeleteOperatorDialog';
+import OperatorInfo from './component/addOperator/OperatorInfo';
+import EditOperatorDialog from './component/addOperator/EditOperatorDialog';
+import OperatorActionHistory from './component/addOperator/OperatorActionHistory';
+import RemoveOperators from './component/addOperator/RemoveOperators';
 
 const AddUser = () => {
   const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
@@ -136,6 +137,7 @@ const AddUser = () => {
             Add Operator
           </Button>
           <OperatorInfo />
+          <RemoveOperators />
         </div>
       </CardWrapperStyle>
       <OperatorActionHistory />

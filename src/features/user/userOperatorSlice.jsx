@@ -10,6 +10,7 @@ const initialState = {
   email: '',
   password: '',
   users: [],
+  removedUsers: [],
   operatorId: '',
   deleteId: '',
   deleteName: '',
@@ -110,8 +111,10 @@ const operatorsSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(operatorsThunk.fulfilled, (state, { payload }) => {
-        state.users = payload.data;
-
+        state.users = payload.data.filter((item) => item.active === true);
+        state.removedUsers = payload.data.filter(
+          (item) => item.active === false
+        );
         state.isLoading = false;
       })
       .addCase(operatorsThunk.rejected, (state, { payload }) => {
