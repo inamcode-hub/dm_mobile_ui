@@ -30,6 +30,7 @@ const ForgotPasswordUpdate = () => {
     farmName,
     email,
     cellPhone,
+    role,
   } = useSelector((state) => state.userProfile);
 
   const handleChange = (e) => {
@@ -64,6 +65,7 @@ const ForgotPasswordUpdate = () => {
                 onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
+                disabled={role === 'operator'}
               />
 
               <TextField
@@ -76,6 +78,7 @@ const ForgotPasswordUpdate = () => {
                 onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
+                disabled={role === 'operator'}
               />
               <TextField
                 fullWidth
@@ -87,6 +90,7 @@ const ForgotPasswordUpdate = () => {
                 onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
+                disabled={role === 'operator'}
               />
               <TextField
                 fullWidth
@@ -98,16 +102,24 @@ const ForgotPasswordUpdate = () => {
                 onChange={(e) => handleChange(e)}
                 required
                 InputLabelProps={{ shrink: true }}
+                disabled={role === 'operator'}
               />
               <MobilePicker />
             </InputFields>
-            <Divider
-              sx={{
-                margin: '10px 0',
-              }}>
-              Address
-            </Divider>
-            <Address />
+            <>
+              {role === 'user' && (
+                <>
+                  <Divider
+                    sx={{
+                      margin: '10px 0',
+                    }}>
+                    Address
+                  </Divider>
+                  <Address />
+                </>
+              )}
+            </>
+
             <Button
               fullWidth
               variant='contained'

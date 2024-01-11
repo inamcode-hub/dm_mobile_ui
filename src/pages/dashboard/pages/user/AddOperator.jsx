@@ -115,7 +115,7 @@ const AddUser = () => {
                               })
                             }
                             disabled={isLoadingDelete ? true : false}>
-                            Delete
+                            Remove
                           </Button>
                         </td>
                       </tr>
