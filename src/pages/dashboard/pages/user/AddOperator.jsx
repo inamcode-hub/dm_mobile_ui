@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 import styled from '@emotion/styled';
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import { TbMoodEmpty } from 'react-icons/tb';
 import { grey } from '@mui/material/colors';
 import {
@@ -15,6 +15,7 @@ import NewOperatorDialog from './component/addOperator_new';
 import DeleteOperatorDialog from './component/addOperator_delete';
 import OperatorInfo from './component/addOperator_info';
 import EditOperatorDialog from './component/addOperator_edit';
+import OperatorActionHistory from './component/addOperator_history';
 
 const AddUser = () => {
   const { isLoading, users, refreshData, isLoadingDelete } = useSelector(
@@ -137,16 +138,13 @@ const AddUser = () => {
           <OperatorInfo />
         </div>
       </CardWrapperStyle>
+      <OperatorActionHistory />
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: 3rem;
-  margin-bottom: 3rem;
   .no-user {
     display: flex;
     align-items: center;
@@ -220,6 +218,8 @@ const Wrapper = styled.div`
   }
 `;
 const CardWrapperStyle = styled(CardWrapper)`
+  margin: 0 auto;
+
   @media (max-width: 600px) {
     width: 90%;
   }
