@@ -95,6 +95,26 @@ export const operatorsEditThunk = createAsyncThunk(
     }
   }
 );
+
+export const reactiveOperatorThunk = createAsyncThunk(
+  'operators/reactiveOperatorThunk',
+  async (id, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+
+    try {
+      const response = await customFetch.put(
+        `/user/reactive_operator/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
 const operatorsSlice = createSlice({
   name: 'operators',
   initialState,
@@ -162,6 +182,17 @@ const operatorsSlice = createSlice({
         state.password = '';
       })
       .addCase(operatorsEditThunk.rejected, (state, { payload }) => {
+        state.isLoadingEdit = false;
+      })
+      .addCase(reactiveOperatorThunk.pending, (state, { payload }) => {
+        state.isLoadingEdit = true;
+      })
+      .addCase(reactiveOperatorThunk.fulfilled, (state, { payload }) => {
+        toast.success('Operator reactivated successfully');
+        state.refreshData = !state.refreshData;
+        state.isLoadingEdit = false;
+      })
+      .addCase(reactiveOperatorThunk.rejected, (state, { payload }) => {
         state.isLoadingEdit = false;
       });
   },

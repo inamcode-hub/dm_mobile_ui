@@ -9,12 +9,14 @@ import React from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { reactiveOperatorThunk } from '../../../../../../features/user/userOperatorSlice';
 const OperatorInfo = () => {
   const { removedUsers } = useSelector((state) => state.operators);
+  const dispatch = useDispatch();
 
-  const handleReactive = () => {
-    console.log('reactive');
+  const handleReactive = (_id) => {
+    dispatch(reactiveOperatorThunk(_id));
   };
   return (
     <Wrapper>
@@ -51,7 +53,7 @@ const OperatorInfo = () => {
                       <Button
                         variant='outlined'
                         color='primary'
-                        onClick={() => handleReactive()}>
+                        onClick={() => handleReactive(item._id)}>
                         Reactive
                       </Button>
                     </td>

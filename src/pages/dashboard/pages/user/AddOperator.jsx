@@ -16,7 +16,7 @@ import DeleteOperatorDialog from './component/addOperator/DeleteOperatorDialog';
 import OperatorInfo from './component/addOperator/OperatorInfo';
 import EditOperatorDialog from './component/addOperator/EditOperatorDialog';
 import OperatorActionHistory from './component/addOperator/OperatorActionHistory';
-import RemoveOperators from './component/addOperator/RemoveOperators';
+import RemoveOperators from './component/addOperator/RemovedOperators';
 
 const AddUser = () => {
   const { isLoading, users, removedUsers, refreshData, isLoadingDelete } =
