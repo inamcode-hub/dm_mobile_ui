@@ -8,7 +8,9 @@ const OperatorActionHistory = () => {
   return (
     <Wrapper>
       <Divider>
-        <h2>Operator Activity Log</h2>
+        <h2>
+          Action History <span>📜</span>
+        </h2>
       </Divider>
       <CardWrapperStyle className='card'>
         <TableWrapper>
@@ -60,6 +62,8 @@ const Wrapper = styled.div`
   width: 100%;
   .card {
     margin: 0 auto;
+  }
+  h2 {
   }
 `;
 
