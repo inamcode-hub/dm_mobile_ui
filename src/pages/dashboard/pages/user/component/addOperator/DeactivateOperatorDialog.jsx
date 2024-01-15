@@ -11,10 +11,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getUserOperatorStateValues,
-  operatorsDeleteThunk,
+  operatorsDeactivateThunk,
 } from '../../../../../../features/user/userOperatorSlice';
 
-const DeleteOperatorDialog = () => {
+const DeactivateOperatorDialog = () => {
   const { showDeleteDialog, deleteName, deleteId } = useSelector(
     (state) => state.operators
   );
@@ -26,7 +26,7 @@ const DeleteOperatorDialog = () => {
     );
   };
   const handleDelete = () => {
-    dispatch(operatorsDeleteThunk(deleteId));
+    dispatch(operatorsDeactivateThunk(deleteId));
   };
   return (
     <Wrapper>
@@ -34,12 +34,19 @@ const DeleteOperatorDialog = () => {
         open={showDeleteDialog}
         onClose={handleClose}>
         <DialogTitle>
-          <strong>Delete Operator</strong>
+          <strong>Deactivate Operator</strong>
         </DialogTitle>
 
         <DialogContent>
           <DialogContentText>
-            Are you sure you want to delete <strong>{deleteName}</strong>?
+            Are you sure you want to Remove <strong>{deleteName}</strong>?
+            <br />
+            {/*  add a note Deactivating will lock down the operator's account instantly, ensuring they cannot access or modify any information or settings in the system.   */}
+            <Text>
+              Removing will deactivate the operator&apos;s account instantly,
+              ensuring they cannot access or modify any information or settings
+              in the system.
+            </Text>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -51,7 +58,7 @@ const DeleteOperatorDialog = () => {
           <Button
             onClick={handleDelete}
             variant='contained'>
-            Delete
+            Deactivate
           </Button>
         </DialogActions>
       </Dialog>
@@ -60,4 +67,9 @@ const DeleteOperatorDialog = () => {
 };
 
 const Wrapper = styled.div``;
-export default DeleteOperatorDialog;
+const Text = styled.p`
+  font-size: 14px;
+  color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
+  margin-top: 10px;
+`;
+export default DeactivateOperatorDialog;

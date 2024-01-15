@@ -59,15 +59,19 @@ export const operatorsRegisterThunk = createAsyncThunk(
   }
 );
 
-export const operatorsDeleteThunk = createAsyncThunk(
-  'operators/operatorsDeleteThunk',
+export const operatorsDeactivateThunk = createAsyncThunk(
+  'operators/operatorsDeactivateThunk',
   async (id, thunkAPI) => {
     const token = getUserCookies('dryermaster_token');
 
     try {
-      const response = await customFetch.delete(`/user/delete_operator/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await customFetch.put(
+        `/user/deactivate_operator/${id}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -156,16 +160,16 @@ const operatorsSlice = createSlice({
       .addCase(operatorsRegisterThunk.rejected, (state, { payload }) => {
         state.isLoadingRegister = false;
       })
-      .addCase(operatorsDeleteThunk.pending, (state, { payload }) => {
+      .addCase(operatorsDeactivateThunk.pending, (state, { payload }) => {
         state.isLoadingDelete = true;
       })
-      .addCase(operatorsDeleteThunk.fulfilled, (state, { payload }) => {
-        toast.success('Operator deleted successfully');
+      .addCase(operatorsDeactivateThunk.fulfilled, (state, { payload }) => {
+        toast.success('Operator deactivated successfully');
         state.refreshData = !state.refreshData;
         state.isLoadingDelete = false;
         state.showDeleteDialog = false;
       })
-      .addCase(operatorsDeleteThunk.rejected, (state, { payload }) => {
+      .addCase(operatorsDeactivateThunk.rejected, (state, { payload }) => {
         state.isLoadingDelete = false;
       })
       .addCase(operatorsEditThunk.pending, (state, { payload }) => {

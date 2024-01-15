@@ -6,17 +6,16 @@ import { TbMoodEmpty } from 'react-icons/tb';
 import { grey } from '@mui/material/colors';
 import {
   getUserOperatorStateValues,
-  operatorsDeleteThunk,
   operatorsThunk,
 } from '../../../../features/user/userOperatorSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import Loading from '../../../../components/Loading';
 import NewOperatorDialog from './component/addOperator/NewOperatorDialog';
-import DeleteOperatorDialog from './component/addOperator/DeleteOperatorDialog';
 import OperatorInfo from './component/addOperator/OperatorInfo';
 import EditOperatorDialog from './component/addOperator/EditOperatorDialog';
 import OperatorActionHistory from './component/addOperator/OperatorActionHistory';
 import RemoveOperators from './component/addOperator/RemovedOperators';
+import DeactivateOperatorDialog from './component/addOperator/DeactivateOperatorDialog';
 
 const AddUser = () => {
   const { isLoading, users, removedUsers, refreshData, isLoadingDelete } =
@@ -59,7 +58,7 @@ const AddUser = () => {
   return (
     <Wrapper>
       <NewOperatorDialog />
-      <DeleteOperatorDialog />
+      <DeactivateOperatorDialog />
       <EditOperatorDialog />
       <CardWrapperStyle>
         <div className='title'>
