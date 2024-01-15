@@ -43,9 +43,9 @@ const DeactivateOperatorDialog = () => {
             <br />
             {/*  add a note Deactivating will lock down the operator's account instantly, ensuring they cannot access or modify any information or settings in the system.   */}
             <Text>
-              Removing will deactivate the operator&apos;s account instantly,
-              ensuring they cannot access or modify any information or settings
-              in the system.
+              This is a crucial security measure. Deactivating an operator
+              immediately secures system data and prevents any further access by
+              the individual.
             </Text>
           </DialogContentText>
         </DialogContent>
