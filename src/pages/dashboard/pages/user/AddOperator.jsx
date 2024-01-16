@@ -74,7 +74,7 @@ const AddUser = () => {
                 <div className='icon'>
                   <TbMoodEmpty />
                 </div>
-                <div className='text'>Currently you have no operators</div>
+                <div className='text'>No active operators detected.</div>
               </div>
             ) : (
               <div className='table'>
