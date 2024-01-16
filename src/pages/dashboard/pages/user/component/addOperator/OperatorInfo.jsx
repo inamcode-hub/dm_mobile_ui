@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 import React from 'react';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import styled from '@emotion/styled';
 const OperatorInfo = () => {
   return (
@@ -20,18 +19,14 @@ const OperatorInfo = () => {
         </AccordionSummary>
         <AccordionDetails>
           <List>
-            <li>
-              Maximum number of operators is capped at 5 to ensure optimal
-              management and efficiency.
-            </li>
-            <li>
-              Only the admin has the authority to add new operators, ensuring
-              controlled access and security.
-            </li>
-            <li>
-              Operators are granted view-only access to data, maintaining data
-              integrity by prohibiting alterations.
-            </li>
+            <li>Limit of 5 active operators for efficiency.</li>
+            <li>Total cap of 10 operators, including inactive.</li>
+            <li>Admin exclusive rights to add operators.</li>
+            <li>Operators have read-only data access.</li>
+            <li>Immediate access revocation upon deactivation.</li>
+            <li>Deactivated operator records kept for 3 years.</li>
+            <li>All operator actions logged for accountability.</li>
+            <li>Operators cannot add or manage other operators.</li>
           </List>
         </AccordionDetails>
       </Accordion>
