@@ -18,8 +18,9 @@ import RemoveOperators from './component/addOperator/RemovedOperators';
 import DeactivateOperatorDialog from './component/addOperator/DeactivateOperatorDialog';
 
 const AddUser = () => {
-  const { isLoading, users, removedUsers, refreshData, isLoadingDelete } =
-    useSelector((state) => state.operators);
+  const { isLoading, users, removedUsers, isLoadingDelete } = useSelector(
+    (state) => state.operators
+  );
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -51,7 +52,7 @@ const AddUser = () => {
   };
   useEffect(() => {
     dispatch(operatorsThunk());
-  }, [refreshData]);
+  }, []);
   if (isLoading) {
     return <Loading />;
   }

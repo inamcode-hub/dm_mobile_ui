@@ -38,6 +38,21 @@ export const operatorsThunk = createAsyncThunk(
     }
   }
 );
+export const operatorsRefreshThunk = createAsyncThunk(
+  'operators/operatorsRefreshThunk',
+  async (_, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    try {
+      const response = await customFetch.get('/user/all_operators', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
 export const operatorsRegisterThunk = createAsyncThunk(
   'operators/operatorsRegisterThunk',
   async (_, thunkAPI) => {
@@ -52,6 +67,7 @@ export const operatorsRegisterThunk = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      thunkAPI.dispatch(operatorsRefreshThunk());
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -72,6 +88,7 @@ export const operatorsDeactivateThunk = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      thunkAPI.dispatch(operatorsRefreshThunk());
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -93,6 +110,7 @@ export const operatorsEditThunk = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      thunkAPI.dispatch(operatorsRefreshThunk());
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -113,6 +131,7 @@ export const reactiveOperatorThunk = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      thunkAPI.dispatch(operatorsRefreshThunk());
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -144,12 +163,19 @@ const operatorsSlice = createSlice({
       .addCase(operatorsThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
       })
+      .addCase(operatorsRefreshThunk.pending, (state, { payload }) => {})
+      .addCase(operatorsRefreshThunk.fulfilled, (state, { payload }) => {
+        state.users = payload.data.filter((item) => item.active === true);
+        state.removedUsers = payload.data.filter(
+          (item) => item.active === false
+        );
+      })
+      .addCase(operatorsRefreshThunk.rejected, (state, { payload }) => {})
       .addCase(operatorsRegisterThunk.pending, (state, { payload }) => {
         state.isLoadingRegister = true;
       })
       .addCase(operatorsRegisterThunk.fulfilled, (state, { payload }) => {
         toast.success('Operator added successfully');
-        state.refreshData = !state.refreshData;
         state.isLoadingRegister = false;
         state.openDialog = false;
         state.firstName = '';
@@ -165,7 +191,6 @@ const operatorsSlice = createSlice({
       })
       .addCase(operatorsDeactivateThunk.fulfilled, (state, { payload }) => {
         toast.success('Operator deactivated successfully');
-        state.refreshData = !state.refreshData;
         state.isLoadingDelete = false;
         state.showDeleteDialog = false;
       })
@@ -177,7 +202,6 @@ const operatorsSlice = createSlice({
       })
       .addCase(operatorsEditThunk.fulfilled, (state, { payload }) => {
         toast.success('Operator updated successfully');
-        state.refreshData = !state.refreshData;
         state.isLoadingEdit = false;
         state.openEditDialog = false;
         state.firstName = '';
@@ -193,7 +217,6 @@ const operatorsSlice = createSlice({
       })
       .addCase(reactiveOperatorThunk.fulfilled, (state, { payload }) => {
         toast.success('Operator reactivated successfully');
-        state.refreshData = !state.refreshData;
         state.isLoadingEdit = false;
       })
       .addCase(reactiveOperatorThunk.rejected, (state, { payload }) => {
