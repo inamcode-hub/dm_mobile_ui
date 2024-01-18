@@ -16,7 +16,9 @@ import { userRegisterThunk } from '../../../features/user/userSlice';
 import CardWrapper from '../../../styles/wrappers/CardWrapper';
 
 const RegisterUserDetails = () => {
-  const { isLoading, dmSerial } = useSelector((state) => state.user);
+  const { isLoading, dmSerial, dryermasterId } = useSelector(
+    (state) => state.user
+  );
   const [farmName, setFarmName] = useState('');
   const dispatch = useDispatch();
 
@@ -73,6 +75,7 @@ const RegisterUserDetails = () => {
           email,
           password,
           dmSerial,
+          dryermasterId,
         })
       );
     }

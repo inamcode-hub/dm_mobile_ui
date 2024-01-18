@@ -4,24 +4,36 @@ import {
   Button,
   CircularProgress,
   Divider,
+  IconButton,
+  InputAdornment,
   TextField,
   Typography,
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserStateValues } from '../../../features/user/userSlice';
+import {
+  getUserStateValues,
+  userDryermasterLoginThunk,
+} from '../../../features/user/userSlice';
 import CardWrapper from '../../../styles/wrappers/CardWrapper';
+import { Visibility, VisibilityOff } from '@mui/icons-material';
 
 const RegisterSerial = () => {
-  const { isLoading } = useSelector((state) => state.user);
-  const [serial, setSerial] = useState('');
-  const [password, setPassword] = useState('');
+  const { isLoading, dmSerial, dmPassword } = useSelector(
+    (state) => state.user
+  );
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e) => {
+    dispatch(
+      getUserStateValues({ name: e.target.name, value: e.target.value })
+    );
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(getUserStateValues({ name: 'isDmRegistered', value: 'true' }));
-    dispatch(getUserStateValues({ name: 'dmSerial', value: serial }));
+    dispatch(userDryermasterLoginThunk({ dmSerial, dmPassword }));
   };
 
   return (
@@ -43,6 +55,13 @@ const RegisterSerial = () => {
               </Typography>
             </Link>
           </HeadingBody>
+          <div>
+            <span>
+              Serial: <strong>010224</strong>
+              <br />
+              Password: <strong>demopassword</strong>
+            </span>
+          </div>
         </Heading>
         <form onSubmit={handleSubmit}>
           <Body>
@@ -51,20 +70,32 @@ const RegisterSerial = () => {
               type='text'
               label='Serial Number'
               variant='outlined'
-              name='email'
-              value={serial}
-              onChange={(e) => setSerial(e.target.value)}
+              name='dmSerial'
+              value={dmSerial}
+              onChange={handleChange}
               required
             />
             <TextField
               fullWidth
-              type='password'
               label='Password'
+              type={showPassword ? 'text' : 'password'}
               variant='outlined'
-              name='password'
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name='dmPassword'
+              value={dmPassword}
+              onChange={handleChange}
               required
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={() => setShowPassword(!showPassword)}
+                      edge='end'>
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
             />
             <Button
               fullWidth

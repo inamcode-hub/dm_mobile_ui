@@ -18,6 +18,8 @@ const initialState = {
   role: getUserCookies('dryermaster_role'),
   isDmRegistered: false,
   dmSerial: '',
+  dmPassword: '',
+  dryermasterId: '',
   isSubscriptionActive: false,
   subscriptionExpiry: '',
   isDmOnline: false,
@@ -31,6 +33,18 @@ export const userThunk = createAsyncThunk(
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
+export const userDryermasterLoginThunk = createAsyncThunk(
+  'user/userDryermasterLoginThunk',
+  async (user, thunkAPI) => {
+    try {
+      const response = await customFetch.post('/user/login_dryermaster', user);
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
     }
   }
 );
@@ -157,6 +171,8 @@ const userSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
+
+      //  userThunk
       .addCase(userThunk.pending, (state, { payload }) => {
         console.log('promise pending');
         state.isLoading = true;
@@ -164,6 +180,18 @@ const userSlice = createSlice({
       .addCase(userThunk.fulfilled, (state, { payload }) => {
         console.log('promise fulfilled');
         console.log(payload);
+        state.isLoading = false;
+      })
+      //  userDryermasterLoginThunk
+      .addCase(userDryermasterLoginThunk.pending, (state, { payload }) => {
+        state.isLoading = true;
+      })
+      .addCase(userDryermasterLoginThunk.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.isDmRegistered = true;
+        state.dryermasterId = payload.dryermasterId;
+      })
+      .addCase(userDryermasterLoginThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
       })
       .addCase(userThunk.rejected, (state, { payload }) => {
