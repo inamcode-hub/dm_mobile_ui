@@ -50,6 +50,7 @@ export const removeUserCookies = () => {
   Cookies.remove('dryermaster_lastName');
   Cookies.remove('dryermaster_email');
   Cookies.remove('dryermaster_dmSerial');
+  Cookies.remove('dryermaster_dmModel');
   Cookies.remove('dryermaster_subscriptionExpiry');
 };
 
