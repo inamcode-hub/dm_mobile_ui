@@ -244,7 +244,7 @@ const userSlice = createSlice({
       .addCase(userForgotPasswordThunk.rejected, (state, { payload }) => {
         state.isLoading = false;
       })
-      //  userForgotThunk
+      //  userForgotPasswordUpdateThunk
       .addCase(userForgotPasswordUpdateThunk.pending, (state, { payload }) => {
         state.isLoading = true;
       })
