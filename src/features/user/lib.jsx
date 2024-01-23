@@ -20,6 +20,7 @@ export const setUserCookies = (userData) => {
     email,
     token,
     dmSerial,
+    dmModel,
     subscriptionExpiry,
   } = userData;
   setCookie('dryermaster_role', role);
@@ -28,6 +29,7 @@ export const setUserCookies = (userData) => {
   setCookie('dryermaster_email', email);
   setCookie('dryermaster_token', token);
   setCookie('dryermaster_dmSerial', dmSerial);
+  setCookie('dryermaster_dmModel', dmModel);
   setCookie('dryermaster_subscriptionExpiry', subscriptionExpiry);
 };
 
