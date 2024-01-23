@@ -37,6 +37,7 @@ export const userThunk = createAsyncThunk(
   }
 );
 
+// this is for dryermaster login to get the dryermaster id
 export const userDryermasterLoginThunk = createAsyncThunk(
   'user/userDryermasterLoginThunk',
   async (user, thunkAPI) => {
@@ -61,10 +62,7 @@ export const userRegisterThunk = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      if (error.response.data.message.startsWith('Duplicate')) {
-        toast.error('Email already exists in the database, please login');
-        return thunkAPI.rejectWithValue(error.response.data);
-      } else return handleGlobalError(error, thunkAPI);
+      return handleGlobalError(error, thunkAPI);
     }
   }
 );
