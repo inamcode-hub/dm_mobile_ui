@@ -14,19 +14,19 @@ export const setCookie = (name, value, options = {}) => {
 // Example usage within your thunks
 export const setUserCookies = (userData) => {
   const {
-    token,
     role,
     firstName,
     lastName,
     email,
+    token,
     dmSerial,
     subscriptionExpiry,
   } = userData;
-  setCookie('dryermaster_token', token);
   setCookie('dryermaster_role', role);
   setCookie('dryermaster_firstName', firstName);
   setCookie('dryermaster_lastName', lastName);
   setCookie('dryermaster_email', email);
+  setCookie('dryermaster_token', token);
   setCookie('dryermaster_dmSerial', dmSerial);
   setCookie('dryermaster_subscriptionExpiry', subscriptionExpiry);
 };
