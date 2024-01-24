@@ -67,7 +67,7 @@ const DeactivateOperatorDialog = () => {
 };
 
 const Wrapper = styled.div``;
-const Text = styled.p`
+const Text = styled.span`
   font-size: 14px;
   color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
   margin-top: 10px;
