@@ -3,13 +3,16 @@ import { Button, Divider, Icon, Paper } from '@mui/material';
 import { blue, green } from '@mui/material/colors';
 import { FaCheck } from 'react-icons/fa';
 import { format, sub } from 'date-fns';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MdOutlineWorkspacePremium } from 'react-icons/md';
 import CardWrapper from '../../../../styles/wrappers/CardWrapper';
+import { useEffect } from 'react';
+import { userSubscriptionStatusThunk } from '../../../../features/user/userSlice';
 const Subscription = () => {
   const { isSubscriptionActive, subscriptionExpiry } = useSelector(
     (state) => state.user
   );
+  const dispatch = useDispatch();
   const date =
     subscriptionExpiry && format(new Date(subscriptionExpiry), 'PPP');
   const features = [
@@ -19,7 +22,9 @@ const Subscription = () => {
     'Track your dryer’s performance',
     'Access to your dryer’s historical data',
   ];
-
+  useEffect(() => {
+    dispatch(userSubscriptionStatusThunk());
+  }, []);
   return (
     <Wrapper $isSubscriptionActive={isSubscriptionActive}>
       <div className='card'>
