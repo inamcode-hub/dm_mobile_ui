@@ -20,14 +20,17 @@ const Messages = () => {
 
   useEffect(() => {
     const handleScroll = () => {
+      const distanceFromBottom =
+        document.documentElement.scrollHeight -
+        (window.innerHeight + document.documentElement.scrollTop);
+
       if (
-        window.innerHeight + document.documentElement.scrollTop !==
-          document.documentElement.offsetHeight ||
-        isLoading ||
-        !hasMore
-      )
-        return;
-      dispatch(messagesThunk());
+        distanceFromBottom < 300 && // Fetch when within 300px from bottom
+        !isLoading &&
+        hasMore
+      ) {
+        dispatch(messagesThunk());
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
