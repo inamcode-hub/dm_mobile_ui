@@ -76,12 +76,12 @@ const MessagesList = () => {
 
   return (
     <Wrapper>
-      {messages.map((message) => {
+      {messages.map((message, index) => {
         const icon = icons.find((icon) => icon.name === message.type);
-        console.log(message._id);
+
         return (
           <div
-            key={message._id}
+            key={index}
             className='item'>
             <div
               className='icon'
