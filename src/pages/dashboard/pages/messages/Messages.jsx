@@ -7,18 +7,37 @@ import MessagesList from './component/MessagesList';
 import Loading from '../../../../components/Loading';
 
 const Messages = () => {
-  const { isLoading } = useSelector((state) => state.message);
+  const { isLoading, hasMore } = useSelector((state) => state.message);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(messagesThunk());
-  }, []);
+  }, [dispatch]);
 
-  if (isLoading) {
+  useEffect(() => {
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !==
+          document.documentElement.offsetHeight ||
+        isLoading ||
+        !hasMore
+      )
+        return;
+      dispatch(messagesThunk());
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isLoading, hasMore, dispatch]);
+
+  if (isLoading && !hasMore) {
     return <Loading />;
   }
+
   return (
     <div>
       <MessagesList />
+      {isLoading && <Loading />}
     </div>
   );
 };

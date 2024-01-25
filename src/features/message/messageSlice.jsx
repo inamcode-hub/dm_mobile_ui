@@ -50,10 +50,12 @@ const messagesSlice = createSlice({
         state.isLoading = true;
       })
       .addCase(messagesThunk.fulfilled, (state, { payload }) => {
-        state.messages = payload.result;
+        state.messages = [...state.messages, ...payload.result]; // append new messages
         state.totalMessages = payload.totalMessages;
         state.totalPages = payload.totalPages;
+        state.page += 1; // increment page
         state.isLoading = false;
+        state.hasMore = state.messages.length < state.totalMessages;
       })
       .addCase(messagesThunk.rejected, (state, { payload }) => {
         console.log('promise rejected');

@@ -78,7 +78,7 @@ const MessagesList = () => {
     <Wrapper>
       {messages.map((message) => {
         const icon = icons.find((icon) => icon.name === message.type);
-
+        console.log(message._id);
         return (
           <div
             key={message._id}
