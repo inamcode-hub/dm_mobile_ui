@@ -8,6 +8,8 @@ import {
 } from '../../../../features/message/messageSlice';
 import MessagesList from './component/MessagesList';
 import Loading from '../../../../components/Loading';
+import ReadMessage from './component/ReadMessage';
+import styled from '@emotion/styled';
 
 const Messages = () => {
   const { isLoading, hasMore } = useSelector((state) => state.message);
@@ -44,11 +46,15 @@ const Messages = () => {
   }
 
   return (
-    <div>
+    <Wrapper>
+      <ReadMessage />
       <MessagesList />
       {isLoading && <Loading />}
-    </div>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  /* position: relative; */
+`;
 export default Messages;

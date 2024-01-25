@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   FaInfoCircle,
   FaTag,
@@ -18,9 +18,11 @@ import {
   red,
   yellow,
 } from '@mui/material/colors';
+import { toggleDrawer } from '../../../../../features/message/messageSlice';
 
 const MessagesList = () => {
   const { messages } = useSelector((state) => state.message);
+  const dispatch = useDispatch();
 
   // date-fn format convert show only day and month and year only if not the same year
   const dateConvert = (date) => {
@@ -87,7 +89,8 @@ const MessagesList = () => {
         return (
           <Item
             key={index}
-            readMessage={message.readMessage}>
+            readMessage={message.readMessage}
+            onClick={() => dispatch(toggleDrawer())}>
             <div
               className='icon'
               style={{ color: icon?.backgroundColor }}>

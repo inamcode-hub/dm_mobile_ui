@@ -10,6 +10,7 @@ const initialState = {
   messagePerPage: 0,
   page: 1,
   limit: 15,
+  isDrawerOpen: false,
   isLoading: false,
 };
 export const messagesThunk = createAsyncThunk(
@@ -42,6 +43,9 @@ const messagesSlice = createSlice({
       const { name, value } = payload;
       state[name] = value;
     },
+    toggleDrawer: (state) => {
+      state.isDrawerOpen = !state.isDrawerOpen;
+    },
   },
 
   extraReducers: (builder) => {
@@ -64,6 +68,6 @@ const messagesSlice = createSlice({
       });
   },
 });
-export const { getMessageStateValues } = messagesSlice.actions;
+export const { getMessageStateValues, toggleDrawer } = messagesSlice.actions;
 
 export default messagesSlice.reducer;
