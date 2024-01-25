@@ -140,7 +140,7 @@ const Item = styled.div`
 
     .title {
       h3 {
-        font-size: 1rem;
+        font-size: 1.2rem;
         font-weight: ${({ readMessage }) => (readMessage ? 400 : 700)};
         margin: 0;
         text-transform: capitalize;
@@ -150,6 +150,7 @@ const Item = styled.div`
     .message {
       p {
         font-size: 1rem;
+        font-weight: ${({ readMessage }) => (readMessage ? 400 : 700)};
         @media (max-width: 768px) {
           margin: 0;
         }
