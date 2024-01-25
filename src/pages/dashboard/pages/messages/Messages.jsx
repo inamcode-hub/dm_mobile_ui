@@ -7,11 +7,16 @@ import MessagesList from './component/MessagesList';
 import Loading from '../../../../components/Loading';
 
 const Messages = () => {
-  const { isLoading, hasMore } = useSelector((state) => state.message);
+  const { isLoading, hasMore, messages } = useSelector(
+    (state) => state.message
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(messagesThunk());
+    console.log(messages.length === 0);
+    if (messages.length === 0) {
+      dispatch(messagesThunk());
+    }
   }, [dispatch]);
 
   useEffect(() => {
