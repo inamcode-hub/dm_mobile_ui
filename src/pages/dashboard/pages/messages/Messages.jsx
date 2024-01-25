@@ -13,7 +13,6 @@ const Messages = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(messages.length === 0);
     if (messages.length === 0) {
       dispatch(messagesThunk());
     }
