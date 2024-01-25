@@ -11,6 +11,9 @@ const initialState = {
   page: 1,
   limit: 15,
   isDrawerOpen: false,
+  readMessageId: '',
+  readMessage: {},
+  readMessageLoading: false,
   isLoading: false,
 };
 export const messagesThunk = createAsyncThunk(
@@ -35,6 +38,23 @@ export const messagesThunk = createAsyncThunk(
   }
 );
 
+export const readMessageThunk = createAsyncThunk(
+  'messages/readMessageThunk',
+  async (_, thunkAPI) => {
+    const { readMessageId } = thunkAPI.getState().message;
+    const token = getUserCookies('dryermaster_token');
+    try {
+      const response = await customFetch.get(`/message/user/${readMessageId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+
 const messagesSlice = createSlice({
   name: 'messages',
   initialState,
@@ -43,8 +63,13 @@ const messagesSlice = createSlice({
       const { name, value } = payload;
       state[name] = value;
     },
-    toggleDrawer: (state) => {
+    toggleDrawer: (state, { payload }) => {
       state.isDrawerOpen = !state.isDrawerOpen;
+      if (payload) {
+        state.readMessageId = payload;
+      } else {
+        state.readMessageId = '';
+      }
     },
   },
 
@@ -65,6 +90,16 @@ const messagesSlice = createSlice({
         console.log('promise rejected');
         console.log(payload);
         state.isLoading = false;
+      })
+      .addCase(readMessageThunk.pending, (state, { payload }) => {
+        state.readMessageLoading = true;
+      })
+      .addCase(readMessageThunk.fulfilled, (state, { payload }) => {
+        state.singleMessage = payload.result;
+        state.readMessageLoading = false;
+      })
+      .addCase(readMessageThunk.rejected, (state, { payload }) => {
+        state.readMessageLoading = false;
       });
   },
 });

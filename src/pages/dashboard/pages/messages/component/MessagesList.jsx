@@ -90,7 +90,7 @@ const MessagesList = () => {
           <Item
             key={index}
             readMessage={message.readMessage}
-            onClick={() => dispatch(toggleDrawer())}>
+            onClick={() => dispatch(toggleDrawer(message._id))}>
             <div
               className='icon'
               style={{ color: icon?.backgroundColor }}>
