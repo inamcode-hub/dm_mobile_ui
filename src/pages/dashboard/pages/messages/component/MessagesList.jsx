@@ -45,7 +45,7 @@ const MessagesList = () => {
     {
       name: 'information',
       icon: <FaInfoCircle size={28} />,
-      backgroundColor: blue[300], // Use Material-UI color
+      backgroundColor: blue[400], // Use Material-UI color
     },
     {
       name: 'promotion',
@@ -72,12 +72,17 @@ const MessagesList = () => {
       icon: <FaBullhorn size={28} />,
       backgroundColor: purple[300], // Use Material-UI color
     },
+    {
+      name: 'warning',
+      icon: <FaExclamationTriangle size={28} />,
+      backgroundColor: orange[600],
+    },
   ];
 
   return (
     <Wrapper>
       {messages.map((message, index) => {
-        const icon = icons.find((icon) => icon.name === message.type);
+        const icon = icons.find((icon) => icon?.name === message?.type);
 
         return (
           <div
@@ -85,8 +90,8 @@ const MessagesList = () => {
             className='item'>
             <div
               className='icon'
-              style={{ color: icon.backgroundColor }}>
-              {icon.icon}
+              style={{ color: icon?.backgroundColor }}>
+              {icon?.icon}
             </div>
             <div className='content'>
               <div className='title'>
