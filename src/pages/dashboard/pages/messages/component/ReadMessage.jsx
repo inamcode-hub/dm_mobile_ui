@@ -189,7 +189,7 @@ const Content = styled.div`
     .content {
       font-size: 1rem;
       font-weight: 400;
-      padding-bottom: 2rem;
+      padding-bottom: 6rem;
     }
   }
 `;
