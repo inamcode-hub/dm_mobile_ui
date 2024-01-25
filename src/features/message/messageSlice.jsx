@@ -67,6 +67,12 @@ const messagesSlice = createSlice({
       state.isDrawerOpen = !state.isDrawerOpen;
       if (payload) {
         state.readMessageId = payload;
+        // go in messages array and find the message with the same id as payload
+        // and set the read property to true
+        const message = state.messages.find(
+          (message) => message._id === payload
+        );
+        message.readMessage = true;
       } else {
         state.readMessageId = '';
       }
