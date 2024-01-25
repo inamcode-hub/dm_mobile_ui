@@ -139,6 +139,14 @@ const Wrapper = styled.div`
   }
 `;
 const Content = styled.div`
+  overflow-y: auto; // Enable vertical scrolling
+  max-height: calc(100vh - 60px);
+  @media (min-width: 600px) {
+    max-height: calc(80vh - 60px);
+  }
+  @media (min-width: 960px) {
+    max-height: calc(60vh - 60px);
+  }
   .content-heading {
     display: flex;
     align-items: center;
@@ -181,6 +189,7 @@ const Content = styled.div`
     .content {
       font-size: 1rem;
       font-weight: 400;
+      padding-bottom: 2rem;
     }
   }
 `;
