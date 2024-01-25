@@ -9,7 +9,7 @@ const initialState = {
   totalPages: 0,
   messagePerPage: 0,
   page: 1,
-  limit: 10,
+  limit: 15,
   isLoading: false,
 };
 export const messagesThunk = createAsyncThunk(

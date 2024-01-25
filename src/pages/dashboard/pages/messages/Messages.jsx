@@ -15,7 +15,7 @@ const Messages = () => {
 
   useEffect(() => {
     dispatch(getMessageStateValues({ name: 'page', value: 1 }));
-    dispatch(getMessageStateValues({ name: 'limit', value: 10 }));
+    dispatch(getMessageStateValues({ name: 'limit', value: 15 }));
     dispatch(getMessageStateValues({ name: 'messages', value: [] }));
     dispatch(messagesThunk());
   }, []);
