@@ -85,9 +85,9 @@ const MessagesList = () => {
         const icon = icons.find((icon) => icon?.name === message?.type);
 
         return (
-          <div
+          <Item
             key={index}
-            className='item'>
+            readMessage={message.readMessage}>
             <div
               className='icon'
               style={{ color: icon?.backgroundColor }}>
@@ -98,73 +98,70 @@ const MessagesList = () => {
                 <h3>{message.type}</h3>
               </div>
               <div className='message'>
-                <p>{message.content}</p>
+                <p>{message.title}</p>
               </div>
             </div>
             <div className='date'>
               <p>{dateConvert(message.createdAt)}</p>
             </div>
-          </div>
+          </Item>
         );
       })}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
-  .item {
+const Wrapper = styled.div``;
+const Item = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem;
+  border-bottom: 1px solid #ccc;
+  :hover {
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? grey[800] : '#f5f5f5'};
+    cursor: pointer;
+  }
+
+  .icon {
+    color: ${({ theme }) => theme.palette.primary.contrastText};
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    padding: 1rem;
-    border-bottom: 1px solid #ccc;
-    :hover {
-      background-color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[800] : '#f5f5f5'};
-      cursor: pointer;
-    }
+    justify-content: center;
+    align-items: center;
+  }
 
-    .icon {
-      color: ${({ theme }) => theme.palette.primary.contrastText};
-      border-radius: 50%;
-      width: 2.5rem;
-      height: 2.5rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
+  .content {
+    flex: 1;
+    padding: 0 1rem;
 
-    .content {
-      flex: 1;
-      padding: 0 1rem;
-
-      .title {
-        h3 {
-          font-size: 1.5rem;
-          font-weight: 500;
-          margin: 0;
-
-          text-transform: capitalize;
-        }
-      }
-
-      .message {
-        p {
-          font-size: 1rem;
-          font-weight: 400;
-          @media (max-width: 768px) {
-            margin: 0;
-          }
-        }
+    .title {
+      h3 {
+        font-size: 1rem;
+        font-weight: ${({ readMessage }) => (readMessage ? 400 : 700)};
+        margin: 0;
+        text-transform: capitalize;
       }
     }
 
-    .date {
+    .message {
       p {
         font-size: 1rem;
-        font-weight: 400;
-        margin: 0;
+        @media (max-width: 768px) {
+          margin: 0;
+        }
       }
+    }
+  }
+
+  .date {
+    p {
+      font-size: 1rem;
+      font-weight: ${({ readMessage }) => (readMessage ? 400 : 700)};
+      margin: 0;
     }
   }
 `;
