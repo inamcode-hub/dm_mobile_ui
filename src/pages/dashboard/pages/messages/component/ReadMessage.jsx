@@ -10,12 +10,12 @@ import styled from '@emotion/styled';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { IconButton } from '@mui/material';
-
+import { Divider, IconButton } from '@mui/material';
+import { icons } from './icons';
+import { format } from 'date-fns';
 const ReadMessage = () => {
-  const { isDrawerOpen, readMessageId, readMessageLoading } = useSelector(
-    (state) => state.message
-  );
+  const { isDrawerOpen, readMessageId, readMessageLoading, readMessage } =
+    useSelector((state) => state.message);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -49,12 +49,44 @@ const ReadMessage = () => {
               </IconButton>
             </div>
           </div>
+          <Content>
+            <div className='content-heading'>
+              {/*  add icons and color that match with icons */}
+              <div
+                className='icon'
+                style={{
+                  color: icons.find((icon) => icon?.name === readMessage?.type)
+                    ?.backgroundColor,
+                }}>
+                {icons.find((icon) => icon?.name === readMessage?.type)?.icon}
+              </div>
+              <div className='title'>
+                <h3>{readMessage?.type}</h3>
+              </div>
+            </div>
+            <Divider />
+            <div className='date-author'>
+              <div className='author'>
+                <span>Sent by:</span>
+                {(readMessage?.author && readMessage?.author?.name) ||
+                  'Dryer Master (Justin)'}
+                <span></span>
+              </div>
+              <div className='date'>
+                <span>Date:</span>
+                {readMessage.createdAt &&
+                  format(
+                    new Date(readMessage?.createdAt),
+                    'MMMM dd, yyyy hh:mm:ss a'
+                  )}
+              </div>
+              <div className='body'>
+                <div className='title'>{readMessage?.title}</div>
+                <div className='content'>{readMessage?.content}</div>
+              </div>
+            </div>
+          </Content>
         </Wrapper>
-        {/* <Button
-          onClick={() => dispatch(toggleDrawer())}
-          variant='contained'>
-          Close
-        </Button> */}
       </Box>
     </Modal>
   );
@@ -103,6 +135,52 @@ const Wrapper = styled.div`
           ? theme.palette.grey[300]
           : 'var(--white)'};
       padding: 1rem;
+    }
+  }
+`;
+const Content = styled.div`
+  .content-heading {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    .icon {
+      border-radius: 50%;
+      width: 3rem;
+      height: 3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+    .title {
+      text-transform: capitalize;
+      h3 {
+        padding-left: 1rem;
+        font-size: 1.6rem;
+        margin: 0;
+      }
+    }
+  }
+  .date-author {
+    padding: 1rem;
+    display: grid;
+    span {
+      margin-right: 1rem;
+    }
+  }
+  .body {
+    .title {
+      font-size: 1.3rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+    }
+    .content {
+      font-size: 1rem;
+      font-weight: 400;
     }
   }
 `;

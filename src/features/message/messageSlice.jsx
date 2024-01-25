@@ -95,7 +95,7 @@ const messagesSlice = createSlice({
         state.readMessageLoading = true;
       })
       .addCase(readMessageThunk.fulfilled, (state, { payload }) => {
-        state.singleMessage = payload.result;
+        state.readMessage = payload.data;
         state.readMessageLoading = false;
       })
       .addCase(readMessageThunk.rejected, (state, { payload }) => {
