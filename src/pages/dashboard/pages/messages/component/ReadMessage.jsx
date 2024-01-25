@@ -10,7 +10,7 @@ import styled from '@emotion/styled';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import CloseIcon from '@mui/icons-material/Close';
-import { Divider, IconButton } from '@mui/material';
+import { CircularProgress, Divider, IconButton } from '@mui/material';
 import { icons } from './icons';
 import { format } from 'date-fns';
 const ReadMessage = () => {
@@ -49,43 +49,55 @@ const ReadMessage = () => {
               </IconButton>
             </div>
           </div>
-          <Content>
-            <div className='content-heading'>
-              {/*  add icons and color that match with icons */}
-              <div
-                className='icon'
-                style={{
-                  color: icons.find((icon) => icon?.name === readMessage?.type)
-                    ?.backgroundColor,
-                }}>
-                {icons.find((icon) => icon?.name === readMessage?.type)?.icon}
+          {readMessageLoading ? (
+            <Loading>
+              <h1>Loading...</h1>
+              <CircularProgress
+                size={50}
+                thickness={4}
+                color='primary'
+              />
+            </Loading>
+          ) : (
+            <Content>
+              <div className='content-heading'>
+                {/*  add icons and color that match with icons */}
+                <div
+                  className='icon'
+                  style={{
+                    color: icons.find(
+                      (icon) => icon?.name === readMessage?.type
+                    )?.backgroundColor,
+                  }}>
+                  {icons.find((icon) => icon?.name === readMessage?.type)?.icon}
+                </div>
+                <div className='title'>
+                  <h3>{readMessage?.type}</h3>
+                </div>
               </div>
-              <div className='title'>
-                <h3>{readMessage?.type}</h3>
+              <Divider />
+              <div className='date-author'>
+                <div className='author'>
+                  <span>Sent by:</span>
+                  {(readMessage?.author && readMessage?.author?.name) ||
+                    'Dryer Master (Justin)'}
+                  <span></span>
+                </div>
+                <div className='date'>
+                  <span>Date:</span>
+                  {readMessage.createdAt &&
+                    format(
+                      new Date(readMessage?.createdAt),
+                      'MMMM dd, yyyy hh:mm:ss a'
+                    )}
+                </div>
+                <div className='body'>
+                  <div className='title'>{readMessage?.title}</div>
+                  <div className='content'>{readMessage?.content}</div>
+                </div>
               </div>
-            </div>
-            <Divider />
-            <div className='date-author'>
-              <div className='author'>
-                <span>Sent by:</span>
-                {(readMessage?.author && readMessage?.author?.name) ||
-                  'Dryer Master (Justin)'}
-                <span></span>
-              </div>
-              <div className='date'>
-                <span>Date:</span>
-                {readMessage.createdAt &&
-                  format(
-                    new Date(readMessage?.createdAt),
-                    'MMMM dd, yyyy hh:mm:ss a'
-                  )}
-              </div>
-              <div className='body'>
-                <div className='title'>{readMessage?.title}</div>
-                <div className='content'>{readMessage?.content}</div>
-              </div>
-            </div>
-          </Content>
+            </Content>
+          )}
         </Wrapper>
       </Box>
     </Modal>
@@ -192,6 +204,14 @@ const Content = styled.div`
       padding-bottom: 6rem;
     }
   }
+`;
+
+const Loading = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 3rem;
 `;
 
 export default ReadMessage;
