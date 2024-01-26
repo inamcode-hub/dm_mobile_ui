@@ -78,18 +78,22 @@ const ReadMessage = () => {
               <Divider />
               <div className='date-author'>
                 <div className='author'>
-                  <span>Sent by:</span>
-                  {(readMessage?.author && readMessage?.author?.name) ||
-                    'Dryer Master (Justin)'}
-                  <span></span>
+                  <span>Sent by: </span>
+                  <span className='author-name'>
+                    {readMessage?.author
+                      ? `Dryer Master Team - ${readMessage?.author}`
+                      : 'Dryer Master Team'}
+                  </span>
                 </div>
                 <div className='date'>
                   <span>Date:</span>
-                  {readMessage.createdAt &&
-                    format(
-                      new Date(readMessage?.createdAt),
-                      'MMMM dd, yyyy hh:mm:ss a'
-                    )}
+                  <span className='date-value'>
+                    {readMessage.createdAt &&
+                      format(
+                        new Date(readMessage?.createdAt),
+                        'MMMM dd, yyyy hh:mm:ss a'
+                      )}
+                  </span>
                 </div>
                 <div className='body'>
                   <div className='title'>{readMessage?.title}</div>
@@ -110,8 +114,8 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: { xs: '100%', sm: '80%', md: '60%' },
-  height: { xs: '100%', sm: '80%', md: '60%' },
+  width: { xs: '100%', sm: '80%', md: '70%' },
+  height: { xs: '100%', sm: '80%', md: '70%' },
   bgcolor: 'background.paper',
   boxShadow: 24,
 };
@@ -157,7 +161,7 @@ const Content = styled.div`
     max-height: calc(80vh - 60px);
   }
   @media (min-width: 960px) {
-    max-height: calc(60vh - 60px);
+    max-height: calc(70vh - 60px);
   }
   .content-heading {
     display: flex;
@@ -186,23 +190,64 @@ const Content = styled.div`
   }
   .date-author {
     padding: 1rem;
-    display: grid;
-    span {
-      margin-right: 1rem;
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
   }
+
+  .author,
+  .date {
+    display: flex;
+    align-items: center;
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.grey[900]
+        : theme.palette.grey[100]};
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.grey[300]
+        : theme.palette.grey[900]};
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+
+  .author-name,
+  .date-value {
+    margin-left: 10px;
+    text-transform: capitalize;
+  }
+
   .body {
-    .title {
-      font-size: 1.3rem;
-      font-weight: 500;
-      margin-bottom: 1rem;
-      margin-top: 2rem;
-    }
-    .content {
-      font-size: 1rem;
-      font-weight: 400;
-      padding-bottom: 6rem;
-    }
+    margin-top: 20px;
+  }
+
+  .body .title {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--primary-10);
+    padding-bottom: 10px;
+  }
+
+  .body .content {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-top: 10px;
+    white-space: pre-wrap;
+    margin-bottom: 5rem;
+    border-radius: 8px;
+    /* background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.grey[900]
+        : theme.palette.grey[100]};
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? theme.palette.grey[300]
+        : theme.palette.grey[900]}; */
+    /* padding: 10px 15px; */
+    border: 1px solid ${({ theme }) => theme.palette.grey[300]};
+    padding: 10px 15px;
   }
 `;
 
