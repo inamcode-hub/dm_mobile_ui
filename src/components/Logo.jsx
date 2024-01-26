@@ -17,9 +17,7 @@ const Wrapper = styled.div`
   font-weight: 600;
   span:first-of-type {
     color: ${({ theme }) =>
-      theme.palette.mode === 'dark'
-        ? theme.palette.info.main
-        : 'var(--primary-text)'};
+      theme.palette.mode === 'dark' ? 'var(--white)' : 'var(--primary-text)'};
   }
   span:last-of-type {
     color: ${({ theme }) => theme.palette.secondary.main};
