@@ -235,19 +235,12 @@ const Content = styled.div`
     line-height: 1.6;
     margin-top: 10px;
     white-space: pre-wrap;
-    margin-bottom: 5rem;
     border-radius: 8px;
-    /* background-color: ${({ theme }) =>
-      theme.palette.mode === 'dark'
-        ? theme.palette.grey[900]
-        : theme.palette.grey[100]};
-    color: ${({ theme }) =>
-      theme.palette.mode === 'dark'
-        ? theme.palette.grey[300]
-        : theme.palette.grey[900]}; */
-    /* padding: 10px 15px; */
     border: 1px solid ${({ theme }) => theme.palette.grey[300]};
     padding: 10px 15px;
+    @media (max-width: 600px) {
+      margin-bottom: 5rem;
+    }
   }
 `;
 
