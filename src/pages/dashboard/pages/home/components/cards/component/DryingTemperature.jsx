@@ -34,7 +34,7 @@ const Wrapper = styled.div`
   overflow: hidden;
   .heading {
     background-color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? grey[900] : '#e58e8b'};
+      theme.palette.mode === 'dark' ? grey[800] : '#e58e8b'};
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
