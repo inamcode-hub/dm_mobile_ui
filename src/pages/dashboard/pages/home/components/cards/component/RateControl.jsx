@@ -14,7 +14,7 @@ const RateControl = () => {
       </div>
       <div className='body'>
         <div className='value'>
-          <div className='main'>20.0</div>
+          <div className='main'>35.33</div>
         </div>
       </div>
     </Wrapper>

@@ -7,14 +7,14 @@ const DryingTemperature = () => {
     <Wrapper>
       <div className='heading'>
         <div className='title'>Drying Temp</div>
-        <div className='warning_alert'>
+        {/* <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
-        </div>
+        </div> */}
       </div>
       <div className='body'>
         <div className='value'>
-          <div className='main'>20.0</div>
+          <div className='main'>98</div>
           <div className='sub'>
             <span> F</span>
           </div>

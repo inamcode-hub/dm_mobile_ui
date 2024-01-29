@@ -14,9 +14,9 @@ const Outlet = () => {
       </div>
       <div className='body'>
         <div className='value'>
-          <div className='main'>20.0</div>
+          <div className='main'>13.91</div>
           <div className='sub'>
-            82.1 <span> &#8451;</span>
+            102.7 <span> &#8451;</span>
           </div>
         </div>
       </div>
