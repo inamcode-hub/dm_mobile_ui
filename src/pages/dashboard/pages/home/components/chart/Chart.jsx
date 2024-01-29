@@ -1,7 +1,12 @@
 import React from 'react';
+import MainChart from './components/MainChart';
 
 const Chart = () => {
-  return <div>Chart</div>;
+  return (
+    <div>
+      <MainChart />
+    </div>
+  );
 };
 
 export default Chart;
