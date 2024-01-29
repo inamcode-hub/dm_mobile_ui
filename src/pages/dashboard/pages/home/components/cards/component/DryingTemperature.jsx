@@ -6,11 +6,11 @@ const DryingTemperature = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Drying Temp</div>
-        {/* <div className='warning_alert'>
+        <div className='title'>Drying Temperature</div>
+        <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
-        </div> */}
+        </div>
       </div>
       <div className='body'>
         <div className='value'>
