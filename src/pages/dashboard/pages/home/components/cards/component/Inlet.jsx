@@ -27,7 +27,7 @@ const Inlet = () => {
 const Wrapper = styled.div`
   background: ${({ theme }) =>
     theme.palette.mode === 'dark' ? theme.palette.background.paper : '#5cb85c'};
-  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
+  border: ${({ theme }) => theme.palette.mode === 'dark' && 'px solid #333'};
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 8px;
@@ -56,16 +56,15 @@ const Wrapper = styled.div`
       gap: 0.5rem;
       .warning {
         background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[800] : '#5cb85c'};
-        color: #ffffff;
-        border-radius: 8px;
-        padding: 0.5rem;
-        font-size: 1rem;
-        font-weight: 500;
+          theme.palette.mode === 'dark' ? grey[900] : '#5cb85c'};
       }
       .alert {
         background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[800] : '#5cb85c'};
+          theme.palette.mode === 'dark' ? grey[900] : '#5cb85c'};
+      }
+      .warning,
+      .alert {
+        border: 1px solid #ffffff;
         color: #ffffff;
         border-radius: 8px;
         padding: 0.5rem;

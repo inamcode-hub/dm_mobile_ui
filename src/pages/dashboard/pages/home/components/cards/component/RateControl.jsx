@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 
-const RateControl = () => {
+const Inlet = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Rate Control</div>
+        <div className='title'>Inlet</div>
         <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
@@ -15,6 +15,9 @@ const RateControl = () => {
       <div className='body'>
         <div className='value'>
           <div className='main'>20.0</div>
+          <div className='sub'>
+            82.1 <span> &#8451;</span>
+          </div>
         </div>
       </div>
     </Wrapper>
@@ -24,7 +27,7 @@ const RateControl = () => {
 const Wrapper = styled.div`
   background: ${({ theme }) =>
     theme.palette.mode === 'dark' ? theme.palette.background.paper : '#f0ad4e'};
-  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
+  border: ${({ theme }) => theme.palette.mode === 'dark' && 'px solid #333'};
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 8px;
@@ -53,16 +56,15 @@ const Wrapper = styled.div`
       gap: 0.5rem;
       .warning {
         background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[800] : '#e2901c'};
-        color: #ffffff;
-        border-radius: 8px;
-        padding: 0.5rem;
-        font-size: 1rem;
-        font-weight: 500;
+          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
       }
       .alert {
         background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[800] : '#e2901c'};
+          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
+      }
+      .warning,
+      .alert {
+        border: 1px solid #ffffff;
         color: #ffffff;
         border-radius: 8px;
         padding: 0.5rem;
@@ -92,4 +94,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default RateControl;
+export default Inlet;

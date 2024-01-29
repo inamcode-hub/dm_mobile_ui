@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 
-const Outlet = () => {
+const Inlet = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Outlet</div>
+        <div className='title'>Inlet</div>
         <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
@@ -27,7 +27,7 @@ const Outlet = () => {
 const Wrapper = styled.div`
   background: ${({ theme }) =>
     theme.palette.mode === 'dark' ? theme.palette.background.paper : '#428bca'};
-  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
+  border: ${({ theme }) => theme.palette.mode === 'dark' && 'px solid #333'};
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 8px;
@@ -38,7 +38,7 @@ const Wrapper = styled.div`
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: #0961ad
     border-bottom: ${({ theme }) =>
       theme.palette.mode === 'dark'
         ? `3px solid ${grey[600]}`
@@ -56,16 +56,15 @@ const Wrapper = styled.div`
       gap: 0.5rem;
       .warning {
         background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[800] : '#0961ad'};
-        color: #ffffff;
-        border-radius: 8px;
-        padding: 0.5rem;
-        font-size: 1rem;
-        font-weight: 500;
+          theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
       }
       .alert {
         background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[800] : '#0961ad'};
+          theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
+      }
+      .warning,
+      .alert {
+        border: 1px solid #ffffff;
         color: #ffffff;
         border-radius: 8px;
         padding: 0.5rem;
@@ -95,4 +94,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default Outlet;
+export default Inlet;
