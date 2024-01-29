@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { useSelector } from 'react-redux';
-import Cards from './Cards';
+
 import DmStatus from '../dmstatus/DmStatus';
+import Cards from './components/cards/Cards';
 
 const Home = () => {
   const { isDmOnline, isSubscriptionActive } = useSelector(
