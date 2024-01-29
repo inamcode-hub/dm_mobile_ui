@@ -48,6 +48,7 @@ const Wrapper = styled.div`
     .title {
       font-size: 1.5rem;
       font-weight: 500;
+      color: ${({ theme }) => theme.palette.mode === 'dark' && '#d9534f'};
     }
 
     .warning_alert {
@@ -67,7 +68,7 @@ const Wrapper = styled.div`
         border: 1px solid #ffffff;
         color: #ffffff;
         border-radius: 8px;
-        padding: 0.5rem;
+        padding: 0.3rem;
         font-size: 1rem;
         font-weight: 500;
       }

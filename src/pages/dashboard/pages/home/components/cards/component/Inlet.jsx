@@ -7,10 +7,10 @@ const Inlet = () => {
     <Wrapper>
       <div className='heading'>
         <div className='title'>Inlet</div>
-        <div className='warning_alert'>
+        {/* <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
-        </div>
+        </div> */}
       </div>
       <div className='body'>
         <div className='value'>
@@ -43,11 +43,11 @@ const Wrapper = styled.div`
       theme.palette.mode === 'dark'
         ? `3px solid ${grey[600]}`
         : '3px solid var(--primary)'};
-
     gap: 1rem;
     .title {
       font-size: 1.5rem;
       font-weight: 500;
+      color: ${({ theme }) => theme.palette.mode === 'dark' && '#5cb85c'};
     }
 
     .warning_alert {
@@ -67,7 +67,7 @@ const Wrapper = styled.div`
         border: 1px solid #ffffff;
         color: #ffffff;
         border-radius: 8px;
-        padding: 0.5rem;
+        padding: 0.3rem;
         font-size: 1rem;
         font-weight: 500;
       }
