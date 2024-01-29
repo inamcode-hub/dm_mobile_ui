@@ -37,7 +37,8 @@ const Wrapper = styled.div`
     }
     .warning_alert {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
+      gap: 0.5rem;
       .warning {
         background: #f5f5f5;
         border-radius: 8px;
