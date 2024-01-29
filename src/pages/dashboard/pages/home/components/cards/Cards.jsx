@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   @media (min-width: 920px) {
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (min-width: 1200px) {
+  @media (min-width: 1400px) {
     grid-template-columns: repeat(4, 1fr);
   }
 `;

@@ -6,7 +6,7 @@ const RateControl = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Rate Control</div>
+        <div className='title'>Rate control</div>
         {/* <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
