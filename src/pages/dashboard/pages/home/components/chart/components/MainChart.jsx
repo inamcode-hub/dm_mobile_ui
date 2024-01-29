@@ -42,7 +42,7 @@ const MainChart = () => {
       </div>
       <ResponsiveContainer
         width='100%'
-        height={400}>
+        height={300}>
         <LineChart
           data={chartData}
           margin={{ top: 5, right: 30, left: -20, bottom: 5 }}>
@@ -87,6 +87,9 @@ const MainChart = () => {
 const Wrapper = styled.div`
   background-color: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '#000000' : '#ffffff'};
+  @media (min-width: 768px) {
+    margin: 0 1rem;
+  }
 
   .heading {
     font-size: 1.1rem;
