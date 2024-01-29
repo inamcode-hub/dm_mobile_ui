@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { grey } from '@mui/material/colors';
 import React from 'react';
 
 const Inlet = () => {
@@ -10,12 +11,12 @@ const Inlet = () => {
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
         </div>
-        <div className='body'>
-          <div className='value'>
-            <div className='main'>20.0</div>
-            <div className='sub'>
-              82.1 <span> &#8451;</span>
-            </div>
+      </div>
+      <div className='body'>
+        <div className='value'>
+          <div className='main'>20.0</div>
+          <div className='sub'>
+            82.1 <span> &#8451;</span>
           </div>
         </div>
       </div>
@@ -24,51 +25,72 @@ const Inlet = () => {
 };
 
 const Wrapper = styled.div`
+  background: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? theme.palette.background.paper : '#5cb85c'};
+  border: ${({ theme }) => theme.palette.mode === 'dark' && '1px solid #333'};
+  box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
+    rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
+  border-radius: 8px;
+  overflow: hidden;
   .heading {
-    background: #ffffff;
-    border-radius: 8px;
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? grey[900] : '#9dd29d'};
     padding: 0.5rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: ${({ theme }) =>
+      theme.palette.mode === 'dark'
+        ? `3px solid ${grey[600]}`
+        : '3px solid var(--primary)'};
+
     gap: 1rem;
     .title {
       font-size: 1.5rem;
       font-weight: 500;
     }
+
     .warning_alert {
       display: flex;
       justify-content: flex-end;
       gap: 0.5rem;
       .warning {
-        background: #f5f5f5;
+        background: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[800] : '#5cb85c'};
+        color: #ffffff;
         border-radius: 8px;
         padding: 0.5rem;
         font-size: 1rem;
         font-weight: 500;
       }
       .alert {
-        background: #f5f5f5;
+        background: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[800] : '#5cb85c'};
+        color: #ffffff;
         border-radius: 8px;
         padding: 0.5rem;
         font-size: 1rem;
         font-weight: 500;
       }
     }
-    .body {
+  }
+  .body {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    .value {
       display: flex;
-      justify-content: space-between;
-      .value {
-        display: flex;
-        align-items: flex-end;
-        gap: 0.5rem;
-        .main {
-          font-size: 2rem;
-          font-weight: 500;
-        }
-        .sub {
-          font-size: 1rem;
-          font-weight: 500;
-        }
+      align-items: flex-end;
+      gap: 0.5rem;
+      color: #ffffff;
+      .main {
+        font-size: 2rem;
+        font-weight: 500;
+        color: #ffffff;
+      }
+      .sub {
+        font-size: 1rem;
+        font-weight: 500;
       }
     }
   }
