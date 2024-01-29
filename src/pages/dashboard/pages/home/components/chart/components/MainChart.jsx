@@ -89,9 +89,9 @@ const Wrapper = styled.div`
     theme.palette.mode === 'dark' ? '#000000' : '#ffffff'};
 
   .heading {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 500;
-    margin-bottom: 1rem;
+
     padding: 0 1rem;
     span {
       font-size: 0.9rem;
