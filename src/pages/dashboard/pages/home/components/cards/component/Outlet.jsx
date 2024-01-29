@@ -104,6 +104,7 @@ const Wrapper = styled.div`
     }
     .second_value {
       display: flex;
+      align-items: center;
       color: #ffffff;
       background: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
