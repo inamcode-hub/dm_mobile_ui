@@ -3,6 +3,8 @@ import { useSelector } from 'react-redux';
 
 import DmStatus from '../dmstatus/DmStatus';
 import Cards from './components/cards/Cards';
+import Chart from './components/chart/Chart';
+import Controller from './components/control/Controller';
 
 const Home = () => {
   const { isDmOnline, isSubscriptionActive } = useSelector(
@@ -14,6 +16,8 @@ const Home = () => {
   return (
     <Wrapper>
       <Cards />
+      <Chart />
+      <Controller />
     </Wrapper>
   );
 };
