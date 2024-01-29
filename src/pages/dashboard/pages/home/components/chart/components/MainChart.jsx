@@ -37,20 +37,25 @@ const MainChart = () => {
 
   return (
     <Wrapper>
+      <div className='heading'>
+        DryerMaster Performance Overview <span>(4-5 Hours)</span>
+      </div>
       <ResponsiveContainer
         width='100%'
         height={400}>
         <LineChart
           data={chartData}
           margin={{ top: 5, right: 30, left: -20, bottom: 5 }}>
-          <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='createdAt' />
           <YAxis tickFormatter={tickFormatter} />
           <Tooltip
             formatter={(value, name) => [value, name]}
             labelFormatter={(label) => `Time: ${label}`}
           />
-          <Legend />
+          <Legend
+            verticalAlign='top'
+            align='right'
+          />
           <Line
             type='monotone'
             dataKey='inlet'
@@ -78,5 +83,26 @@ const MainChart = () => {
   );
 };
 
-const Wrapper = styled.div``;
+const Wrapper = styled.div`
+  background-color: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? '#000000' : '#ffffff'};
+
+  .heading {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+    span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? '#ffffff' : '#000000'};
+    }
+    @media (max-width: 768px) {
+      span {
+        display: block;
+      }
+    }
+  }
+`;
 export default MainChart;
