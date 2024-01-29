@@ -2,9 +2,27 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
 
 const initialState = {
-  name: '',
-  lastName: '',
-  email: '',
+  // dryerMaster
+  dryerMaster: '',
+  // Inlet Moisture
+  inletMoisture: '',
+  inletMoistureTemp: '',
+  inletMoistureWarning: '',
+  inletMoistureAlarm: '',
+  // Outlet Moisture
+  outletMoisture: '',
+  outletMoistureTemp: '',
+  outletMoistureWarning: '',
+  outletMoistureAlarm: '',
+  // Rate Control
+  rateControl: '',
+  rateControlWarning: '',
+  rateControlAlarm: '',
+  // Drying Temp
+  dryingTemp: '',
+  dryingTempWarning: '',
+  dryingTempAlarm: '',
+
   isLoading: false,
 };
 export const dryerMastersThunk = createAsyncThunk(
