@@ -48,6 +48,7 @@ const MainChart = () => {
           margin={{ top: 5, right: 30, left: -20, bottom: 5 }}>
           <XAxis dataKey='createdAt' />
           <YAxis tickFormatter={tickFormatter} />
+          <CartesianGrid strokeDasharray='3 3' />
           <Tooltip
             formatter={(value, name) => [value, name]}
             labelFormatter={(label) => `Time: ${label}`}
