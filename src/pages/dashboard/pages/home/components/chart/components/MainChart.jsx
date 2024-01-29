@@ -88,20 +88,15 @@ const Wrapper = styled.div`
     theme.palette.mode === 'dark' ? '#000000' : '#ffffff'};
 
   .heading {
-    font-size: 1.5rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 500;
     margin-bottom: 1rem;
     padding: 0 1rem;
     span {
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 400;
       color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? '#ffffff' : '#000000'};
-    }
-    @media (max-width: 768px) {
-      span {
-        display: block;
-      }
     }
   }
 `;
