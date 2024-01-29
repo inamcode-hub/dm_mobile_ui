@@ -35,7 +35,7 @@ const Outlet = () => {
 
 const Wrapper = styled.div`
   background: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? theme.palette.background.paper : '#428bca'};
+    theme.palette.mode === 'dark' ? '#000' : '#428bca'};
   border: ${({ theme }) => theme.palette.mode === 'dark' && 'px solid #333'};
   box-shadow: rgba(145, 158, 171, 0.2) 0px 0px 2px 0px,
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
@@ -93,7 +93,7 @@ const Wrapper = styled.div`
       gap: 0.5rem;
       color: #ffffff;
       .main {
-        font-size: 2rem;
+        font-size: 2.5rem;
         font-weight: 500;
         color: #ffffff;
       }
