@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 
-const Inlet = () => {
+const Outlet = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Inlet</div>
+        <div className='title'>Outlet</div>
         <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
@@ -38,7 +38,7 @@ const Wrapper = styled.div`
     padding: 0.5rem;
     display: flex;
     justify-content: space-between;
-    align-items: #0961ad
+    align-items: center;
     border-bottom: ${({ theme }) =>
       theme.palette.mode === 'dark'
         ? `3px solid ${grey[600]}`
@@ -94,4 +94,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default Inlet;
+export default Outlet;

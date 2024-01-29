@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 
-const Inlet = () => {
+const RateControl = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Inlet</div>
+        <div className='title'>Rate Control</div>
         <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
@@ -15,9 +15,6 @@ const Inlet = () => {
       <div className='body'>
         <div className='value'>
           <div className='main'>20.0</div>
-          <div className='sub'>
-            82.1 <span> &#8451;</span>
-          </div>
         </div>
       </div>
     </Wrapper>
@@ -94,4 +91,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default Inlet;
+export default RateControl;

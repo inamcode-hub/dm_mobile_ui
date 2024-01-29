@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 
-const Inlet = () => {
+const DryingTemperature = () => {
   return (
     <Wrapper>
       <div className='heading'>
-        <div className='title'>Inlet</div>
+        <div className='title'>Drying Temperature</div>
         <div className='warning_alert'>
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
@@ -16,7 +16,7 @@ const Inlet = () => {
         <div className='value'>
           <div className='main'>20.0</div>
           <div className='sub'>
-            82.1 <span> &#8451;</span>
+            <span> F</span>
           </div>
         </div>
       </div>
@@ -94,4 +94,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default Inlet;
+export default DryingTemperature;
