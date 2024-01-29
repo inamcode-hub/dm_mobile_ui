@@ -46,7 +46,10 @@ const MainChart = () => {
           <CartesianGrid strokeDasharray='3 3' />
           <XAxis dataKey='createdAt' />
           <YAxis tickFormatter={tickFormatter} />
-          <Tooltip formatter={(value, name) => [value, name]} />
+          <Tooltip
+            formatter={(value, name) => [value, name]}
+            labelFormatter={(label) => `Time: ${label}`}
+          />
           <Legend />
           <Line
             type='monotone'
