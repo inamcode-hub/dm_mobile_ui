@@ -22,7 +22,7 @@ const initialState = {
   dryermasterId: '',
   isSubscriptionActive: false,
   subscriptionExpiry: '',
-  isDmOnline: false,
+  isDmOnline: true,
   isLoading: false,
 };
 export const userThunk = createAsyncThunk(

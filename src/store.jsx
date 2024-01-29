@@ -6,6 +6,7 @@ import systemSlice from './features/system/systemSlice';
 import userProfileSlice from './features/user/userProfileSlice';
 import userOperatorSlice from './features/user/userOperatorSlice';
 import messageSlice from './features/message/messageSlice';
+import dryerMasterSlice from './features/dryerMaster/dryerMasterSlice';
 
 const reducers = {
   sample: samplesSlice,
@@ -15,6 +16,7 @@ const reducers = {
   operators: userOperatorSlice,
   system: systemSlice,
   message: messageSlice,
+  dryerMaster: dryerMasterSlice,
 };
 
 const Store = configureStore({
