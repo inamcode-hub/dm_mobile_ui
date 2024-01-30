@@ -111,13 +111,13 @@ const Wrapper = styled.div`
       gap: 0.2rem;
 
       .main {
-        background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
+        /* background: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'}; */
+        border: 1px solid #ffffff;
         border-radius: 8px;
       }
       .sub {
-        background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
+        border: 1px solid #ffffff;
         border-radius: 8px;
       }
       .main,
@@ -125,7 +125,7 @@ const Wrapper = styled.div`
         display: flex;
         gap: 0.5rem;
         justify-content: space-between;
-        font-weight: 500;
+        font-weight: 400;
         padding: 0.1rem 0.5rem;
       }
     }

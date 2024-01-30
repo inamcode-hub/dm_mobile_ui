@@ -4,7 +4,11 @@ import React from 'react';
 const RateControlControl = () => {
   return (
     <div>
-      <Button variant='contained'>Control</Button>
+      <Button
+        variant='contained'
+        size='small'>
+        Control
+      </Button>
     </div>
   );
 };

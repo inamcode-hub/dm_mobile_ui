@@ -105,8 +105,9 @@ const Wrapper = styled.div`
 
     .second_value {
       color: #ffffff;
-      background: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
+      /* background: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? grey[900] : '#0961ad'}; */
+      border: 1px solid #ffffff;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
