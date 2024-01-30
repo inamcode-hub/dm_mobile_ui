@@ -8,8 +8,8 @@ const DryingTemperature = () => {
       <div className='heading'>
         <div className='title'>Drying temp</div>
         <div className='warning_alert'>
-          <div className='warning'>Warning</div>
-          <div className='alert'>Alert</div>
+          {/* <div className='warning'>Warning</div>
+          <div className='alert'>Alert</div> */}
         </div>
       </div>
       <div className='body'>
