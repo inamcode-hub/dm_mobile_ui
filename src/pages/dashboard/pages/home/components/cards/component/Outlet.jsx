@@ -10,8 +10,8 @@ const Outlet = () => {
         <div className='title'>Outlet</div>
         <div className='warning_alert'>
           <OutletControl />
-          <div className='warning'>Warning</div>
-          <div className='alert'>Alert</div>
+          {/* <div className='warning'>Warning</div>
+          <div className='alert'>Alert</div> */}
         </div>
       </div>
       <div className='body'>

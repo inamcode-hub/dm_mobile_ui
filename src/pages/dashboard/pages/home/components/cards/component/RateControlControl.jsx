@@ -1,7 +1,12 @@
+import { Button } from '@mui/material';
 import React from 'react';
 
 const RateControlControl = () => {
-  return <div>RateControlControl</div>;
+  return (
+    <div>
+      <Button variant='contained'>Control</Button>
+    </div>
+  );
 };
 
 export default RateControlControl;
