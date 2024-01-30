@@ -124,7 +124,6 @@ const Wrapper = styled.div`
       .sub {
         display: flex;
         gap: 0.5rem;
-        color: ${({ theme }) => theme.palette.mode === 'dark' && '#f0ad4e'};
         justify-content: space-between;
         font-weight: 500;
         padding: 0.1rem 0.5rem;
