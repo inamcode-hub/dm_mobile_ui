@@ -79,6 +79,7 @@ const Wrapper = styled.div`
   .body {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 0.5rem;
     .value {
       display: flex;

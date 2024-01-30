@@ -8,7 +8,7 @@ const ChangeRate = () => {
       <Button
         variant='contained'
         color='primary'>
-        SetPoint
+        SetPoint: 45
       </Button>
     </Wrapper>
   );
