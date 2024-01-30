@@ -16,15 +16,7 @@ const RateControl = () => {
         <div className='value'>
           <div className='main'>35.33</div>
         </div>
-        <div className='second_value'>
-          <div className='main'>
-            100 <span></span>
-          </div>
-          <div className='sub'>
-            <span>Suggested</span>
-            <span>Rate</span>
-          </div>
-        </div>
+        <div className='second_value'></div>
       </div>
     </Wrapper>
   );
@@ -97,30 +89,6 @@ const Wrapper = styled.div`
       .sub {
         font-size: 1rem;
         font-weight: 500;
-      }
-    }
-    .second_value {
-      display: flex;
-      align-items: center;
-      color: #ffffff;
-      background: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
-      border-radius: 8px;
-      padding: 0.3rem 0.5rem;
-      .main {
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: #ffffff;
-        span {
-          font-size: 1rem;
-        }
-      }
-      .sub {
-        display: flex;
-        flex-direction: column;
-        font-size: 0.8rem;
-        font-weight: 400;
-        margin-left: 0.5rem;
       }
     }
   }

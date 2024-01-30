@@ -20,9 +20,7 @@ const Outlet = () => {
           </div>
         </div>
         <div className='second_value'>
-          <div className='main'>
-            15 <span>%</span>
-          </div>
+          <div className='main'>15</div>
           <div className='sub'>
             <span>Moisture</span>
             <span>Setpoint</span>
@@ -110,8 +108,14 @@ const Wrapper = styled.div`
         theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
       border-radius: 8px;
       padding: 0.3rem 0.5rem;
+      transition: all 0.3s ease;
+      :hover {
+        background: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[800] : '#042f55'};
+        cursor: pointer;
+      }
       .main {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: 400;
         color: #ffffff;
         span {
