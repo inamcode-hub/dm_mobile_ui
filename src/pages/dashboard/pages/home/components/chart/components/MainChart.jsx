@@ -1,117 +1,119 @@
 import React, { useState, useEffect } from 'react';
+import ApexCharts from 'react-apexcharts';
 import { format } from 'date-fns';
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
 import { data } from './Data';
 import { useWindowSize } from '../../../../../../../hooks/useWindowSize';
-import styled from '@emotion/styled';
 
 const MainChart = () => {
-  const [chartData, setChartData] = useState([]);
+  const [series, setSeries] = useState([]);
   const { width } = useWindowSize();
-  const isMobile = width <= 768;
-
   useEffect(() => {
     const formattedData = data.map((item) => ({
-      ...item,
-      inlet: Math.round(item.inlet),
-      target: Math.round(item.target),
-      outlet: Math.round(item.outlet),
-
-      createdAt: format(new Date(item.createdAt), 'EEE hh:mm'), // Format date using date-fns
+      x: format(new Date(item.createdAt), 'EEE hh:mm'),
+      y: [item.inlet, item.target, item.outlet],
     }));
-    setChartData(formattedData);
+
+    setSeries([
+      {
+        name: 'Inlet',
+        data: formattedData.map((item) => ({ x: item.x, y: item.y[0] })),
+      },
+      {
+        name: 'Target',
+        data: formattedData.map((item) => ({ x: item.x, y: item.y[1] })),
+      },
+      {
+        name: 'Outlet',
+        data: formattedData.map((item) => ({ x: item.x, y: item.y[2] })),
+      },
+    ]);
   }, []);
 
-  const tickFormatter = (tickItem) => {
-    return Math.round(tickItem);
+  const options = {
+    chart: {
+      type: 'line',
+      height: 350,
+      stacked: false,
+      toolbar: {
+        show: true,
+      },
+      zoom: {
+        enabled: true,
+      },
+
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
+    },
+
+    dataLabels: {
+      enabled: width > 768 ? true : false,
+      formatter: function (val) {
+        return Math.round(val); // Round the value to the nearest whole number
+      },
+    },
+    colors: ['#5cb85c', '#000', '#0961ad'],
+    stroke: {
+      curve: 'smooth',
+    },
+    title: {
+      text: 'Average High & Low Temperature',
+      align: 'left',
+    },
+
+    xaxis: {
+      type: 'category',
+      title: {
+        text: 'Time',
+      },
+      tickAmount:
+        // width bigger than 768px than 10 if screen is bigger than 920px than 20
+        width > 768 ? (width > 920 ? 20 : 8) : 5,
+
+      labels: {
+        formatter: function (val) {
+          return val;
+        },
+      },
+    },
+    yaxis: {
+      title: {
+        text: 'Moisture',
+      },
+      labels: {
+        formatter: function (val) {
+          return Math.round(val);
+        },
+      },
+    },
+    tooltip: {
+      y: {
+        formatter: function (val) {
+          return Math.round(val);
+        },
+      },
+    },
+    legend: {
+      position: 'top',
+      horizontalAlign: 'left',
+    },
   };
 
   return (
-    <Wrapper>
-      <div className='heading'>
-        DryerMaster Performance Overview <span>(4-5 Hours)</span>
-      </div>
-      <ResponsiveContainer
-        width='100%'
-        height={300}>
-        <LineChart
-          data={chartData}
-          margin={{ top: 5, right: 30, left: -20, bottom: 5 }}>
-          <XAxis dataKey='createdAt' />
-          <YAxis tickFormatter={tickFormatter} />
-          <CartesianGrid strokeDasharray='3 3' />
-          <Tooltip formatter={(value, name) => [value, name]} />
-          <Legend
-            verticalAlign='top'
-            align='right'
-            wrapperStyle={{ top: -5 }}
-            formatter={(value) => {
-              return (
-                <span style={{}}>
-                  {value === 'inlet'
-                    ? 'Inlet'
-                    : value === 'target'
-                    ? 'Target'
-                    : 'Outlet'}
-                </span>
-              );
-            }}
-          />
-          <Line
-            type='monotone'
-            dataKey='inlet'
-            stroke='#5cb85c'
-            dot={false}
-            label={isMobile ? false : { position: 'top' }}
-          />
-          <Line
-            type='monotone'
-            dataKey='target'
-            stroke='#333'
-            dot={false}
-            label={isMobile ? false : { position: 'top' }}
-          />
-          <Line
-            type='monotone'
-            dataKey='outlet'
-            stroke='#428bca'
-            dot={false}
-            label={isMobile ? false : { position: 'top' }}
-          />
-        </LineChart>
-      </ResponsiveContainer>
-    </Wrapper>
+    <div id='chart'>
+      <ApexCharts
+        options={options}
+        series={series}
+        type='line'
+        height={350}
+      />
+    </div>
   );
 };
 
-const Wrapper = styled.div`
-  margin-bottom: 1rem !important;
-  background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#000000' : '#ffffff'};
-  @media (min-width: 768px) {
-    margin: 0 1rem;
-  }
-
-  .heading {
-    font-size: 1.1rem;
-    font-weight: 500;
-
-    padding: 0 1rem;
-    span {
-      font-size: 0.9rem;
-      font-weight: 400;
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? '#ffffff' : '#000000'};
-    }
-  }
-`;
 export default MainChart;
