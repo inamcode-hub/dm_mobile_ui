@@ -14,7 +14,7 @@ import { data } from './Data';
 import { useWindowSize } from '../../../../../../../hooks/useWindowSize';
 import styled from '@emotion/styled';
 
-const MainChart = () => {
+const ControlChart = () => {
   const [chartData, setChartData] = useState([]);
   const { width } = useWindowSize();
   const isMobile = width <= 768;
@@ -22,10 +22,7 @@ const MainChart = () => {
   useEffect(() => {
     const formattedData = data.map((item) => ({
       ...item,
-      inlet: Math.round(item.inlet),
-      target: Math.round(item.target),
-      outlet: Math.round(item.outlet),
-
+      rate: Math.round(item.rate),
       createdAt: format(new Date(item.createdAt), 'EEE hh:mm'), // Format date using date-fns
     }));
     setChartData(formattedData);
@@ -49,41 +46,27 @@ const MainChart = () => {
           <XAxis dataKey='createdAt' />
           <YAxis tickFormatter={tickFormatter} />
           <CartesianGrid strokeDasharray='3 3' />
-          <Tooltip formatter={(value, name) => [value, name]} />
+          <Tooltip
+            formatter={(value, name) => [value, name]}
+            labelFormatter={(label) => `Time: ${label}`}
+          />
           <Legend
             verticalAlign='top'
             align='right'
-            wrapperStyle={{ top: -5 }}
+            iconType='wye'
+            wrapperStyle={{ top: 0 }}
             formatter={(value) => {
               return (
                 <span style={{}}>
-                  {value === 'inlet'
-                    ? 'Inlet'
-                    : value === 'target'
-                    ? 'Target'
-                    : 'Outlet'}
+                  {value === 'rate' ? 'Rate control' : 'Temperature'}
                 </span>
               );
             }}
           />
           <Line
             type='monotone'
-            dataKey='inlet'
-            stroke='#5cb85c'
-            dot={false}
-            label={isMobile ? false : { position: 'top' }}
-          />
-          <Line
-            type='monotone'
-            dataKey='target'
-            stroke='#333'
-            dot={false}
-            label={isMobile ? false : { position: 'top' }}
-          />
-          <Line
-            type='monotone'
-            dataKey='outlet'
-            stroke='#428bca'
+            dataKey='rate'
+            stroke='#f0ad4e'
             dot={false}
             label={isMobile ? false : { position: 'top' }}
           />
@@ -94,7 +77,6 @@ const MainChart = () => {
 };
 
 const Wrapper = styled.div`
-  margin-bottom: 1rem !important;
   background-color: ${({ theme }) =>
     theme.palette.mode === 'dark' ? '#000000' : '#ffffff'};
   @media (min-width: 768px) {
@@ -114,4 +96,4 @@ const Wrapper = styled.div`
     }
   }
 `;
-export default MainChart;
+export default ControlChart;
