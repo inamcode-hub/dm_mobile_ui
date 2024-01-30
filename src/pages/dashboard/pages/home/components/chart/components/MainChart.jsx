@@ -38,7 +38,7 @@ const MainChart = () => {
         show: true,
       },
       zoom: {
-        enabled: true,
+        enabled: false,
       },
 
       dropShadow: {
@@ -52,7 +52,7 @@ const MainChart = () => {
     },
 
     dataLabels: {
-      enabled: width > 768 ? true : false,
+      enabled: width > 920 ? true : false,
       formatter: function (val) {
         return Math.round(val); // Round the value to the nearest whole number
       },
@@ -68,12 +68,10 @@ const MainChart = () => {
 
     xaxis: {
       type: 'category',
-      title: {
-        text: 'Time',
-      },
+
       tickAmount:
         // width bigger than 768px than 10 if screen is bigger than 920px than 20
-        width > 768 ? (width > 920 ? 20 : 8) : 5,
+        width > 768 ? (width > 920 ? 15 : 8) : 7,
 
       labels: {
         formatter: function (val) {
@@ -82,9 +80,6 @@ const MainChart = () => {
       },
     },
     yaxis: {
-      title: {
-        text: 'Moisture',
-      },
       labels: {
         formatter: function (val) {
           return Math.round(val);
