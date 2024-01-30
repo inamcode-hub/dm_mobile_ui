@@ -9,9 +9,9 @@ const RateControl = () => {
       <div className='heading'>
         <div className='title'>Rate</div>
         <div className='warning_alert'>
-          <RateControlControl />
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
+          <RateControlControl />
         </div>
       </div>
       <div className='body'>

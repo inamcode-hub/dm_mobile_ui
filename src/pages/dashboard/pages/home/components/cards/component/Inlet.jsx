@@ -7,10 +7,10 @@ const Inlet = () => {
     <Wrapper>
       <div className='heading'>
         <div className='title'>Inlet</div>
-        {/* <div className='warning_alert'>
-          <div className='warning'>Warning</div>
-          <div className='alert'>Alert</div>
-        </div> */}
+        <div className='warning_alert'>
+          {/* <div className='warning'>Warning</div>
+          <div className='alert'>Alert</div> */}
+        </div>
       </div>
       <div className='body'>
         <div className='value'>
