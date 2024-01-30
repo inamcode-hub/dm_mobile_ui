@@ -105,25 +105,29 @@ const Wrapper = styled.div`
     }
     .second_value {
       color: #ffffff;
-      background: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
-      border-radius: 8px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      gap: 0.2rem;
 
-      padding: 0rem 0.5rem;
       .main {
-        border-bottom: 1px solid #ffffff;
+        background: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
+        border-radius: 8px;
       }
       .sub {
+        background: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
+        border-radius: 8px;
       }
       .main,
       .sub {
         display: flex;
         gap: 0.5rem;
-        color: #ffffff;
+        color: ${({ theme }) => theme.palette.mode === 'dark' && '#f0ad4e'};
         justify-content: space-between;
+        font-weight: 500;
+        padding: 0.1rem 0.5rem;
       }
     }
   }

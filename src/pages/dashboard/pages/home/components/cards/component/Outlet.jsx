@@ -23,11 +23,8 @@ const Outlet = () => {
         </div>
         <div className='second_value'>
           <div className='main'>
-            15 <span>%</span>
-          </div>
-          <div className='sub'>
-            <span>Moisture</span>
-            <span>Setpoint</span>
+            <span>SetPoint:</span>
+            <span>15</span>
           </div>
         </div>
       </div>
@@ -105,28 +102,22 @@ const Wrapper = styled.div`
         font-weight: 500;
       }
     }
+
     .second_value {
-      display: flex;
-      align-items: center;
       color: #ffffff;
       background: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
       border-radius: 8px;
-      padding: 0.3rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 2rem;
+      padding: 0rem 0.5rem;
       .main {
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: #ffffff;
-        span {
-          font-size: 1rem;
-        }
-      }
-      .sub {
         display: flex;
-        flex-direction: column;
-        font-size: 0.8rem;
-        font-weight: 400;
-        margin-left: 0.5rem;
+        gap: 0.5rem;
+        color: #ffffff;
+        justify-content: space-between;
       }
     }
   }
