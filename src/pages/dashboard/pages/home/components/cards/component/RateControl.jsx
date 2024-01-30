@@ -20,11 +20,12 @@ const RateControl = () => {
         </div>
         <div className='second_value'>
           <div className='main'>
-            100 <span></span>
+            <span>SetPoint:</span>
+            <span>35.33</span>
           </div>
           <div className='sub'>
-            <span>Suggested</span>
-            <span>Rate</span>
+            <span>Mode:</span>
+            <span>Manual</span>
           </div>
         </div>
       </div>
@@ -103,27 +104,26 @@ const Wrapper = styled.div`
       }
     }
     .second_value {
-      display: flex;
-      align-items: center;
       color: #ffffff;
       background: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
       border-radius: 8px;
-      padding: 0.3rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      padding: 0rem 0.5rem;
       .main {
-        font-size: 1.5rem;
-        font-weight: 400;
-        color: #ffffff;
-        span {
-          font-size: 1rem;
-        }
+        border-bottom: 1px solid #ffffff;
       }
       .sub {
+      }
+      .main,
+      .sub {
         display: flex;
-        flex-direction: column;
-        font-size: 0.8rem;
-        font-weight: 400;
-        margin-left: 0.5rem;
+        gap: 0.5rem;
+        color: #ffffff;
+        justify-content: space-between;
       }
     }
   }
