@@ -1,16 +1,18 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import OutletControl from './OutletControl';
 
 const Outlet = () => {
   return (
     <Wrapper>
       <div className='heading'>
         <div className='title'>Outlet</div>
-        {/* <div className='warning_alert'>
+        <div className='warning_alert'>
+          <OutletControl />
           <div className='warning'>Warning</div>
           <div className='alert'>Alert</div>
-        </div> */}
+        </div>
       </div>
       <div className='body'>
         <div className='value'>
@@ -63,6 +65,7 @@ const Wrapper = styled.div`
     .warning_alert {
       display: flex;
       justify-content: flex-end;
+      align-items: center;
       gap: 0.5rem;
       .warning {
         background: ${({ theme }) =>
