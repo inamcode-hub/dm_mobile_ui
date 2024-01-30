@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import ChangeMode from './ChangeMode';
+import ChangeRate from './ChangeRate';
 
 const RateControl = () => {
   return (
@@ -16,7 +18,10 @@ const RateControl = () => {
         <div className='value'>
           <div className='main'>35.33</div>
         </div>
-        <div className='second_value'></div>
+        <div className='second_value'>
+          <ChangeMode />
+          <ChangeRate />
+        </div>
       </div>
     </Wrapper>
   );
@@ -90,6 +95,11 @@ const Wrapper = styled.div`
         font-size: 1rem;
         font-weight: 500;
       }
+    }
+    .second_value {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
   }
 `;
