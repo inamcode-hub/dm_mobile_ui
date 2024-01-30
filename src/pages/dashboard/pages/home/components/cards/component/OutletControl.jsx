@@ -4,11 +4,7 @@ import React from 'react';
 const OutletControl = () => {
   return (
     <div>
-      <Button
-        variant='contained'
-        size='small'>
-        Control
-      </Button>
+      <Button variant='contained'>Control</Button>
     </div>
   );
 };
