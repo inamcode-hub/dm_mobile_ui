@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
-import RateControlControl from './RateControlControl';
 
 const RateControl = () => {
   return (
@@ -11,7 +10,6 @@ const RateControl = () => {
         <div className='warning_alert'>
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
-          <RateControlControl />
         </div>
       </div>
       <div className='body'>

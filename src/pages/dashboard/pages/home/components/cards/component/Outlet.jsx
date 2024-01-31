@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
-import OutletControl from './OutletControl';
 
 const Outlet = () => {
   return (
@@ -11,7 +10,6 @@ const Outlet = () => {
         <div className='warning_alert'>
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
-          <OutletControl />
         </div>
       </div>
       <div className='body'>
