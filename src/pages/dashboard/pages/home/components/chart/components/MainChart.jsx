@@ -3,10 +3,15 @@ import ApexCharts from 'react-apexcharts';
 import { format } from 'date-fns';
 import { data } from './Data';
 import { useWindowSize } from '../../../../../../../hooks/useWindowSize';
+import styled from '@emotion/styled';
+import { useTheme } from '@emotion/react';
 
 const MainChart = () => {
   const [series, setSeries] = useState([]);
   const { width } = useWindowSize();
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
+
   useEffect(() => {
     const formattedData = data.map((item) => ({
       x: format(new Date(item.createdAt), 'EEE hh:mm'),
@@ -57,23 +62,30 @@ const MainChart = () => {
         return Math.round(val); // Round the value to the nearest whole number
       },
     },
-    colors: ['#5cb85c', '#000', '#0961ad'],
+    colors: isDarkMode
+      ? ['#5cb85c', '#353535', '#0961ad']
+      : ['#5cb85c', '#000', '#0961ad'],
     stroke: {
       curve: 'smooth',
     },
     title: {
       text: 'Average High & Low Temperature',
       align: 'left',
+      style: {
+        color: isDarkMode ? '#fff' : '#000', // Change title color based on theme
+      },
     },
 
     xaxis: {
       type: 'category',
-
       tickAmount:
         // width bigger than 768px than 10 if screen is bigger than 920px than 20
         width > 768 ? (width > 920 ? 15 : 8) : 7,
 
       labels: {
+        style: {
+          colors: isDarkMode ? '#fff' : '#000',
+        },
         formatter: function (val) {
           return val;
         },
@@ -81,12 +93,16 @@ const MainChart = () => {
     },
     yaxis: {
       labels: {
+        style: {
+          colors: isDarkMode ? '#fff' : '#000',
+        },
         formatter: function (val) {
           return Math.round(val);
         },
       },
     },
     tooltip: {
+      theme: isDarkMode ? 'dark' : 'light',
       y: {
         formatter: function (val) {
           return Math.round(val);
@@ -96,19 +112,34 @@ const MainChart = () => {
     legend: {
       position: 'top',
       horizontalAlign: 'left',
+      labels: {
+        colors: isDarkMode ? '#fff' : '#000', // Change text color based on theme
+      },
     },
   };
 
   return (
-    <div id='chart'>
-      <ApexCharts
-        options={options}
-        series={series}
-        type='line'
-        height={350}
-      />
-    </div>
+    <Wrapper>
+      <div id='chart'>
+        <ApexCharts
+          options={options}
+          series={series}
+          type='line'
+          height={350}
+        />
+      </div>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div`
+  #chart {
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 1rem;
+    border-radius: 10px;
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#000' : '#fff'};
+  }
+`;
 
 export default MainChart;
