@@ -130,7 +130,7 @@ const Wrapper = styled.div`
         transition: all 0.3s ease;
         :hover {
           background-color: ${({ theme }) =>
-            theme.palette.mode === 'dark' ? grey[900] : '#8f5b14'};
+            theme.palette.mode === 'dark' ? grey[700] : '#8f5b14'};
           cursor: pointer;
         }
       }
