@@ -78,6 +78,7 @@ const MainChart = () => {
 
     xaxis: {
       type: 'category',
+
       tickAmount:
         // width bigger than 768px than 10 if screen is bigger than 920px than 20
         width > 768 ? (width > 920 ? 15 : 8) : 7,
@@ -133,6 +134,7 @@ const MainChart = () => {
 };
 
 const Wrapper = styled.div`
+  overflow: hidden;
   #chart {
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin: 0 1rem;
