@@ -125,6 +125,14 @@ const Wrapper = styled.div`
         justify-content: space-between;
         font-weight: 400;
         padding: 0.1rem 0.5rem;
+        background-color: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
+        transition: all 0.3s ease;
+        :hover {
+          background-color: ${({ theme }) =>
+            theme.palette.mode === 'dark' ? grey[900] : '#8f5b14'};
+          cursor: pointer;
+        }
       }
     }
   }

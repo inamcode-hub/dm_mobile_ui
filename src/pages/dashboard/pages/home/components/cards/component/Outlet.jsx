@@ -95,16 +95,10 @@ const Wrapper = styled.div`
         font-weight: 500;
         color: #ffffff;
       }
-      .sub {
-        font-size: 1rem;
-        font-weight: 500;
-      }
     }
 
     .second_value {
       color: #ffffff;
-      /* background: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[900] : '#0961ad'}; */
       border: 1px solid #ffffff;
       border-radius: 8px;
       display: flex;
@@ -117,6 +111,14 @@ const Wrapper = styled.div`
         gap: 0.5rem;
         color: #ffffff;
         justify-content: space-between;
+      }
+      background-color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
+      transition: all 0.3s ease;
+      :hover {
+        background-color: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[900] : '#064074'};
+        cursor: pointer;
       }
     }
   }
