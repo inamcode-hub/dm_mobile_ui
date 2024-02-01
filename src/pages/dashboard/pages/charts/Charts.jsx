@@ -49,7 +49,7 @@ const ApexChart = () => {
         show: true,
       },
       zoom: {
-        enabled: false,
+        enabled: true,
       },
 
       dropShadow: {
