@@ -114,8 +114,27 @@ const ApexChart = () => {
       group: 'social',
       type: 'line',
       height: 300,
+      toolbar: {
+        show: false,
+      },
+      zoom: {
+        enabled: true,
+      },
+
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
     },
+
     colors: ['#f0ad4e'],
+    stroke: {
+      curve: 'smooth',
+    },
   });
 
   const [series2, setSeries2] = useState([
