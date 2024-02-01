@@ -1,45 +1,95 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import { data } from './Data';
+import { format } from 'date-fns';
+import { useWindowSize } from '../../../../hooks/useWindowSize';
+import { useTheme } from '@emotion/react';
 
 const ApexChart = () => {
-  // Prepare your data
+  const { width } = useWindowSize();
+
+  const theme = useTheme();
+  const isDarkMode = theme.palette.mode === 'dark';
   const seriesInlet = data.map((item) => {
     return {
-      x: new Date(item.createdAt).getTime(),
+      x: format(new Date(item.createdAt), 'EEE hh:mm'),
       y: item.inlet.toFixed(0),
     };
   });
 
   const seriesOutlet = data.map((item) => {
     return {
-      x: new Date(item.createdAt).getTime(),
+      x: format(new Date(item.createdAt), 'EEE hh:mm'),
       y: item.outlet.toFixed(0),
     };
   });
 
   const seriesTarget = data.map((item) => {
     return {
-      x: new Date(item.createdAt).getTime(),
+      x: format(new Date(item.createdAt), 'EEE hh:mm'),
       y: item.target.toFixed(0),
     };
   });
 
   const seriesRate = data.map((item) => {
     return {
-      x: new Date(item.createdAt).getTime(),
+      x: format(new Date(item.createdAt), 'EEE hh:mm'),
       y: item.rate.toFixed(0),
     };
   });
 
   const [options, setOptions] = useState({
     chart: {
-      id: 'chart1',
+      id: 'chart2',
       group: 'social',
       type: 'line',
-      height: 300,
+      height: 350,
+      stacked: false,
+      toolbar: {
+        show: true,
+      },
+      zoom: {
+        enabled: false,
+      },
+
+      dropShadow: {
+        enabled: true,
+        color: '#000',
+        top: 18,
+        left: 7,
+        blur: 10,
+        opacity: 0.2,
+      },
     },
-    colors: ['#008FFB', '#546E7A', '#00E396'],
+    colors: isDarkMode
+      ? ['#5cb85c', '#353535', '#0961ad']
+      : ['#5cb85c', '#000', '#0961ad'],
+    stroke: {
+      curve: 'smooth',
+    },
+    title: {
+      text: 'Average High & Low Temperature',
+      align: 'left',
+      style: {
+        color: isDarkMode ? '#fff' : '#000', // Change title color based on theme
+      },
+    },
+    xaxis: {
+      type: 'category',
+
+      tickAmount:
+        // width bigger than 768px than 10 if screen is bigger than 920px than 20
+        width > 768 ? (width > 920 ? 15 : 8) : 7,
+
+      labels: {
+        style: {
+          colors: isDarkMode ? '#fff' : '#000',
+        },
+        formatter: function (val) {
+          return val;
+        },
+      },
+    },
   });
 
   const [series, setSeries] = useState([
@@ -48,12 +98,12 @@ const ApexChart = () => {
       data: seriesInlet,
     },
     {
-      name: 'outlet',
-      data: seriesOutlet,
-    },
-    {
       name: 'target',
       data: seriesTarget,
+    },
+    {
+      name: 'outlet',
+      data: seriesOutlet,
     },
   ]);
 
@@ -74,6 +124,7 @@ const ApexChart = () => {
     },
   ]);
 
+  useEffect(() => {}, [width, isDarkMode]);
   return (
     <div>
       <div id='chart-line'>
@@ -81,7 +132,7 @@ const ApexChart = () => {
           options={options}
           series={series}
           type='line'
-          height={300}
+          height={options.chart.height}
         />
       </div>
       <div id='chart-line2'>
@@ -89,7 +140,7 @@ const ApexChart = () => {
           options={options2}
           series={series2}
           type='line'
-          height={300}
+          height={options2.chart.height}
         />
       </div>
     </div>
