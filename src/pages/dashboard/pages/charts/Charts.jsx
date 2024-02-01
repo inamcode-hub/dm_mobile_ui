@@ -4,6 +4,7 @@ import { data } from './Data';
 import { format } from 'date-fns';
 import { useWindowSize } from '../../../../hooks/useWindowSize';
 import { useTheme } from '@emotion/react';
+import styled from '@emotion/styled';
 
 const ApexChart = () => {
   const { width } = useWindowSize();
@@ -71,7 +72,7 @@ const ApexChart = () => {
       text: 'Average High & Low Temperature',
       align: 'left',
       style: {
-        color: isDarkMode ? '#fff' : '#000', // Change title color based on theme
+        color: '#000', // Change title color based on theme
       },
     },
     xaxis: {
@@ -83,7 +84,7 @@ const ApexChart = () => {
 
       labels: {
         style: {
-          colors: isDarkMode ? '#fff' : '#000',
+          colors: '#000',
         },
         formatter: function (val) {
           return val;
@@ -114,7 +115,7 @@ const ApexChart = () => {
       type: 'line',
       height: 300,
     },
-    colors: ['#546E7A'],
+    colors: ['#f0ad4e'],
   });
 
   const [series2, setSeries2] = useState([
@@ -124,9 +125,9 @@ const ApexChart = () => {
     },
   ]);
 
-  useEffect(() => {}, [width, isDarkMode]);
+  useEffect(() => {}, [isDarkMode]);
   return (
-    <div>
+    <Wrapper>
       <div id='chart-line'>
         <ReactApexChart
           options={options}
@@ -143,8 +144,14 @@ const ApexChart = () => {
           height={options2.chart.height}
         />
       </div>
-    </div>
+    </Wrapper>
   );
 };
 
+const Wrapper = styled.div`
+  .apexcharts-legend-text {
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
+  }
+`;
 export default ApexChart;
