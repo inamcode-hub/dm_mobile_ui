@@ -10,9 +10,12 @@ import MessagesList from './component/MessagesList';
 import Loading from '../../../../components/Loading';
 import ReadMessage from './component/ReadMessage';
 import styled from '@emotion/styled';
+import Empty from './component/Empty';
 
 const Messages = () => {
-  const { isLoading, hasMore } = useSelector((state) => state.message);
+  const { isLoading, hasMore, messages } = useSelector(
+    (state) => state.message
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -43,6 +46,10 @@ const Messages = () => {
 
   if (isLoading && !hasMore) {
     return <Loading />;
+  }
+
+  if (!messages.length) {
+    return <Empty />;
   }
 
   return (
