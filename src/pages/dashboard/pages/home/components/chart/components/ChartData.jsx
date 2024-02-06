@@ -193,7 +193,7 @@ const Wrapper = styled.div`
   .apexcharts-title-text {
     fill: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
-    text-transform: uppercase;
+    text-transform: capitalize;
   }
   .apexcharts-xaxis-label,
   .apexcharts-yaxis-label {
@@ -206,6 +206,7 @@ const Wrapper = styled.div`
       theme.palette.mode === 'dark' ? '#333' : '#fff'} !important;
     color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
+    text-transform: capitalize;
   }
   .apexcharts-tooltip-title {
     background: ${({ theme }) =>
