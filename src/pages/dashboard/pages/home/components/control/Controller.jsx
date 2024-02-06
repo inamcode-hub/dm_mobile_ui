@@ -7,14 +7,14 @@ const Controller = () => {
     {
       id: 1,
       name: 'Moisture SetPoint',
-      value: 0.5,
+      value: 15,
       unit: '%',
       action: 'Change',
     },
     {
       id: 2,
       name: 'Discharge Rate SetPoint',
-      value: 0.5,
+      value: 35,
       action: 'Change',
     },
     {
@@ -26,7 +26,7 @@ const Controller = () => {
     {
       id: 4,
       name: 'Predicted Moisture ',
-      value: '11.5',
+      value: '13',
     },
     {
       id: 5,
@@ -128,6 +128,12 @@ const Wrapper = styled.div`
             &:first-of-type {
               border-top-left-radius: 10px;
               border-bottom-left-radius: 10px;
+            }
+
+            &:nth-of-type(2) {
+              font-weight: bold;
+              background-color: ${({ theme }) =>
+                theme.palette.mode === 'dark' ? '#353535' : '#f7f7f7'};
             }
 
             &:last-of-type {
