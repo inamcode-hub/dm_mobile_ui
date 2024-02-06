@@ -1,6 +1,3 @@
-import React from 'react';
-import MainChart from './components/MainChart';
-import ControlChart from './components/ControlChart';
 import styled from '@emotion/styled';
 import ChartData from './components/ChartData';
 

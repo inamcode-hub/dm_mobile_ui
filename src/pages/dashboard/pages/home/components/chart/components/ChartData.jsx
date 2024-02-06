@@ -185,7 +185,7 @@ const Wrapper = styled.div`
   display: grid;
   gap: 1rem;
   overflow: hidden;
-  margin-bottom: 5rem;
+  margin-bottom: 1rem;
   .apexcharts-toolbar {
     margin-right: 1rem;
   }
