@@ -5,6 +5,7 @@ import DmStatus from '../dmstatus/DmStatus';
 import Cards from './components/cards/Cards';
 import Chart from './components/chart/Chart';
 import Controller from './components/control/Controller';
+import Information from './components/information/Information';
 
 const Home = () => {
   const { isDmOnline, isSubscriptionActive } = useSelector(
@@ -18,6 +19,7 @@ const Home = () => {
       <Cards />
       <Chart />
       <Controller />
+      <Information />
     </Wrapper>
   );
 };
