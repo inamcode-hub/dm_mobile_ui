@@ -1,8 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Button, IconButton } from '@mui/material';
+import { Button, Divider, IconButton } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings'; // Example icon for actions
 import TuneIcon from '@mui/icons-material/Tune';
+import OpacityIcon from '@mui/icons-material/Opacity'; // For moisture
+import SpeedIcon from '@mui/icons-material/Speed'; // For discharge rate
+import { GrSystem } from 'react-icons/gr';
 
 import { grey, blue } from '@mui/material/colors';
 import { Tune } from '@mui/icons-material';
@@ -13,20 +16,25 @@ const Controller = () => {
       id: 1,
       name: 'Moisture SetPoint',
       value: 15,
-      unit: '%',
       action: 'Change',
+      icon: <OpacityIcon />,
+      className: 'moisture',
     },
     {
       id: 2,
       name: 'Discharge Rate SetPoint',
       value: 35,
       action: 'Change',
+      icon: <SpeedIcon />,
+      className: 'discharge',
     },
     {
       id: 3,
       name: 'Operating Mode',
       value: 'Auto',
       action: 'Change',
+      icon: <GrSystem />,
+      className: 'mode',
     },
   ];
   return (
@@ -38,21 +46,31 @@ const Controller = () => {
             key={item.id}
             className='item'>
             <div className='name-value'>
-              <div className='name'>{item.name}</div>
-              <div className='value'>
-                {item.value} {item.unit}
+              <div className='name'>
+                {item.icon && (
+                  <IconButton
+                    size='medium'
+                    color='primary'>
+                    {item.icon}
+                  </IconButton>
+                )}
+                {item.name}
               </div>
+              <div className='value'>{item.value}</div>
             </div>
-            {item.action && (
-              <div className='action'>
-                <Button
-                  startIcon={<SettingsIcon />}
-                  color='primary'
-                  variant='outlined'>
-                  {item.action}
-                </Button>
-              </div>
-            )}
+            <Divider
+              style={{
+                margin: '0.5rem 0',
+              }}
+            />
+            <div className='action'>
+              <Button
+                startIcon={<SettingsIcon />}
+                color='primary'
+                variant='outlined'>
+                {item.action}
+              </Button>
+            </div>
           </div>
         ))}
       </div>
@@ -98,16 +116,33 @@ const Wrapper = styled.div`
 
       .name-value {
         display: flex;
+        align-items: center;
         justify-content: space-between;
       }
 
       .name {
-        font-weight: bold;
+        /* font-weight: bold; */
+        display: flex;
+        align-items: center;
+        //button icons
+        .MuiIconButton-root {
+          color: ${({ theme }) =>
+            theme.palette.mode === 'dark' ? '#fff' : 'primary(--main)'};
+        }
       }
-
       .value {
-        color: ${grey[600]};
-        font-weight: 500;
+        margin-left: auto;
+        color: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary.main};
+        font-weight: bold;
+        font-size: 1rem;
+        background-color: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? grey[900] : grey[200]};
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid
+          ${({ theme }) =>
+            theme.palette.mode === 'dark' ? grey[800] : grey[300]};
       }
 
       .action {
