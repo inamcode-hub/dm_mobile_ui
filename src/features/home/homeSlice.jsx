@@ -2,6 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
 
 const initialState = {
+  moistureSetPoint: 15,
+  rateSetPoint: 35,
+  modeControl: 'auto',
+  //dialog states
   moistureSetPointDialog: false,
   rateSetPointDialog: false,
   modeControlDialog: false,
