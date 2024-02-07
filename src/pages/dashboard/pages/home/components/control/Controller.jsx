@@ -1,7 +1,11 @@
-import styled from '@emotion/styled';
-import { Button } from '@mui/material';
-import { grey } from '@mui/material/colors';
 import React from 'react';
+import styled from '@emotion/styled';
+import { Button, IconButton } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings'; // Example icon for actions
+import TuneIcon from '@mui/icons-material/Tune';
+
+import { grey, blue } from '@mui/material/colors';
+import { Tune } from '@mui/icons-material';
 
 const Controller = () => {
   const data = [
@@ -24,16 +28,6 @@ const Controller = () => {
       value: 'Auto',
       action: 'Change',
     },
-    {
-      id: 4,
-      name: 'Predicted Moisture ',
-      value: '13',
-    },
-    {
-      id: 5,
-      name: 'Suggested Rate',
-      value: '0',
-    },
   ];
   return (
     <Wrapper>
@@ -52,8 +46,9 @@ const Controller = () => {
             {item.action && (
               <div className='action'>
                 <Button
-                  variant='contained'
-                  color='primary'>
+                  startIcon={<SettingsIcon />}
+                  color='primary'
+                  variant='outlined'>
                   {item.action}
                 </Button>
               </div>
@@ -66,71 +61,61 @@ const Controller = () => {
 };
 
 const Wrapper = styled.div`
-  /* Basic setup */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   overflow: hidden;
   background-color: ${({ theme }) =>
-    theme.palette.mode === 'dark' ? '#121212' : '#fff'};
-
-  /* Heading style */
+    theme.palette.mode === 'dark' ? '#000' : theme.palette.background.paper};
+  margin: 1rem;
   .heading {
     background-color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? '#333' : '#e0e0e0'};
-    color: ${({ theme }) => (theme.palette.mode === 'dark' ? '#fff' : '#000')};
-    padding: 1rem;
-    font-size: 1rem;
-    font-weight: bold;
-    border-bottom: 1px solid
-      ${({ theme }) => (theme.palette.mode === 'dark' ? '#444' : '#d0d0d0')};
+      theme.palette.mode === 'dark'
+        ? theme.palette.background.paper
+        : theme.palette.primary.main};
+    color: #fff;
+    padding: 16px;
+    font-size: 1.25rem;
+    font-weight: 500;
   }
 
-  /* Content and items */
   .content {
+    padding: 1rem;
+    @media (max-width: 768px) {
+      padding: 1rem 0.5rem 1rem 0.5rem;
+    }
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: 1rem;
-    padding: 0.5rem;
+    gap: 16px;
+
     .item {
-      display: flex;
-      flex-direction: column;
-      /* gap: 8px; */
+      padding: 1rem;
+      @media (max-width: 768px) {
+        padding: 0.5rem;
+      }
       border-radius: 8px;
-      border: 1px solid
-        ${({ theme }) => (theme.palette.mode === 'dark' ? '#444' : '#d0d0d0')};
-      /* Name and value styling for better emphasis */
+      border: 1px solid ${grey[300]};
+      transition: box-shadow 0.3s ease-in-out;
+
       .name-value {
         display: flex;
         justify-content: space-between;
-        padding: 8px;
-        align-items: center;
-
-        .name {
-        }
-        .value {
-          color: ${({ theme }) =>
-            theme.palette.mode === 'dark' ? '#ddd' : '#333'};
-        }
       }
-      /* Adjust action button for better visual integration */
+
+      .name {
+        font-weight: bold;
+      }
+
+      .value {
+        color: ${grey[600]};
+        font-weight: 500;
+      }
+
       .action {
-        /* padding-right: 8px;
-      padding-bottom: 8px; */
-        /* display: flex;
-      justify-content: flex-end; */
-        button {
-          width: 100%;
-        }
-      }
-    }
-
-    /* Responsive adjustments */
-    @media (max-width: 600px) {
-      .content {
-        grid-template-columns: 1fr;
+        display: flex;
+        justify-content: flex-end;
       }
     }
   }
 `;
+
 export default Controller;
