@@ -60,7 +60,7 @@ const ChartData = () => {
         opacity: 0.2,
       },
     },
-    colors: ['#5cb85c', '#000', '#0961ad'],
+    colors: ['#5cb85c', '#63c', '#0961ad'],
     stroke: {
       curve: 'smooth',
     },
