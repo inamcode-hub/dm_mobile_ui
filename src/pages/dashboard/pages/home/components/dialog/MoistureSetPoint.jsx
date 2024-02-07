@@ -92,7 +92,7 @@ const Wrapper = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  min-height: 100%;
 
   .heading {
     padding-bottom: 20px;
