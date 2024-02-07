@@ -1,8 +1,16 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
 
 const Outlet = () => {
+  const dispatch = useDispatch();
+  const handleClickOpen = () => {
+    dispatch(
+      getHomeStateValues({ name: 'moistureSetPointDialog', value: true })
+    );
+  };
   return (
     <Wrapper>
       <div className='heading'>
@@ -19,7 +27,9 @@ const Outlet = () => {
             102.7 <span> &#8451;</span>
           </div>
         </div>
-        <div className='second_value'>
+        <div
+          className='second_value'
+          onClick={handleClickOpen}>
           <div className='main'>
             <span>SetPoint:</span>
             <span>15</span>

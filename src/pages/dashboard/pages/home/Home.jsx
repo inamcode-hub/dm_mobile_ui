@@ -6,6 +6,9 @@ import Cards from './components/cards/Cards';
 import Chart from './components/chart/Chart';
 import Controller from './components/control/Controller';
 import Information from './components/information/Information';
+import MoistureSetPoint from './components/dialog/MoistureSetPoint';
+import DischargeRateSetPoint from './components/dialog/DischargeRateSetPoint';
+import ModeControl from './components/dialog/ModeControl';
 
 const Home = () => {
   const { isDmOnline, isSubscriptionActive } = useSelector(
@@ -16,6 +19,9 @@ const Home = () => {
   }
   return (
     <Wrapper>
+      <MoistureSetPoint />
+      <DischargeRateSetPoint />
+      <ModeControl />
       <Cards />
       <Chart />
       <Controller />

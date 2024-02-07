@@ -1,8 +1,18 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
 
 const RateControl = () => {
+  const dispatch = useDispatch();
+
+  const handleSetPoint = () => {
+    dispatch(getHomeStateValues({ name: 'rateSetPointDialog', value: true }));
+  };
+  const handleMode = () => {
+    dispatch(getHomeStateValues({ name: 'modeControlDialog', value: true }));
+  };
   return (
     <Wrapper>
       <div className='heading'>
@@ -17,11 +27,15 @@ const RateControl = () => {
           <div className='main'>35.33</div>
         </div>
         <div className='second_value'>
-          <div className='main'>
+          <div
+            className='main'
+            onClick={handleSetPoint}>
             <span>SetPoint:</span>
             <span>35.33</span>
           </div>
-          <div className='sub'>
+          <div
+            className='sub'
+            onClick={handleMode}>
             <span>Mode:</span>
             <span>Manual</span>
           </div>

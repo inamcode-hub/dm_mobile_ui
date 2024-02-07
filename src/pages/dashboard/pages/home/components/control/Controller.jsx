@@ -9,8 +9,24 @@ import { GrSystem } from 'react-icons/gr';
 
 import { grey, blue } from '@mui/material/colors';
 import { Tune } from '@mui/icons-material';
+import { useDispatch } from 'react-redux';
+import { getHomeStateValues } from '../../../../../../features/home/homeSlice';
 
 const Controller = () => {
+  const dispatch = useDispatch();
+
+  const handleMoisture = () => {
+    dispatch(
+      getHomeStateValues({ name: 'moistureSetPointDialog', value: true })
+    );
+  };
+  const handleRate = () => {
+    dispatch(getHomeStateValues({ name: 'rateSetPointDialog', value: true }));
+  };
+
+  const handleMode = () => {
+    dispatch(getHomeStateValues({ name: 'modeControlDialog', value: true }));
+  };
   const data = [
     {
       id: 1,
@@ -19,6 +35,7 @@ const Controller = () => {
       action: 'Change',
       icon: <OpacityIcon />,
       className: 'moisture',
+      onClick: handleMoisture,
     },
     {
       id: 2,
@@ -27,6 +44,7 @@ const Controller = () => {
       action: 'Change',
       icon: <SpeedIcon />,
       className: 'discharge',
+      onClick: handleRate,
     },
     {
       id: 3,
@@ -35,6 +53,7 @@ const Controller = () => {
       action: 'Change',
       icon: <GrSystem />,
       className: 'mode',
+      onClick: handleMode,
     },
   ];
   return (
@@ -63,7 +82,9 @@ const Controller = () => {
                 margin: '0.5rem 0',
               }}
             />
-            <div className='action'>
+            <div
+              className='action'
+              onClick={item.onClick}>
               <Button
                 startIcon={<SettingsIcon />}
                 color='primary'
