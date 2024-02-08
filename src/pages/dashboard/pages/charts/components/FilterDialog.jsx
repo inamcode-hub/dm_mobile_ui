@@ -45,7 +45,7 @@ const FilterDialog = () => {
         </div>
         <div className='body'>
           <ChartSort />
-          {/* <ChartDatePicker /> */}
+          <ChartDatePicker />
         </div>
         <div className='footer'>
           <Button
