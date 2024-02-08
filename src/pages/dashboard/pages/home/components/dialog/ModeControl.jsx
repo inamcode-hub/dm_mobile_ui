@@ -75,7 +75,7 @@ const ModeControl = () => {
               <ToggleButton
                 key={index}
                 value={item.value}
-                disabled={item.disabled}
+                disabled={mode === item.value}
                 className={mode === item.value ? 'active' : ''}>
                 {item.label}
                 {/* {item.value === 'automatic' && !automaticReady && (
