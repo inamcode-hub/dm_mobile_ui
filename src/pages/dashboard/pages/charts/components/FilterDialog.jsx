@@ -47,7 +47,7 @@ const FilterDialog = () => {
             onClick={handleSubmit}
             color='primary'
             variant='contained'>
-            Update Set Point
+            Apply Filter
           </Button>
         </div>
       </Wrapper>
