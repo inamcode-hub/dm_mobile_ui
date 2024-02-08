@@ -3,7 +3,8 @@ import DatePicker from 'react-datepicker';
 import styled from '@emotion/styled';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Divider, Typography } from '@mui/material';
-import { MdOutlineDateRange } from 'react-icons/md';
+import { MdOutlineDateRange, MdRefresh } from 'react-icons/md';
+import { Button } from '@mui/material';
 
 const ChartDatePicker = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -49,6 +50,12 @@ const ChartDatePicker = () => {
         </div>
       </div>
       <Divider />
+      <div className='button'>
+        <Button variant='outlined'>
+          <MdRefresh />
+          Reset Filter
+        </Button>
+      </div>
     </Wrapper>
   );
 };
@@ -83,6 +90,19 @@ const Wrapper = styled.div`
           transform: translateY(-50%);
         }
       }
+    }
+  }
+  .button {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    button {
+      padding: 0.5rem 2rem;
+    }
+    //icon
+    svg {
+      margin-right: 0.5rem;
+      font-size: 1.2rem;
     }
   }
 `;
