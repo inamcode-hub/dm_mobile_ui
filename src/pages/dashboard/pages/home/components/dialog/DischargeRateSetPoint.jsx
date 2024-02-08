@@ -120,26 +120,27 @@ const Wrapper = styled.div`
       }
     }
 
-    .MuiTextField-root {
-      margin-top: 10px;
-    }
     .content {
       font-size: 16px;
       color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[300] : grey[600]};
-      padding: 20px 0;
+      font-size: 16px;
+      color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? grey[300] : grey[600]};
+      margin: 20px 0;
+      border: 1px solid #e0e0e0;
+      padding: 10px;
+      border-radius: 8px;
+      //info
+      background-color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? '#333' : '#f9f9f9'};
     }
   }
 
   .footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-
     gap: 10px;
-
-    .MuiButton-root {
-      font-size: 14px;
-    }
   }
 `;
 
