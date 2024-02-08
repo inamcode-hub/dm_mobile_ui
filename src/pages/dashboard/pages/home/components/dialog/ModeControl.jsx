@@ -51,10 +51,7 @@ const ModeControl = () => {
         <div className='heading'>
           <div className='title'>
             <GrSystem />
-            Change Mode
-          </div>
-          <div className='content'>
-            Select the desired operational mode for the system.
+            Mode Control
           </div>
         </div>
         <div className='body'>
@@ -118,15 +115,13 @@ const ModeControl = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   height: 100%;
 
   .heading {
-    padding-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 20px;
 
     .title {
       font-size: 2rem;
@@ -143,12 +138,6 @@ const Wrapper = styled.div`
           theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary.main};
       }
     }
-
-    .content {
-      font-size: 16px;
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[300] : grey[600]};
-    }
   }
 
   .body {
@@ -156,8 +145,7 @@ const Wrapper = styled.div`
       font-size: 16px;
       color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[300] : grey[600]};
-      margin-bottom: 20px;
-
+      margin: 20px 0;
       span {
         font-weight: bold;
         color: ${({ theme }) =>
@@ -169,7 +157,7 @@ const Wrapper = styled.div`
     }
 
     .MuiTextField-root {
-      margin-top: 10px;
+      /* margin-top: 10px; */
     }
     .info {
       font-size: 16px;
@@ -196,7 +184,6 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr 1fr;
 
     gap: 10px;
-    margin-top: 20px;
 
     .MuiButton-root {
       font-size: 14px;
