@@ -93,17 +93,15 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  position: relative;
 
   .heading {
     padding-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
-
-    padding-top: 4rem;
+    margin-bottom: 20px;
+    @media (max-width: 600px) {
+      margin-top: 3rem;
+    }
     .title {
-      position: absolute;
-      top: 20px;
-      left: 20px;
       font-size: 2rem;
       font-weight: bold;
       margin-bottom: 10px;
