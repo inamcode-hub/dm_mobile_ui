@@ -126,7 +126,6 @@ const Wrapper = styled.div`
     .title {
       font-size: 2rem;
       font-weight: bold;
-      margin-bottom: 10px;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -145,7 +144,7 @@ const Wrapper = styled.div`
       font-size: 16px;
       color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[300] : grey[600]};
-      margin: 20px 0;
+      margin: 1rem 0;
       span {
         font-weight: bold;
         color: ${({ theme }) =>
@@ -163,7 +162,7 @@ const Wrapper = styled.div`
       font-size: 16px;
       color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[300] : grey[600]};
-      margin: 20px 0;
+      margin: 1rem 0;
       border: 1px solid #e0e0e0;
       padding: 10px;
       border-radius: 8px;
