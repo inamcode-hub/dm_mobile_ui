@@ -1,10 +1,17 @@
 import * as React from 'react';
-import { Button, Drawer, useTheme, useMediaQuery } from '@mui/material';
+import {
+  Button,
+  Drawer,
+  useTheme,
+  useMediaQuery,
+  CardHeader,
+} from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaRegChartBar } from 'react-icons/fa';
 import styled from '@emotion/styled';
-import SpeedIcon from '@mui/icons-material/Speed';
 import { getChartStateValues } from '../../../../../features/chart/chartSlice';
+import ChartDatePicker from './ChartDatePicker';
+import ChartSort from './ChartSort';
 const FilterDialog = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -35,6 +42,10 @@ const FilterDialog = () => {
             <FaRegChartBar />
             Filter Chart
           </div>
+        </div>
+        <div className='body'>
+          <ChartSort />
+          {/* <ChartDatePicker /> */}
         </div>
         <div className='footer'>
           <Button
@@ -79,6 +90,9 @@ const Wrapper = styled.div`
   }
 
   .body {
+    padding: 1rem 0;
+    display: grid;
+    gap: 1rem;
   }
 
   .footer {

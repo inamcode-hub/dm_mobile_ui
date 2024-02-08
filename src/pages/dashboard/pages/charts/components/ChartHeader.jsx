@@ -1,5 +1,4 @@
 import React from 'react';
-import ChartHeaderDatePicker from './ChartHeaderDatePicker';
 import { useDispatch } from 'react-redux';
 import { getChartStateValues } from '../../../../../features/chart/chartSlice';
 import { Button } from '@mui/material';

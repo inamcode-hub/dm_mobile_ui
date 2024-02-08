@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 
-const ChartHeaderDatePicker = () => {
+const ChartDatePicker = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
+
+  useEffect(() => {
+    console.log('Start Date:', startDate);
+    console.log('End Date:', endDate);
+  }, [startDate, endDate]);
 
   return (
     <div
@@ -38,4 +43,4 @@ const ChartHeaderDatePicker = () => {
   );
 };
 
-export default ChartHeaderDatePicker;
+export default ChartDatePicker;
