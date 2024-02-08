@@ -93,7 +93,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100%;
-
+  max-height: 90vh;
+  overflow-y: auto;
   .heading {
     padding-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
