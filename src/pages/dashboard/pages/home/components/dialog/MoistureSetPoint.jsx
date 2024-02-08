@@ -64,6 +64,10 @@ const MoistureSetPoint = () => {
             value={newMoistureSetPoint}
             onChange={(e) => setNewMoistureSetPoint(e.target.value)}
           />
+          <div className='content'>
+            Enter the moisture set point, our dryer fine-tunes its settings to
+            match your product&apos;s moisture to this value.
+          </div>
         </div>
         <div className='footer'>
           <Button
@@ -92,27 +96,18 @@ const Wrapper = styled.div`
 
   .heading {
     border-bottom: 1px solid #e0e0e0;
-
     .title {
       font-size: 2rem;
       font-weight: bold;
-
       display: flex;
       align-items: center;
       gap: 10px;
-
       svg {
         font-size: 2.5rem;
         // icon color
         color: ${({ theme }) =>
           theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary.main};
       }
-    }
-
-    .content {
-      font-size: 16px;
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[300] : grey[600]};
     }
   }
 
@@ -132,6 +127,12 @@ const Wrapper = styled.div`
     .MuiTextField-root {
       margin-top: 10px;
     }
+    .content {
+      font-size: 16px;
+      color: ${({ theme }) =>
+        theme.palette.mode === 'dark' ? grey[300] : grey[600]};
+      padding: 20px 0;
+    }
   }
 
   .footer {
@@ -139,7 +140,6 @@ const Wrapper = styled.div`
     grid-template-columns: 1fr 1fr;
 
     gap: 10px;
-    margin-top: 20px;
 
     .MuiButton-root {
       font-size: 14px;
