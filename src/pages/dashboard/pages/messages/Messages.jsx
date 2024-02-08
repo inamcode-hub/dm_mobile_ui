@@ -48,7 +48,7 @@ const Messages = () => {
     return <Loading />;
   }
 
-  if (!messages.length) {
+  if (!messages.length && !isLoading) {
     return <Empty />;
   }
 
