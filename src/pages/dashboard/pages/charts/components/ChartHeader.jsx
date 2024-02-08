@@ -18,12 +18,10 @@ const ChartHeader = () => {
         size='small'
         onClick={handleFilterDialog}
         startIcon={<FilterAltOutlinedIcon />}>
-        Filter Chart
+        Filter
       </Button>
     </Wrapper>
   );
 };
-const Wrapper = styled.div`
-  padding: 1rem;
-`;
+const Wrapper = styled.div``;
 export default ChartHeader;
