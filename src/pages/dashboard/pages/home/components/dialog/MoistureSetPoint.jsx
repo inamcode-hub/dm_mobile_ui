@@ -89,15 +89,21 @@ const MoistureSetPoint = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 1rem;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   min-height: 100%;
+  position: relative;
 
   .heading {
+    padding-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
 
+    padding-top: 4rem;
     .title {
+      position: absolute;
+      top: 20px;
+      left: 20px;
       font-size: 2rem;
       font-weight: bold;
       margin-bottom: 10px;
