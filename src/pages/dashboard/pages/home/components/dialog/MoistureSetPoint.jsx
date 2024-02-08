@@ -47,10 +47,6 @@ const MoistureSetPoint = () => {
             <OpacityIcon />
             Moisture Set Point
           </div>
-          <div className='content'>
-            Enter the moisture set point, our dryer fine-tunes its settings to
-            match your product&apos;s moisture to this value.
-          </div>
         </div>
         <div className='body'>
           <div className='current_value'>
@@ -89,22 +85,18 @@ const MoistureSetPoint = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 20px;
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   min-height: 100%;
 
   .heading {
-    padding-bottom: 20px;
     border-bottom: 1px solid #e0e0e0;
-    margin-bottom: 20px;
-    @media (max-width: 600px) {
-      margin-top: 3rem;
-    }
+
     .title {
       font-size: 2rem;
       font-weight: bold;
-      margin-bottom: 10px;
+
       display: flex;
       align-items: center;
       gap: 10px;
