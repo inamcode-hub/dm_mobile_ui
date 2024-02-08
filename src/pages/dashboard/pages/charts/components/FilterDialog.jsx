@@ -12,6 +12,7 @@ import styled from '@emotion/styled';
 import { getChartStateValues } from '../../../../../features/chart/chartSlice';
 import ChartDatePicker from './ChartDatePicker';
 import ChartSort from './ChartSort';
+import { MdRefresh } from 'react-icons/md';
 const FilterDialog = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -41,6 +42,12 @@ const FilterDialog = () => {
           <div className='title'>
             <FaRegChartBar />
             Filter Chart
+          </div>
+          <div className='button'>
+            <Button variant='outlined'>
+              <MdRefresh />
+              Reset Filter
+            </Button>
           </div>
         </div>
         <div className='body'>
@@ -73,6 +80,21 @@ const Wrapper = styled.div`
   min-height: 100%;
 
   .heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .button {
+      display: flex;
+      justify-content: flex-end;
+
+      button {
+      }
+      //icon
+      svg {
+        margin-right: 0.5rem;
+        font-size: 1.2rem;
+      }
+    }
     border-bottom: 1px solid #e0e0e0;
     .title {
       font-size: 2rem;
