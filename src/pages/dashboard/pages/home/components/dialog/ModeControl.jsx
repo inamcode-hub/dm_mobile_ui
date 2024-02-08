@@ -13,13 +13,18 @@ import styled from '@emotion/styled';
 import { GrSystem } from 'react-icons/gr';
 import { grey } from '@mui/material/colors';
 
+const modeData = [
+  { value: 'automatic', label: 'Automatic', disabled: false, active: false },
+  { value: 'manual', label: 'Manual', disabled: false, active: false },
+  { value: 'local', label: 'Local', disabled: false, active: false },
+];
 const ModeControl = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const { modeControlDialog, modeControl } = useSelector((state) => state.home);
   const [mode, setMode] = React.useState('local');
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const currentMode = 'local';
+
   const automaticReady = false;
   const handleClose = () => {
     dispatch(getHomeStateValues({ name: 'modeControlDialog', value: false }));
@@ -57,7 +62,7 @@ const ModeControl = () => {
         <div className='body'>
           <div className='information'>
             <div className='current_value'>
-              Currently you are in <span>{currentMode}</span> mode.
+              Currently you are in <span>{modeControl}</span> mode.
             </div>
           </div>
           <ToggleButtonGroup
@@ -66,25 +71,18 @@ const ModeControl = () => {
             exclusive
             onChange={handleAlignment}
             fullWidth>
-            <ToggleButton
-              value='automatic'
-              disabled={!automaticReady || mode === 'automatic'}
-              className={mode === 'automatic' ? 'active' : ''}>
-              Automatic
-            </ToggleButton>
-            <ToggleButton
-              value='manual'
-              disabled={mode === 'manual'}
-              className={mode === 'manual' ? 'active' : ''}>
-              Manual
-            </ToggleButton>
-
-            <ToggleButton
-              value='local'
-              disabled={mode === 'local'}
-              className={mode === 'local' ? 'active' : ''}>
-              Local
-            </ToggleButton>
+            {modeData.map((item, index) => (
+              <ToggleButton
+                key={index}
+                value={item.value}
+                disabled={item.disabled}
+                className={mode === item.value ? 'active' : ''}>
+                {item.label}
+                {/* {item.value === 'automatic' && !automaticReady && (
+                  <span>Calibrating</span>
+                )} */}
+              </ToggleButton>
+            ))}
           </ToggleButtonGroup>
           {!automaticReady && (
             <div className='info'>

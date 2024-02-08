@@ -2,13 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
 
 const initialState = {
-  moistureSetPoint: 15,
-  rateSetPoint: 35,
-  modeControl: 'auto',
   //dialog states
   moistureSetPointDialog: false,
   rateSetPointDialog: false,
   modeControlDialog: false,
+  //Current state values
+  moistureSetPoint: 15,
+  rateSetPoint: 35,
+  modeControl: 'automatic',
+  // Desired state values
+  desiredMoistureSetPoint: '',
+  desiredRateSetPoint: '',
+  desiredModeControl: '',
+  // Loading state
   isLoading: false,
 };
 export const homeThunk = createAsyncThunk(
