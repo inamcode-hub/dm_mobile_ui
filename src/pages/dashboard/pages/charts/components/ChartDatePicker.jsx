@@ -3,6 +3,7 @@ import DatePicker from 'react-datepicker';
 import styled from '@emotion/styled';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Divider, Typography } from '@mui/material';
+import { MdOutlineDateRange } from 'react-icons/md';
 
 const ChartDatePicker = () => {
   const [startDate, setStartDate] = useState(new Date());
@@ -21,24 +22,30 @@ const ChartDatePicker = () => {
       <div className='body'>
         <div className='date-picker-1'>
           <Typography variant='subtitle2'>Start Date:</Typography>
-          <DatePicker
-            selected={startDate}
-            onChange={(date) => setStartDate(date)}
-            selectsStart
-            startDate={startDate}
-            endDate={endDate}
-          />
+          <div className='date-picker-input'>
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => setStartDate(date)}
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+            />
+            <MdOutlineDateRange className='date-icon' />
+          </div>
         </div>
         <div className='date-picker-2'>
           <Typography variant='subtitle2'>End Date:</Typography>
-          <DatePicker
-            selected={endDate}
-            onChange={(date) => setEndDate(date)}
-            selectsEnd
-            startDate={startDate}
-            endDate={endDate}
-            minDate={startDate}
-          />
+          <div className='date-picker-input'>
+            <DatePicker
+              selected={endDate}
+              onChange={(date) => setEndDate(date)}
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+            />
+            <MdOutlineDateRange className='date-icon' />
+          </div>
         </div>
       </div>
       <Divider />
@@ -52,22 +59,28 @@ const Wrapper = styled.div`
 
     .date-picker-1,
     .date-picker-2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      align-items: center;
+      display: flex;
+      flex-direction: column;
 
-      @media (max-width: 768px) {
-        display: grid;
-        gap: 0rem;
-      }
-      .react-datepicker__input-container {
-        input {
-          padding: 0.5rem;
-          border-radius: 5px;
-          border: 1px solid #e0e0e0;
-          outline: none;
-          font-size: 1rem;
-          width: 100%;
+      .date-picker-input {
+        position: relative;
+
+        .react-datepicker__input-container {
+          input {
+            padding: 0.5rem;
+            padding-left: 2.5rem;
+            border-radius: 5px;
+            border: 1px solid #e0e0e0;
+            outline: none;
+            font-size: 1rem;
+          }
+        }
+
+        .date-icon {
+          position: absolute;
+          left: 10px;
+          top: 50%;
+          transform: translateY(-50%);
         }
       }
     }
