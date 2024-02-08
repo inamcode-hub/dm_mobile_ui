@@ -41,7 +41,7 @@ const FilterDialog = () => {
         <div className='heading'>
           <div className='title'>
             <FaRegChartBar />
-            Filter Chart
+            Filter
           </div>
           <div className='button'>
             <Button variant='outlined'>
