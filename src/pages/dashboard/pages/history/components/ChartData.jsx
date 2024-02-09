@@ -87,6 +87,9 @@ const Wrapper = styled.div`
           @media (max-width: 500px) {
             font-size: 0.8rem;
           }
+          position: sticky;
+          top: 7.4rem;
+          z-index: 999;
         }
 
         td {
