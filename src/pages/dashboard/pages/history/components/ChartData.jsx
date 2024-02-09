@@ -46,9 +46,11 @@ const ChartData = () => {
 };
 
 const Wrapper = styled.div`
+  margin-bottom: 2rem;
   .chart-data {
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#333' : '#fff'};
+
     .header {
     }
 
@@ -58,7 +60,6 @@ const Wrapper = styled.div`
         border-collapse: collapse;
         @media (max-width: 500px) {
           overflow-x: auto;
-          font-size: 0.8rem;
         }
         th,
         td {
@@ -83,6 +84,9 @@ const Wrapper = styled.div`
           &:last-of-type {
             padding-right: 1rem;
           }
+          @media (max-width: 500px) {
+            font-size: 0.8rem;
+          }
         }
 
         td {
@@ -91,9 +95,21 @@ const Wrapper = styled.div`
           }
           &:first-of-type {
             padding-left: 1rem;
+            @media (max-width: 500px) {
+              font-size: 0.8rem;
+            }
           }
           &:last-of-type {
             padding-right: 1rem;
+            @media (max-width: 500px) {
+              font-size: 0.8rem;
+            }
+          }
+          //second last child
+          &:nth-last-of-type(2) {
+            @media (max-width: 500px) {
+              font-size: 0.8rem;
+            }
           }
         }
 
