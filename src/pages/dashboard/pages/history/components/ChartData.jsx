@@ -79,6 +79,10 @@ const Wrapper = styled.div`
           &:first-of-type {
             padding-left: 1rem;
           }
+
+          &:last-of-type {
+            padding-right: 1rem;
+          }
         }
 
         td {
@@ -87,6 +91,9 @@ const Wrapper = styled.div`
           }
           &:first-of-type {
             padding-left: 1rem;
+          }
+          &:last-of-type {
+            padding-right: 1rem;
           }
         }
 
