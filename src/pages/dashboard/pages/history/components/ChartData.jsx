@@ -46,7 +46,7 @@ const ChartData = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 3rem 0 3rem 0;
+  padding: 0rem 0 3rem 0;
   .chart-data {
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#333' : '#fff'};

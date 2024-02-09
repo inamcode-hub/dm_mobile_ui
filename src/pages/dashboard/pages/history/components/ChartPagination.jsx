@@ -42,6 +42,7 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+
   p {
     margin: 0;
     border: 1px solid ${({ theme }) => theme.palette.divider};

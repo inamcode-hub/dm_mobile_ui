@@ -19,13 +19,14 @@ const History = () => {
 };
 const Wrapper = styled.div`
   .filter-pagination {
+    position: sticky;
+    top: 3.5rem;
+    z-index: 999;
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#333' : '#fff'};
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem;
-    position: fixed;
-    width: 100%;
-    background-color: white;
+    padding: 1rem;
   }
 `;
 export default History;
