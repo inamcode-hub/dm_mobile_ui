@@ -4,6 +4,7 @@ import { customFetch } from '../../lib/customeFetch';
 const initialState = {
   // dialog
   showFilterDialog: false,
+  showFilterDialogHistory: false,
   isLoading: false,
 };
 export const ChartThunk = createAsyncThunk(
