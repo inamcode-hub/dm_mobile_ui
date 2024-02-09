@@ -23,6 +23,9 @@ const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0.5rem;
+    position: fixed;
+    width: 100%;
+    background-color: white;
   }
 `;
 export default History;
