@@ -46,7 +46,6 @@ const ChartData = () => {
 };
 
 const Wrapper = styled.div`
-  padding: 0rem 0 3rem 0;
   .chart-data {
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#333' : '#fff'};
@@ -55,6 +54,10 @@ const Wrapper = styled.div`
     }
 
     .table {
+      tr:nth-of-type(even) {
+        background-color: ${({ theme }) =>
+          theme.palette.mode === 'dark' ? '#444' : '#f9f9f9'};
+      }
       table {
         width: 100%;
         border-collapse: collapse;
