@@ -1,10 +1,18 @@
 import React from 'react';
-import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import {
+  useStripe,
+  useElements,
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+} from '@stripe/react-stripe-js';
 import styled from '@emotion/styled';
-import { customFetch } from '../../../../lib/customeFetch'; // Ensure this path is correct
-import { getUserCookies } from '../../../../features/user/lib'; // Ensure this path is correct
 
-const CARD_ELEMENT_OPTIONS = {
+import { getUserCookies } from '../../../../features/user/lib'; // Ensure the path is correct
+import { customFetch } from '../../../../lib/customeFetch';
+import { toast } from 'react-toastify';
+
+const ELEMENT_OPTIONS = {
   style: {
     base: {
       color: '#32325d',
@@ -30,51 +38,111 @@ const Billing = () => {
     event.preventDefault();
 
     if (!stripe || !elements) {
-      // Make sure Stripe.js has loaded
+      console.log('Stripe has not fully loaded yet.');
       return;
     }
 
-    const cardElement = elements.getElement(CardElement);
+    const cardNumberElement = elements.getElement(CardNumberElement);
+    const cardExpiryElement = elements.getElement(CardExpiryElement);
+    const cardCvcElement = elements.getElement(CardCvcElement);
+    // Stripe Elements does not support a separate PostalCodeElement
+    // You would need to handle the postal code as a normal input field if required
 
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
-      card: cardElement,
+      card: cardNumberElement,
+      // Additional information can be included here if necessary
     });
 
     if (!error) {
       const { id } = paymentMethod;
       try {
-        const token = getUserCookies('dryermaster_token'); // Ensure this function works as expected
+        const token = getUserCookies('dryermaster_token'); // Adjust the cookie name as needed
         const response = await customFetch.post(
-          '/dryermaster/account/stripe',
+          '/dryermaster/account/stripe', // Your specific endpoint
           { paymentMethodId: id },
           { headers: { Authorization: `Bearer ${token}` } }
         );
 
-        console.log(response);
+        console.log('Payment success:', response);
+        toast.success(response.data.message);
       } catch (error) {
-        console.error(error);
+        console.error('Payment error:', error);
+        toast.error(error.response.data.message);
       }
+    } else {
+      console.error('Stripe error:', error);
     }
   };
 
-  // The return statement should be directly inside the component function, not nested in any other function
   return (
     <Wrapper>
-      <form onSubmit={handleSubmit}>
-        <CardElement options={CARD_ELEMENT_OPTIONS} />
-        <button
+      <StyledForm onSubmit={handleSubmit}>
+        <Label>
+          Card Number
+          <CardNumberElement options={ELEMENT_OPTIONS} />
+        </Label>
+        <Label>
+          Expiry Date
+          <CardExpiryElement options={ELEMENT_OPTIONS} />
+        </Label>
+        <Label>
+          CVC
+          <CardCvcElement options={ELEMENT_OPTIONS} />
+        </Label>
+        {/* Implement the postal code as a normal input field if necessary */}
+        <PayButton
           type='submit'
           disabled={!stripe}>
           Pay
-        </button>
-      </form>
+        </PayButton>
+      </StyledForm>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  /* your styles here */
+  background-color: #f6f9fc;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
+  margin-top: 50px;
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
+
+const Label = styled.label`
+  color: #6b7c93;
+  font-weight: 300;
+  letter-spacing: 0.025em;
+  margin-bottom: 10px;
+  display: block;
+`;
+
+const PayButton = styled.button`
+  background-color: #6772e5;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  margin-top: 20px;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: #5469d4;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 `;
 
 export default Billing;
