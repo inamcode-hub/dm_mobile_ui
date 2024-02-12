@@ -9,12 +9,14 @@ import messageSlice from './features/message/messageSlice';
 import dryerMasterSlice from './features/dryerMaster/dryerMasterSlice';
 import homeSlice from './features/home/homeSlice';
 import chartSlice from './features/chart/chartSlice';
+import userAccountSlice from './features/user/userAccountSlice';
 
 const reducers = {
   sample: samplesSlice,
   localStorage: localStorageSlice,
   user: UserSlice,
   userProfile: userProfileSlice,
+  userAccount: userAccountSlice,
   operators: userOperatorSlice,
   system: systemSlice,
   message: messageSlice,
