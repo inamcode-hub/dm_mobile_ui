@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const initialState = {
   firstName: '',
-
+  paymentCards: [],
   isLoading: false,
   isUpdating: false,
 };
@@ -18,6 +18,23 @@ export const userAccountThunk = createAsyncThunk(
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+export const userAccountPaymentCardsThunk = createAsyncThunk(
+  'userAccount/userAccountPaymentCardsThunk',
+  async (_, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    try {
+      const response = await customFetch.get('/dryermaster/account/stripe', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
     }
   }
 );
@@ -45,6 +62,17 @@ const userAccountSlice = createSlice({
       })
       .addCase(userAccountThunk.rejected, (state, { payload }) => {
         console.log('promise rejected');
+        console.log(payload);
+        state.isLoading = false;
+      })
+      .addCase(userAccountPaymentCardsThunk.pending, (state, { payload }) => {
+        state.isLoading = true;
+      })
+      .addCase(userAccountPaymentCardsThunk.fulfilled, (state, { payload }) => {
+        state.paymentCards = payload.data.data;
+        state.isLoading = false;
+      })
+      .addCase(userAccountPaymentCardsThunk.rejected, (state, { payload }) => {
         console.log(payload);
         state.isLoading = false;
       });
