@@ -36,6 +36,7 @@ const ELEMENT_OPTIONS = {
 const Billing = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const [loading, setLoading] = React.useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -59,21 +60,24 @@ const Billing = () => {
     if (!error) {
       const { id } = paymentMethod;
       try {
+        setLoading(true);
         const token = getUserCookies('dryermaster_token'); // Adjust the cookie name as needed
         const response = await customFetch.post(
           '/dryermaster/account/stripe', // Your specific endpoint
           { paymentMethodId: id },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-
         console.log('Payment success:', response);
         toast.success(response.data.message);
+        setLoading(false);
       } catch (error) {
         console.error('Payment error:', error);
         toast.error(error.response.data.message);
+        setLoading(false);
       }
     } else {
       console.error('Stripe error:', error);
+      toast.error(error.message);
     }
   };
 
@@ -109,8 +113,8 @@ const Billing = () => {
           <PayButton
             type='submit'
             variant='contained'
-            disabled={!stripe}>
-            Pay
+            disabled={!stripe || loading}>
+            {loading ? 'Please wait...' : 'Pay'}
           </PayButton>
         </StyledForm>
       </StyledCardWrapper>
@@ -147,7 +151,7 @@ const StyledForm = styled.form`
 `;
 
 const Label = styled.label`
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
   color: ${({ theme }) =>
     theme.palette.mode === 'dark' ? 'var(--white)' : 'var(--primary-18)'};
