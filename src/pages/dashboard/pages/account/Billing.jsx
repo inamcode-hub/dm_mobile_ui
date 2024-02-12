@@ -11,6 +11,7 @@ import styled from '@emotion/styled';
 import { getUserCookies } from '../../../../features/user/lib'; // Ensure the path is correct
 import { customFetch } from '../../../../lib/customeFetch';
 import { toast } from 'react-toastify';
+import { Button } from '@mui/material';
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -23,6 +24,7 @@ const ELEMENT_OPTIONS = {
         color: '#aab7c4',
       },
     },
+
     invalid: {
       color: '#fa755a',
       iconColor: '#fa755a',
@@ -51,7 +53,6 @@ const Billing = () => {
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: 'card',
       card: cardNumberElement,
-      // Additional information can be included here if necessary
     });
 
     if (!error) {
@@ -93,6 +94,7 @@ const Billing = () => {
         {/* Implement the postal code as a normal input field if necessary */}
         <PayButton
           type='submit'
+          variant='contained'
           disabled={!stripe}>
           Pay
         </PayButton>
@@ -123,26 +125,6 @@ const Label = styled.label`
   display: block;
 `;
 
-const PayButton = styled.button`
-  background-color: #6772e5;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  margin-top: 20px;
-  padding: 10px 12px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
-
-  &:hover {
-    background-color: #5469d4;
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`;
+const PayButton = styled(Button)``;
 
 export default Billing;
