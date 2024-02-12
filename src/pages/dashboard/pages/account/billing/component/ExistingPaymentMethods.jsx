@@ -8,9 +8,11 @@ import {
   FaCcDiscover,
 } from 'react-icons/fa';
 import styled from '@emotion/styled';
+import Loading from '../../../../../../components/Loading';
+import Empty from './Empty';
 
 const ExistingPaymentMethods = () => {
-  const { paymentCards } = useSelector((state) => state.userAccount);
+  const { paymentCards, isLoading } = useSelector((state) => state.userAccount);
 
   const getCardIcon = (brand) => {
     switch (
@@ -28,7 +30,12 @@ const ExistingPaymentMethods = () => {
         return <FaCcVisa />; // Default to Visa if unmatched
     }
   };
-
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (paymentCards.length === 0) {
+    return <Empty />;
+  }
   return (
     <Wrapper>
       <Typography
@@ -58,12 +65,6 @@ const ExistingPaymentMethods = () => {
                   Expires {item.card.exp_month}/{item.card.exp_year}
                 </Typography>
                 <CardActions>
-                  <Button
-                    variant='outlined'
-                    color='primary'
-                    size='small'>
-                    Pay
-                  </Button>
                   <Button
                     variant='outlined'
                     color='error'

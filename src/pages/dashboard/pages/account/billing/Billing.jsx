@@ -12,7 +12,7 @@ const Billing = () => {
   return (
     <div>
       <ExistingPaymentMethods />
-      <PaymentDetails />
+      {/* <PaymentDetails /> */}
     </div>
   );
 };
