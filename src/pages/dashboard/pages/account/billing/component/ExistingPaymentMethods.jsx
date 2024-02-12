@@ -37,9 +37,7 @@ const ExistingPaymentMethods = () => {
         sx={{ marginBottom: '20px' }}>
         Existing Payment Methods
       </Typography>
-      <Grid
-        container
-        spacing={2}>
+      <div className='body'>
         {paymentCards.map((item) => (
           <Grid
             item
@@ -77,7 +75,7 @@ const ExistingPaymentMethods = () => {
             </PaymentCard>
           </Grid>
         ))}
-      </Grid>
+      </div>
     </Wrapper>
   );
 };
@@ -85,6 +83,11 @@ const ExistingPaymentMethods = () => {
 // Styled components
 const Wrapper = styled('div')`
   padding: 20px;
+  .body {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+  }
 `;
 
 const PaymentCard = styled(Card)`
