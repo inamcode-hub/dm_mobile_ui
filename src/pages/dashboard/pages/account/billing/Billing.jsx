@@ -12,6 +12,7 @@ import { getUserCookies } from '../../../../../features/user/lib'; // Ensure the
 import { customFetch } from '../../../../../lib/customeFetch';
 import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
+import CardWrapper from '../../../../../styles/wrappers/CardWrapper';
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -78,51 +79,79 @@ const Billing = () => {
 
   return (
     <Wrapper>
-      <StyledForm onSubmit={handleSubmit}>
-        <Label>
-          Card Number
-          <CardNumberElement options={ELEMENT_OPTIONS} />
-        </Label>
-        <Label>
-          Expiry Date
-          <CardExpiryElement options={ELEMENT_OPTIONS} />
-        </Label>
-        <Label>
-          CVC
-          <CardCvcElement options={ELEMENT_OPTIONS} />
-        </Label>
-        {/* Implement the postal code as a normal input field if necessary */}
-        <PayButton
-          type='submit'
-          variant='contained'
-          disabled={!stripe}>
-          Pay
-        </PayButton>
-      </StyledForm>
+      <StyledCardWrapper>
+        <div className='title'>Payment Details</div>
+        <StyledForm onSubmit={handleSubmit}>
+          <Label>
+            Card Number
+            <CardNumberElement
+              className='element'
+              options={ELEMENT_OPTIONS}
+            />
+          </Label>
+          <div className='expiry-cvv'>
+            <Label>
+              Expiry Date
+              <CardExpiryElement
+                className='element'
+                options={ELEMENT_OPTIONS}
+              />
+            </Label>
+            <Label>
+              CVC / CVV
+              <CardCvcElement
+                className='element'
+                options={ELEMENT_OPTIONS}
+              />
+            </Label>
+          </div>
+          {/* Implement the postal code as a normal input field if necessary */}
+          <PayButton
+            type='submit'
+            variant='contained'
+            disabled={!stripe}>
+            Pay
+          </PayButton>
+        </StyledForm>
+      </StyledCardWrapper>
     </Wrapper>
   );
 };
 
 const Wrapper = styled.div`
-  background-color: #f6f9fc;
-  padding: 20px;
-  border-radius: 10px;
-  max-width: 400px;
-  margin: 0 auto;
-  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .element {
+    width: 100%;
+    padding: 10px 14px;
+    margin: 10px 0;
+    border: 1px solid #d9d9d9;
+    border-radius: 5px;
+    background-color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? 'var(--dark-2)' : 'var(--light-2)'};
+    min-width: 200px;
+  }
+  .expiry-cvv {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
-
+const StyledCardWrapper = styled(CardWrapper)`
+  margin-top: 3rem;
+`;
 const StyledForm = styled.form`
   display: flex;
   flex-direction: column;
 `;
 
 const Label = styled.label`
-  color: #6b7c93;
-  font-weight: 300;
-  letter-spacing: 0.025em;
-  margin-bottom: 10px;
-  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? 'var(--white)' : 'var(--primary-18)'};
+  font-weight: 500;
 `;
 
 const PayButton = styled(Button)``;
