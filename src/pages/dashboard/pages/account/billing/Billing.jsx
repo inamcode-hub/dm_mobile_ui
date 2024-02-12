@@ -8,8 +8,8 @@ import {
 } from '@stripe/react-stripe-js';
 import styled from '@emotion/styled';
 
-import { getUserCookies } from '../../../../features/user/lib'; // Ensure the path is correct
-import { customFetch } from '../../../../lib/customeFetch';
+import { getUserCookies } from '../../../../../features/user/lib'; // Ensure the path is correct
+import { customFetch } from '../../../../../lib/customeFetch';
 import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
 
