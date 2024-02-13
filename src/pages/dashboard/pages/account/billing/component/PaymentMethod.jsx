@@ -3,12 +3,16 @@ import { Button, ButtonGroup } from '@mui/material';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserAccountStateValues } from '../../../../../../features/user/userAccountSlice';
+import { format } from 'date-fns';
 
 const PaymentMethod = () => {
+  const dispatch = useDispatch();
   const { showNewCard, paymentCards } = useSelector(
     (state) => state.userAccount
   );
-  const dispatch = useDispatch();
+  const { subscriptionExpiry, isSubscriptionActive } = useSelector(
+    (state) => state.user
+  );
 
   const handleCardChange = (showNewCard) => {
     dispatch(
@@ -31,16 +35,20 @@ const PaymentMethod = () => {
         <Title>Renew Subscription</Title>
         <SubscriptionInfo>
           <InfoItem>
-            Amount: <strong>$100.00 USD</strong>
+            Amount<strong>$100.00 USD</strong>
           </InfoItem>
           <InfoItem>
-            Frequency: <strong>Yearly</strong>
+            Frequency<strong>Yearly</strong>
           </InfoItem>
           <InfoItem>
-            Expiry Date: <strong>12/12/2022</strong>
-          </InfoItem>
-          <InfoItem>
-            Renewal Date: <strong>12/12/2022</strong>
+            Expiry Date
+            <strong
+              style={{
+                color: isSubscriptionActive ? 'green' : '#0288d1',
+              }}>
+              {subscriptionExpiry &&
+                format(new Date(subscriptionExpiry), 'MMM d, yyyy')}
+            </strong>
           </InfoItem>
         </SubscriptionInfo>
       </Heading>

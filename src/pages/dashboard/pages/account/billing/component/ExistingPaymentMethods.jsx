@@ -13,7 +13,7 @@ import Empty from './Empty';
 
 const ExistingPaymentMethods = () => {
   const { paymentCards, isLoading } = useSelector((state) => state.userAccount);
-
+  const { isSubscriptionActive } = useSelector((state) => state.user);
   const getCardIcon = (brand) => {
     switch (
       brand.toLowerCase() // Ensure lowercase comparison
@@ -65,14 +65,17 @@ const ExistingPaymentMethods = () => {
                   Expires {item.card.exp_month}/{item.card.exp_year}
                 </Typography>
                 <CardActions>
+                  {!isSubscriptionActive && (
+                    <Button
+                      variant='outlined'
+                      color='primary'
+                      size='small'>
+                      Renew Subscription
+                    </Button>
+                  )}
                   <Button
                     variant='outlined'
-                    size='small'>
-                    Renew Subscription
-                  </Button>
-                  <Button
-                    variant='outlined'
-                    color='error'
+                    color='primary'
                     size='small'>
                     Remove
                   </Button>

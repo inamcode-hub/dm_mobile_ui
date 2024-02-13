@@ -268,11 +268,13 @@ const userSlice = createSlice({
         const { isExpired, expiryDate } = payload;
         if (isExpired) {
           Cookies.set('dryermaster_subscriptionExpiry', expiryDate);
+          state.subscriptionExpiry = expiryDate;
           state.isSubscriptionActive = false;
           state.isLoading = false;
           return;
         } else {
           Cookies.set('dryermaster_subscriptionExpiry', expiryDate);
+          state.subscriptionExpiry = expiryDate;
           state.isSubscriptionActive = true;
           state.isLoading = false;
         }

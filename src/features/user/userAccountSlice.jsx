@@ -32,7 +32,6 @@ export const userAccountPaymentCardsThunk = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);

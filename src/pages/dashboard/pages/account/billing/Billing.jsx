@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { userAccountPaymentCardsThunk } from '../../../../../features/user/userAccountSlice';
 
 import PaymentMethod from './component/PaymentMethod';
+import { userSubscriptionStatusThunk } from '../../../../../features/user/userSlice';
 
 const Billing = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ const Billing = () => {
   );
   useEffect(() => {
     dispatch(userAccountPaymentCardsThunk());
+    dispatch(userSubscriptionStatusThunk());
   }, []);
   return (
     <div>

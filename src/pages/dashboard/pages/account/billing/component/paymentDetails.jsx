@@ -13,6 +13,7 @@ import { customFetch } from '../../../../../../lib/customeFetch';
 import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
 import CardWrapper from '../../../../../../styles/wrappers/CardWrapper';
+import { useSelector } from 'react-redux';
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -37,7 +38,7 @@ const PaymentDetails = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = React.useState(false);
-
+  const { isSubscriptionActive } = useSelector((state) => state.user);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -113,7 +114,7 @@ const PaymentDetails = () => {
           <PayButton
             type='submit'
             variant='contained'
-            disabled={!stripe || loading}>
+            disabled={!stripe || loading || isSubscriptionActive}>
             {loading ? 'Please wait...' : 'Renew Subscription'}
           </PayButton>
         </StyledForm>
