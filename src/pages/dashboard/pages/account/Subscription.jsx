@@ -8,11 +8,13 @@ import { MdOutlineWorkspacePremium } from 'react-icons/md';
 import CardWrapper from '../../../../styles/wrappers/CardWrapper';
 import { useEffect } from 'react';
 import { userSubscriptionStatusThunk } from '../../../../features/user/userSlice';
+import { useNavigate } from 'react-router-dom';
 const Subscription = () => {
-  const { isSubscriptionActive, subscriptionExpiry } = useSelector(
+  const { isSubscriptionActive, subscriptionExpiry, role } = useSelector(
     (state) => state.user
   );
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const date =
     subscriptionExpiry && format(new Date(subscriptionExpiry), 'PPP');
   const features = [
@@ -22,6 +24,9 @@ const Subscription = () => {
     'Track your dryer’s performance',
     'Access to your dryer’s historical data',
   ];
+  const onClick = () => {
+    navigate('/dashboard/account/billing');
+  };
   useEffect(() => {
     dispatch(userSubscriptionStatusThunk());
   }, []);
@@ -72,8 +77,13 @@ const Subscription = () => {
             </ul>
           </div>
           <div className='card-footer'>
-            {!isSubscriptionActive && (
-              <Button variant='contained'>Renew Subscription</Button>
+            {!isSubscriptionActive && role === 'user' && (
+              <Button
+                variant='contained'
+                size='large'
+                onClick={onClick}>
+                Renew Subscription
+              </Button>
             )}
           </div>
         </CardWrapper>

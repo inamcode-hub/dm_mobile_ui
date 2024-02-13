@@ -47,7 +47,7 @@ const PaymentMethod = () => {
                 color: isSubscriptionActive ? 'green' : '#0288d1',
               }}>
               {subscriptionExpiry &&
-                format(new Date(subscriptionExpiry), 'MMM d, yyyy')}
+                format(new Date(subscriptionExpiry), 'dd MMMM yyyy')}
             </strong>
           </InfoItem>
         </SubscriptionInfo>
