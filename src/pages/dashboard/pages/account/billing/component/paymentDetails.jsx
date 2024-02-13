@@ -13,7 +13,8 @@ import { customFetch } from '../../../../../../lib/customeFetch';
 import { toast } from 'react-toastify';
 import { Button } from '@mui/material';
 import CardWrapper from '../../../../../../styles/wrappers/CardWrapper';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { userSubscriptionStatusThunk } from '../../../../../../features/user/userSlice';
 
 const ELEMENT_OPTIONS = {
   style: {
@@ -38,6 +39,7 @@ const PaymentDetails = () => {
   const stripe = useStripe();
   const elements = useElements();
   const [loading, setLoading] = React.useState(false);
+  const dispatch = useDispatch();
   const { isSubscriptionActive } = useSelector((state) => state.user);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -71,6 +73,7 @@ const PaymentDetails = () => {
         console.log('Payment success:', response);
         toast.success(response.data.message);
         setLoading(false);
+        dispatch(userSubscriptionStatusThunk());
       } catch (error) {
         console.error('Payment error:', error);
         toast.error(error.response.data.message);
