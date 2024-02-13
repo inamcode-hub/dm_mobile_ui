@@ -70,7 +70,7 @@ const PaymentDetails = () => {
           { paymentMethodId: id },
           { headers: { Authorization: `Bearer ${token}` } }
         );
-        console.log('Payment success:', response);
+
         toast.success(response.data.message);
         setLoading(false);
         dispatch(userSubscriptionStatusThunk());
