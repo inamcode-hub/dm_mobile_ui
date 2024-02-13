@@ -39,9 +39,9 @@ const ExistingPaymentMethods = () => {
   return (
     <Wrapper>
       <Typography
-        variant='h5'
+        variant='h6'
         component='div'
-        sx={{ marginBottom: '20px' }}>
+        sx={{ marginBottom: '1rem' }}>
         Existing Payment Methods
       </Typography>
       <div className='body'>
@@ -65,6 +65,11 @@ const ExistingPaymentMethods = () => {
                   Expires {item.card.exp_month}/{item.card.exp_year}
                 </Typography>
                 <CardActions>
+                  <Button
+                    variant='outlined'
+                    size='small'>
+                    Renew Subscription
+                  </Button>
                   <Button
                     variant='outlined'
                     color='error'

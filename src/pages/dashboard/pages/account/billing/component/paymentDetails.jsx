@@ -114,7 +114,7 @@ const PaymentDetails = () => {
             type='submit'
             variant='contained'
             disabled={!stripe || loading}>
-            {loading ? 'Please wait...' : 'Pay'}
+            {loading ? 'Please wait...' : 'Renew Subscription'}
           </PayButton>
         </StyledForm>
       </StyledCardWrapper>

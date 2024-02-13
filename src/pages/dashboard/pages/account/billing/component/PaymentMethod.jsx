@@ -33,14 +33,14 @@ const PaymentMethod = () => {
               variant={showNewCard ? 'contained' : 'outlined'}
               color='primary'
               onClick={() => handleCardChange(true)}>
-              Add New Card
+              New Card
             </Button>
             <Button
               variant={!showNewCard ? 'contained' : 'outlined'}
               color='primary'
               onClick={() => handleCardChange(false)}
               disabled={paymentCards.length === 0}>
-              Use Existing Card
+              Existing Cards
             </Button>
           </ButtonGroup>
         </div>
@@ -53,6 +53,7 @@ const PaymentMethod = () => {
 const Wrapper = styled.div`
   padding: 1rem;
   border-bottom: 1px solid #d9d9d9;
+  background-color: ${({ theme }) => theme.palette.background.paper};
   .title {
     font-size: 1.5rem;
     font-weight: 500;
