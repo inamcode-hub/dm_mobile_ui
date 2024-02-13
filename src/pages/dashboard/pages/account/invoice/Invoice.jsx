@@ -59,9 +59,9 @@ const Invoice = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [transactionLoading, hasMore, dispatch]);
 
-  // if (transactionLoading && !hasMore) {
-  //   return <Loading />;
-  // }
+  if (transactionLoading && !hasMore) {
+    return <Loading />;
+  }
 
   if (!transactionHistory.length && !transactionLoading) {
     return <Empty />;

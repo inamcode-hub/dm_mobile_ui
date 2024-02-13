@@ -10,7 +10,7 @@ const initialState = {
   showNewCard: false,
   //================
   transactionHistory: [],
-  hasMore: true,
+  hasMore: false,
   limit: 20,
   transactionLoading: false,
   //===============
