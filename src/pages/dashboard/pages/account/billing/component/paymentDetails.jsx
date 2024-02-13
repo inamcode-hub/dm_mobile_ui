@@ -135,11 +135,12 @@ const Wrapper = styled.div`
     border-radius: 5px;
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? 'var(--dark-2)' : 'var(--light-2)'};
-    min-width: 200px;
+    min-width: 130px;
   }
   .expiry-cvv {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
   }
 `;
 const StyledCardWrapper = styled(CardWrapper)`

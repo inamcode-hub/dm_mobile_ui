@@ -11,8 +11,8 @@ const Billing = () => {
   }, []);
   return (
     <div>
+      <PaymentDetails />
       <ExistingPaymentMethods />
-      {/* <PaymentDetails /> */}
     </div>
   );
 };
