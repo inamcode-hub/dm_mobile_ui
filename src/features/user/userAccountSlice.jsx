@@ -3,12 +3,14 @@ import { customFetch } from '../../lib/customeFetch';
 import { getUserCookies, setUserCookies, updateUserCookies } from './lib';
 import { handleGlobalError } from '../../lib/handleGlobalError';
 import { toast } from 'react-toastify';
+import { userSubscriptionStatusThunk } from './userSlice';
 
 const initialState = {
   firstName: '',
   paymentCards: [],
   showNewCard: false,
   isLoading: false,
+  renewLoading: false,
   isUpdating: false,
 };
 export const userAccountThunk = createAsyncThunk(
@@ -40,25 +42,25 @@ export const userAccountPaymentCardsThunk = createAsyncThunk(
 );
 export const userAccountExistingPaymentThunk = createAsyncThunk(
   'userAccount/userAccountExistingPaymentThunk',
-  async (user, thunkAPI) => {
+  async (id, thunkAPI) => {
     const token = getUserCookies('dryermaster_token');
-    console.log(user);
-    // try {
-    //   const response = await customFetch.post(
-    //     '/dryermaster/account/stripe',
-    //     {
-    //       paymentMethodId: user,
-    //     },
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     }
-    //   );
-    //   return response.data;
-    // } catch (error) {
-    //   return handleGlobalError(error, thunkAPI);
-    // }
+    try {
+      const response = await customFetch.post(
+        '/dryermaster/account/stripe/charge',
+        {
+          paymentMethodId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      thunkAPI.dispatch(userSubscriptionStatusThunk());
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
   }
 );
 
@@ -102,21 +104,21 @@ const userAccountSlice = createSlice({
       .addCase(
         userAccountExistingPaymentThunk.pending,
         (state, { payload }) => {
-          state.isLoading = true;
+          state.renewLoading = true;
         }
       )
       .addCase(
         userAccountExistingPaymentThunk.fulfilled,
         (state, { payload }) => {
-          state.paymentCards = payload.data.data;
-          state.isLoading = false;
+          toast.success(payload.message);
+          state.renewLoading = false;
         }
       )
       .addCase(
         userAccountExistingPaymentThunk.rejected,
         (state, { payload }) => {
           console.log(payload);
-          state.isLoading = false;
+          state.renewLoading = false;
         }
       );
   },

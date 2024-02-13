@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Card, CardContent, Typography, Grid } from '@mui/material';
 import {
   FaCcVisa,
@@ -10,10 +10,28 @@ import {
 import styled from '@emotion/styled';
 import Loading from '../../../../../../components/Loading';
 import Empty from './Empty';
+import { userAccountExistingPaymentThunk } from '../../../../../../features/user/userAccountSlice';
 
+const initialState = {
+  renewId: '',
+  removeId: '',
+};
 const ExistingPaymentMethods = () => {
-  const { paymentCards, isLoading } = useSelector((state) => state.userAccount);
+  const [state, setState] = React.useState(initialState);
+  const dispatch = useDispatch();
+  const { paymentCards, isLoading, renewLoading } = useSelector(
+    (state) => state.userAccount
+  );
   const { isSubscriptionActive } = useSelector((state) => state.user);
+
+  const handleRemoveCard = (id) => {
+    console.log('Remove card with id:', id);
+  };
+
+  const handleRenewSubscription = (id) => {
+    dispatch(userAccountExistingPaymentThunk(id));
+    setState({ ...state, renewId: id });
+  };
   const getCardIcon = (brand) => {
     switch (
       brand.toLowerCase() // Ensure lowercase comparison
@@ -69,14 +87,19 @@ const ExistingPaymentMethods = () => {
                     <Button
                       variant='outlined'
                       color='primary'
-                      size='small'>
-                      Renew Subscription
+                      size='small'
+                      disabled={item.id === state.renewId && renewLoading}
+                      onClick={() => handleRenewSubscription(item.id)}>
+                      {item.id === state.renewId && renewLoading
+                        ? 'Renewing...'
+                        : 'Renew Subscription'}
                     </Button>
                   )}
                   <Button
                     variant='outlined'
                     color='primary'
-                    size='small'>
+                    size='small'
+                    onClick={() => handleRemoveCard(item.id)}>
                     Remove
                   </Button>
                 </CardActions>
