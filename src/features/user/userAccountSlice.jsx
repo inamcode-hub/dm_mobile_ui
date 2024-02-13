@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 const initialState = {
   firstName: '',
   paymentCards: [],
+  showNewCard: false,
   isLoading: false,
   isUpdating: false,
 };
