@@ -59,9 +59,9 @@ const Invoice = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [transactionLoading, hasMore, dispatch]);
 
-  if (transactionLoading && !hasMore) {
-    return <Loading />;
-  }
+  // if (transactionLoading && !hasMore) {
+  //   return <Loading />;
+  // }
 
   if (!transactionHistory.length && !transactionLoading) {
     return <Empty />;
@@ -86,7 +86,16 @@ const Invoice = () => {
                 {new Date(transaction.created * 1000).toLocaleDateString()}
               </Td>
               <Td>${transaction.amount / 100} USD</Td>
-              <Td>
+              <Td
+                style={{
+                  color:
+                    transaction.status === 'succeeded'
+                      ? 'green'
+                      : transaction.status === 'pending'
+                      ? 'orange'
+                      : 'red',
+                  fontWeight: 500,
+                }}>
                 {transaction.status.charAt(0).toUpperCase() +
                   transaction.status.slice(1)}
               </Td>
@@ -128,12 +137,21 @@ const Th = styled.th`
   text-align: left;
   border-bottom: 2px solid #e6ebf1;
   white-space: nowrap;
+  background-color: ${({ theme }) =>
+    theme.palette.mode === 'dark' ? '#333' : 'var(--primary)'};
+  color: #fff;
 `;
 
 const Td = styled.td`
   padding: 15px;
   border-bottom: 1px solid #e6ebf1;
   white-space: nowrap;
+  svg {
+    margin-right: 10px;
+    font-size: 1.9rem;
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#fff' : 'var(--primary)'};
+  }
 `;
 
 const Tr = styled.tr`
