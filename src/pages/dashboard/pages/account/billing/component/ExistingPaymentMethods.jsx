@@ -10,7 +10,10 @@ import {
 import styled from '@emotion/styled';
 import Loading from '../../../../../../components/Loading';
 import Empty from './Empty';
-import { userAccountExistingPaymentThunk } from '../../../../../../features/user/userAccountSlice';
+import {
+  userAccountExistingPaymentDetachThunk,
+  userAccountExistingPaymentThunk,
+} from '../../../../../../features/user/userAccountSlice';
 
 const initialState = {
   renewId: '',
@@ -19,13 +22,14 @@ const initialState = {
 const ExistingPaymentMethods = () => {
   const [state, setState] = React.useState(initialState);
   const dispatch = useDispatch();
-  const { paymentCards, isLoading, renewLoading } = useSelector(
+  const { paymentCards, isLoading, renewLoading, removeLoading } = useSelector(
     (state) => state.userAccount
   );
   const { isSubscriptionActive } = useSelector((state) => state.user);
 
   const handleRemoveCard = (id) => {
-    console.log('Remove card with id:', id);
+    dispatch(userAccountExistingPaymentDetachThunk(id));
+    setState({ ...state, removeId: id });
   };
 
   const handleRenewSubscription = (id) => {
@@ -99,8 +103,11 @@ const ExistingPaymentMethods = () => {
                     variant='outlined'
                     color='primary'
                     size='small'
+                    disabled={item.id === state.removeId && removeLoading}
                     onClick={() => handleRemoveCard(item.id)}>
-                    Remove
+                    {item.id === state.removeId && removeLoading
+                      ? 'Removing...'
+                      : 'Remove'}
                   </Button>
                 </CardActions>
               </CardContent>

@@ -11,6 +11,7 @@ const initialState = {
   showNewCard: false,
   isLoading: false,
   renewLoading: false,
+  removeLoading: false,
   isUpdating: false,
 };
 export const userAccountThunk = createAsyncThunk(
@@ -26,6 +27,22 @@ export const userAccountThunk = createAsyncThunk(
 );
 export const userAccountPaymentCardsThunk = createAsyncThunk(
   'userAccount/userAccountPaymentCardsThunk',
+  async (_, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    try {
+      const response = await customFetch.get('/dryermaster/account/stripe', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+export const userAccountPaymentCardsRefreshThunk = createAsyncThunk(
+  'userAccount/userAccountPaymentCardsRefreshThunk',
   async (_, thunkAPI) => {
     const token = getUserCookies('dryermaster_token');
     try {
@@ -57,6 +74,29 @@ export const userAccountExistingPaymentThunk = createAsyncThunk(
         }
       );
       thunkAPI.dispatch(userSubscriptionStatusThunk());
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+export const userAccountExistingPaymentDetachThunk = createAsyncThunk(
+  'userAccount/userAccountExistingPaymentDetachThunk',
+  async (id, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    try {
+      const response = await customFetch.post(
+        '/dryermaster/account/stripe/detach',
+        {
+          paymentMethodId: id,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      thunkAPI.dispatch(userAccountPaymentCardsRefreshThunk());
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -102,6 +142,22 @@ const userAccountSlice = createSlice({
         state.isLoading = false;
       })
       .addCase(
+        userAccountPaymentCardsRefreshThunk.pending,
+        (state, { payload }) => {}
+      )
+      .addCase(
+        userAccountPaymentCardsRefreshThunk.fulfilled,
+        (state, { payload }) => {
+          state.paymentCards = payload.data.data;
+        }
+      )
+      .addCase(
+        userAccountPaymentCardsRefreshThunk.rejected,
+        (state, { payload }) => {
+          console.log(payload);
+        }
+      )
+      .addCase(
         userAccountExistingPaymentThunk.pending,
         (state, { payload }) => {
           state.renewLoading = true;
@@ -119,6 +175,26 @@ const userAccountSlice = createSlice({
         (state, { payload }) => {
           console.log(payload);
           state.renewLoading = false;
+        }
+      )
+      .addCase(
+        userAccountExistingPaymentDetachThunk.pending,
+        (state, { payload }) => {
+          state.removeLoading = true;
+        }
+      )
+      .addCase(
+        userAccountExistingPaymentDetachThunk.fulfilled,
+        (state, { payload }) => {
+          toast.success(payload.message);
+          state.removeLoading = false;
+        }
+      )
+      .addCase(
+        userAccountExistingPaymentDetachThunk.rejected,
+        (state, { payload }) => {
+          console.log(payload);
+          state.removeLoading = false;
         }
       );
   },
