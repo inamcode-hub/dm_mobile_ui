@@ -9,7 +9,7 @@ import NotFound from '../NotFound';
 import Profile from './pages/user/Profile';
 import ChangePassword from './pages/user/ChangePassword';
 
-import Invoice from './pages/account/Invoice';
+import Invoice from './pages/account/invoice/Invoice';
 import Subscription from './pages/account/Subscription';
 import AddOperator from './pages/user/AddOperator';
 import Billing from './pages/account/billing/Billing';

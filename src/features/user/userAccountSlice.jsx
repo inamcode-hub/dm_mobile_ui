@@ -6,9 +6,14 @@ import { toast } from 'react-toastify';
 import { userSubscriptionStatusThunk } from './userSlice';
 
 const initialState = {
-  firstName: '',
   paymentCards: [],
   showNewCard: false,
+  //================
+  transactionHistory: [],
+  hasMore: true,
+  limit: 20,
+  transactionLoading: false,
+  //===============
   isLoading: false,
   renewLoading: false,
   removeLoading: false,
@@ -97,6 +102,27 @@ export const userAccountExistingPaymentDetachThunk = createAsyncThunk(
         }
       );
       thunkAPI.dispatch(userAccountPaymentCardsRefreshThunk());
+      return response.data;
+    } catch (error) {
+      return handleGlobalError(error, thunkAPI);
+    }
+  }
+);
+export const userAccountTransactionHistory = createAsyncThunk(
+  'userAccount/userAccountTransactionHistory',
+  async (id, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    const { limit } = thunkAPI.getState().userAccount;
+    try {
+      const response = await customFetch.get(
+        `/dryermaster/account/stripe/charges?limit=${limit}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
       return response.data;
     } catch (error) {
       return handleGlobalError(error, thunkAPI);
@@ -196,7 +222,22 @@ const userAccountSlice = createSlice({
           console.log(payload);
           state.removeLoading = false;
         }
-      );
+      )
+      .addCase(userAccountTransactionHistory.pending, (state, { payload }) => {
+        state.transactionLoading = true;
+      })
+      .addCase(
+        userAccountTransactionHistory.fulfilled,
+        (state, { payload }) => {
+          state.transactionHistory = payload.data;
+          state.hasMore = payload.hasMore;
+          state.transactionLoading = false;
+        }
+      )
+      .addCase(userAccountTransactionHistory.rejected, (state, { payload }) => {
+        console.log(payload);
+        state.transactionLoading = false;
+      });
   },
 });
 export const { getUserAccountStateValues } = userAccountSlice.actions;
