@@ -38,6 +38,29 @@ export const userAccountPaymentCardsThunk = createAsyncThunk(
     }
   }
 );
+export const userAccountExistingPaymentThunk = createAsyncThunk(
+  'userAccount/userAccountExistingPaymentThunk',
+  async (user, thunkAPI) => {
+    const token = getUserCookies('dryermaster_token');
+    console.log(user);
+    // try {
+    //   const response = await customFetch.post(
+    //     '/dryermaster/account/stripe',
+    //     {
+    //       paymentMethodId: user,
+    //     },
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   );
+    //   return response.data;
+    // } catch (error) {
+    //   return handleGlobalError(error, thunkAPI);
+    // }
+  }
+);
 
 const userAccountSlice = createSlice({
   name: 'userAccount',
@@ -75,7 +98,27 @@ const userAccountSlice = createSlice({
       .addCase(userAccountPaymentCardsThunk.rejected, (state, { payload }) => {
         console.log(payload);
         state.isLoading = false;
-      });
+      })
+      .addCase(
+        userAccountExistingPaymentThunk.pending,
+        (state, { payload }) => {
+          state.isLoading = true;
+        }
+      )
+      .addCase(
+        userAccountExistingPaymentThunk.fulfilled,
+        (state, { payload }) => {
+          state.paymentCards = payload.data.data;
+          state.isLoading = false;
+        }
+      )
+      .addCase(
+        userAccountExistingPaymentThunk.rejected,
+        (state, { payload }) => {
+          console.log(payload);
+          state.isLoading = false;
+        }
+      );
   },
 });
 export const { getUserAccountStateValues } = userAccountSlice.actions;
