@@ -3,46 +3,45 @@ import styled from '@emotion/styled';
 import { IconButton } from '@mui/material';
 
 import { grey } from '@mui/material/colors';
+import { useSelector } from 'react-redux';
 
 const Information = () => {
+  const { modelPredictedMoisture, modelSuggestedRate, notReadyReason } =
+    useSelector((state) => state.dryerMaster);
   const data = [
     {
       id: 2,
       name: 'Predicted Moisture',
-      value: 20,
+      value: modelPredictedMoisture,
     },
     {
       id: 1,
       name: 'Suggested Rate',
-      value: 80,
+      value: modelSuggestedRate,
     },
 
     {
       id: 3,
       name: 'Ready To Go Automatic',
-      value: 'Yes',
+      value: notReadyReason === 0 ? 'Yes' : 'No',
     },
   ];
   return (
     <Wrapper>
-      <div className='heading'>Dryer Information</div>
-      <div className='content'>
+      <div className="heading">Dryer Information</div>
+      <div className="content">
         {data.map((item) => (
-          <div
-            key={item.id}
-            className='item'>
-            <div className='name-value'>
-              <div className='name'>
+          <div key={item.id} className="item">
+            <div className="name-value">
+              <div className="name">
                 {item.icon && (
-                  <IconButton
-                    size='medium'
-                    color='primary'>
+                  <IconButton size="medium" color="primary">
                     {item.icon}
                   </IconButton>
                 )}
                 {item.name}
               </div>
-              <div className='value'>{item.value}</div>
+              <div className="value">{item?.value}</div>
             </div>
           </div>
         ))}
