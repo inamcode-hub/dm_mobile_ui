@@ -1,10 +1,15 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
 
 const Outlet = () => {
+  const {
+    outletMoistureAverage,
+    outletProductTemperatureAverage,
+    targetMoisture,
+  } = useSelector((state) => state.dryerMaster);
   const dispatch = useDispatch();
   const handleClickOpen = () => {
     dispatch(
@@ -13,26 +18,26 @@ const Outlet = () => {
   };
   return (
     <Wrapper>
-      <div className='heading'>
-        <div className='title'>Outlet</div>
-        <div className='warning_alert'>
+      <div className="heading">
+        <div className="title">Outlet</div>
+        <div className="warning_alert">
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
         </div>
       </div>
-      <div className='body'>
-        <div className='value'>
-          <div className='main'>13.91</div>
-          <div className='sub'>
-            102.7 <span> &#8451;</span>
+      <div className="body">
+        <div className="value">
+          <div className="main">
+            {outletMoistureAverage} <span> %</span>
+          </div>
+          <div className="sub">
+            {outletProductTemperatureAverage} <span> &#8451;</span>
           </div>
         </div>
-        <div
-          className='second_value'
-          onClick={handleClickOpen}>
-          <div className='main'>
+        <div className="second_value" onClick={handleClickOpen}>
+          <div className="main">
             <span>SetPoint:</span>
-            <span>15</span>
+            <span>{targetMoisture}</span>
           </div>
         </div>
       </div>

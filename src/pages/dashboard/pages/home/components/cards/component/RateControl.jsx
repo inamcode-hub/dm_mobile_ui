@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
 
 const RateControl = () => {
+  const { dmRateOutput, dischargeRateIn, remoteModeRequestWriteOnly } =
+    useSelector((state) => state.dryerMaster);
   const dispatch = useDispatch();
 
   const handleSetPoint = () => {
@@ -15,29 +17,27 @@ const RateControl = () => {
   };
   return (
     <Wrapper>
-      <div className='heading'>
-        <div className='title'>Rate</div>
-        <div className='warning_alert'>
+      <div className="heading">
+        <div className="title">Rate</div>
+        <div className="warning_alert">
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
         </div>
       </div>
-      <div className='body'>
-        <div className='value'>
-          <div className='main'>35.33</div>
+      <div className="body">
+        <div className="value">
+          <div className="main">{dischargeRateIn}</div>
         </div>
-        <div className='second_value'>
-          <div
-            className='main'
-            onClick={handleSetPoint}>
+        <div className="second_value">
+          <div className="main" onClick={handleSetPoint}>
             <span>SetPoint:</span>
-            <span>35.33</span>
+            <span>{dmRateOutput}</span>
           </div>
-          <div
-            className='sub'
-            onClick={handleMode}>
+          <div className="sub" onClick={handleMode}>
             <span>Mode:</span>
-            <span>Manual</span>
+            <span>{remoteModeRequestWriteOnly === 0 && 'Local'}</span>
+            <span>{remoteModeRequestWriteOnly === 1 && 'Manual'}</span>
+            <span>{remoteModeRequestWriteOnly === 2 && 'Auto'}</span>
           </div>
         </div>
       </div>

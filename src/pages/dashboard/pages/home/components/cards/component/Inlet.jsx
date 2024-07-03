@@ -1,22 +1,29 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const Inlet = () => {
+  const { inletMoisture, inletProductTemperature } = useSelector(
+    (state) => state.dryerMaster
+  );
   return (
     <Wrapper>
-      <div className='heading'>
-        <div className='title'>Inlet</div>
-        <div className='warning_alert'>
+      <div className="heading">
+        <div className="title">Inlet</div>
+        <div className="warning_alert">
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
         </div>
       </div>
-      <div className='body'>
-        <div className='value'>
-          <div className='main'>20.0</div>
-          <div className='sub'>
-            82.1 <span> &#8451;</span>
+      <div className="body">
+        <div className="value">
+          <div className="main">
+            {inletMoisture} <span> %</span>
+          </div>
+          <div className="sub">
+            {inletProductTemperature}
+            <span> &#8451;</span>
           </div>
         </div>
       </div>

@@ -1,21 +1,23 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 const DryingTemperature = () => {
+  const { airPlenumTemperature } = useSelector((state) => state.dryerMaster);
   return (
     <Wrapper>
-      <div className='heading'>
-        <div className='title'>Drying temp</div>
-        <div className='warning_alert'>
+      <div className="heading">
+        <div className="title">Drying temp</div>
+        <div className="warning_alert">
           {/* <div className='warning'>Warning</div>
           <div className='alert'>Alert</div> */}
         </div>
       </div>
-      <div className='body'>
-        <div className='value'>
-          <div className='main'>98</div>
-          <div className='sub'>
+      <div className="body">
+        <div className="value">
+          <div className="main">{airPlenumTemperature}</div>
+          <div className="sub">
             <span> F</span>
           </div>
         </div>
