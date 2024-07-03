@@ -3,7 +3,7 @@ import { customFetch } from '../../lib/customeFetch';
 import { registers } from './registers';
 
 const initialState = registers.reduce((acc, { tagName }) => {
-  acc[tagName] = '';
+  acc[tagName] = '0';
   return acc;
 }, {});
 
