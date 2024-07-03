@@ -1,30 +1,14 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { customFetch } from '../../lib/customeFetch';
+import { registers } from './registers';
 
-const initialState = {
-  // dryerMaster
-  dryerMaster: '',
-  // Inlet Moisture
-  inletMoisture: '',
-  inletMoistureTemp: '',
-  inletMoistureWarning: '',
-  inletMoistureAlarm: '',
-  // Outlet Moisture
-  outletMoisture: '',
-  outletMoistureTemp: '',
-  outletMoistureWarning: '',
-  outletMoistureAlarm: '',
-  // Rate Control
-  rateControl: '',
-  rateControlWarning: '',
-  rateControlAlarm: '',
-  // Drying Temp
-  dryingTemp: '',
-  dryingTempWarning: '',
-  dryingTempAlarm: '',
+const initialState = registers.reduce((acc, { tagName }) => {
+  acc[tagName] = '';
+  return acc;
+}, {});
 
-  isLoading: false,
-};
+initialState.isLoading = false;
+
 export const dryerMastersThunk = createAsyncThunk(
   'dryerMasters/dryerMastersThunk',
   async (_, thunkAPI) => {
@@ -45,11 +29,18 @@ const dryerMastersSlice = createSlice({
       const { name, value } = payload;
       state[name] = value;
     },
+    addServerData: (state, { payload }) => {
+      payload.forEach((item) => {
+        if (item.tagName in state) {
+          state[item.tagName] = item.value;
+        }
+      });
+      state.serverData = payload;
+    },
   },
-
   extraReducers: (builder) => {
     builder
-      .addCase(dryerMastersThunk.pending, (state, { payload }) => {
+      .addCase(dryerMastersThunk.pending, (state) => {
         console.log('promise pending');
         state.isLoading = true;
       })
@@ -65,6 +56,8 @@ const dryerMastersSlice = createSlice({
       });
   },
 });
-export const { getDryerMasterStateValues } = dryerMastersSlice.actions;
+
+export const { getDryerMasterStateValues, addServerData } =
+  dryerMastersSlice.actions;
 
 export default dryerMastersSlice.reducer;

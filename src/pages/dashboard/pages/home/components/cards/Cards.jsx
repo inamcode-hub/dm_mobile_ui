@@ -1,11 +1,24 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Inlet from './component/Inlet';
 import Outlet from './component/Outlet';
 import RateControl from './component/RateControl';
 import DryingTemperature from './component/DryingTemperature';
 import styled from '@emotion/styled';
+import { connectToSSE } from '../../../../../../lib/sseHandler';
+import { useDispatch } from 'react-redux';
 
 const Cards = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    console.log('Cards');
+    const eventSource = connectToSSE(dispatch);
+
+    // Clean up the event source when the component unmounts
+    return () => {
+      eventSource.close();
+    };
+  }, [dispatch]);
   return (
     <Wrapper>
       <Inlet />
