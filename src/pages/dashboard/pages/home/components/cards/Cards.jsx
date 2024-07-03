@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import Inlet from './component/Inlet';
 import Outlet from './component/Outlet';
 import RateControl from './component/RateControl';
@@ -9,9 +9,8 @@ import { useDispatch } from 'react-redux';
 
 const Cards = () => {
   const dispatch = useDispatch();
+
   useEffect(() => {
-    window.scrollTo(0, 0);
-    console.log('Cards');
     const eventSource = connectToSSE(dispatch);
 
     // Clean up the event source when the component unmounts
@@ -19,6 +18,7 @@ const Cards = () => {
       eventSource.close();
     };
   }, [dispatch]);
+
   return (
     <Wrapper>
       <Inlet />
@@ -40,4 +40,5 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(4, 1fr);
   }
 `;
+
 export default Cards;
