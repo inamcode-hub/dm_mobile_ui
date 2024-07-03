@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
 
 const RateControl = () => {
-  const { dmRateOutput, dischargeRateIn, remoteModeRequestWriteOnly } =
-    useSelector((state) => state.dryerMaster);
+  const { dmRateOutput, dischargeRateIn, localRemoteMode } = useSelector(
+    (state) => state.dryerMaster
+  );
   const dispatch = useDispatch();
 
   const handleSetPoint = () => {
@@ -35,9 +36,13 @@ const RateControl = () => {
           </div>
           <div className="sub" onClick={handleMode}>
             <span>Mode:</span>
-            <span>{remoteModeRequestWriteOnly === 0 && 'Local'}</span>
-            <span>{remoteModeRequestWriteOnly === 1 && 'Manual'}</span>
-            <span>{remoteModeRequestWriteOnly === 2 && 'Auto'}</span>
+            <span>
+              {localRemoteMode === 0
+                ? 'Local'
+                : localRemoteMode === 1
+                ? 'Manual'
+                : 'Auto'}
+            </span>
           </div>
         </div>
       </div>

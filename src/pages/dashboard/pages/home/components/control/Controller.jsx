@@ -9,11 +9,14 @@ import { GrSystem } from 'react-icons/gr';
 
 import { grey, blue } from '@mui/material/colors';
 import { Tune } from '@mui/icons-material';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../features/home/homeSlice';
 
 const Controller = () => {
   const dispatch = useDispatch();
+  const { targetMoisture, dmRateOutput, localRemoteMode } = useSelector(
+    (state) => state.dryerMaster
+  );
 
   const handleMoisture = () => {
     dispatch(
@@ -31,7 +34,7 @@ const Controller = () => {
     {
       id: 1,
       name: 'Moisture SetPoint',
-      value: 15,
+      value: targetMoisture,
       action: 'Change',
       icon: <OpacityIcon />,
       className: 'moisture',
@@ -40,7 +43,7 @@ const Controller = () => {
     {
       id: 2,
       name: 'Discharge Rate SetPoint',
-      value: 35,
+      value: dmRateOutput,
       action: 'Change',
       icon: <SpeedIcon />,
       className: 'discharge',
@@ -49,7 +52,12 @@ const Controller = () => {
     {
       id: 3,
       name: 'Operating Mode',
-      value: 'Auto',
+      value:
+        localRemoteMode === 0
+          ? 'Local'
+          : localRemoteMode === 1
+          ? 'Manual'
+          : 'Auto',
       action: 'Change',
       icon: <GrSystem />,
       className: 'mode',
@@ -58,37 +66,32 @@ const Controller = () => {
   ];
   return (
     <Wrapper>
-      <div className='heading'>Dryer Control</div>
-      <div className='content'>
+      <div className="heading">Dryer Control</div>
+      <div className="content">
         {data.map((item) => (
-          <div
-            key={item.id}
-            className='item'>
-            <div className='name-value'>
-              <div className='name'>
+          <div key={item.id} className="item">
+            <div className="name-value">
+              <div className="name">
                 {item.icon && (
-                  <IconButton
-                    size='medium'
-                    color='primary'>
+                  <IconButton size="medium" color="primary">
                     {item.icon}
                   </IconButton>
                 )}
                 {item.name}
               </div>
-              <div className='value'>{item.value}</div>
+              <div className="value">{item.value}</div>
             </div>
             <Divider
               style={{
                 margin: '0.5rem 0',
               }}
             />
-            <div
-              className='action'
-              onClick={item.onClick}>
+            <div className="action" onClick={item.onClick}>
               <Button
                 startIcon={<SettingsIcon />}
-                color='primary'
-                variant='outlined'>
+                color="primary"
+                variant="outlined"
+              >
                 {item.action}
               </Button>
             </div>
