@@ -11,76 +11,99 @@ import { getHomeStateValues } from '../../../../../../features/home/homeSlice';
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import OpacityIcon from '@mui/icons-material/Opacity';
+import { toast } from 'react-toastify';
+import { getUserCookies } from '../../../../../../features/user/lib';
+import { customFetch } from '../../../../../../lib/customeFetch';
 const MoistureSetPoint = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { moistureSetPointDialog, moistureSetPoint } = useSelector(
-    (state) => state.home
-  );
-  const [newMoistureSetPoint, setNewMoistureSetPoint] =
-    React.useState(moistureSetPoint);
+  const { targetMoisture } = useSelector((state) => state?.dryerMaster);
+  const { moistureSetPointDialog } = useSelector((state) => state.home);
+  const [newMoistureSetPoint, setNewMoistureSetPoint] = React.useState('');
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
   const handleClose = () => {
     dispatch(
       getHomeStateValues({ name: 'moistureSetPointDialog', value: false })
     );
+    setNewMoistureSetPoint('');
   };
 
-  const handleSubmit = () => {
-    // Dispatch action to update the moisture set point here
-    handleClose(); // Close drawer after submitting
+  const handleSubmit = async () => {
+    if (newMoistureSetPoint === '') {
+      toast.error('Please enter a valid moisture set point!');
+      return;
+    }
+    try {
+      const token = getUserCookies('dryermaster_token');
+      const response = await customFetch.post(
+        '/dryermaster/dashboard/moisture_set_point',
+        {
+          newValue: newMoistureSetPoint,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        toast.success('Moisture set point updated successfully!');
+        handleClose();
+      } else {
+        toast.error('Failed to update moisture set point!');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error('Failed to update moisture set point!');
+    }
+    // Close drawer after submitting
   };
 
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       open={moistureSetPointDialog}
       onClose={handleClose}
-      variant='temporary'
+      variant="temporary"
       sx={{
         '& .MuiDrawer-paper': { width: fullScreen ? '100%' : '500px' },
-      }}>
+      }}
+    >
       <Wrapper>
-        <div className='heading'>
-          <div className='title'>
+        <div className="heading">
+          <div className="title">
             <OpacityIcon />
             Moisture Set Point
           </div>
         </div>
-        <div className='body'>
-          <div className='current_value'>
+        <div className="body">
+          <div className="current_value">
             <span>Current Set Point:</span>
-            <span>{moistureSetPoint}%</span>
+            <span>{targetMoisture}%</span>
           </div>
           <TextField
             fullWidth
             autoFocus
-            margin='dense'
-            id='moistureSetPoint'
-            label='Desired Moisture Set Point'
-            type='number'
-            variant='outlined'
-            className='text-field'
+            margin="dense"
+            id="moistureSetPoint"
+            label="Desired Moisture Set Point"
+            type="number"
+            variant="outlined"
+            className="text-field"
             value={newMoistureSetPoint}
             onChange={(e) => setNewMoistureSetPoint(e.target.value)}
           />
-          <div className='content'>
+          <div className="content">
             Enter the moisture set point, our dryer fine-tunes its settings to
             match your product&apos;s moisture to this value.
           </div>
         </div>
-        <div className='footer'>
-          <Button
-            onClick={handleClose}
-            color='primary'
-            variant='outlined'>
+        <div className="footer">
+          <Button onClick={handleClose} color="primary" variant="outlined">
             Discard Changes
           </Button>
-          <Button
-            onClick={handleSubmit}
-            color='primary'
-            variant='contained'>
+          <Button onClick={handleSubmit} color="primary" variant="contained">
             Update Set Point
           </Button>
         </div>
@@ -120,7 +143,7 @@ const Wrapper = styled.div`
       justify-content: space-between;
       align-items: center;
 
-      span:first-child {
+      span:first-of-type {
         font-weight: bold;
       }
     }
