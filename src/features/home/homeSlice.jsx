@@ -1,90 +1,100 @@
-// homeSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { getUserCookies } from '../user/lib';
+import { toast } from 'react-toastify';
 
 let socket = null;
+let manualClose = false;
+let fatalError = false;
 
 const initialState = {
   // Dialog states
   moistureSetPointDialog: false,
   rateSetPointDialog: false,
   modeControlDialog: false,
+
   // Current state values
   moistureSetPoint: 15,
   rateSetPoint: 35,
   modeControl: 'automatic',
+
   // Desired state values
   desiredMoistureSetPoint: '',
   desiredRateSetPoint: '',
   desiredModeControl: '',
+
   // Loading state
   isLoading: false,
+
   // Live data
   streamPayload: [],
+  // Connection/device diagnostics
+  connectionStatus: null,
+  devicesStatusSnapshot: [],
 };
 
-export const homeThunk = createAsyncThunk(
-  'home/homeThunk',
-  async (_, thunkAPI) => {
-    try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/api/v1/home`
-      );
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// Reconnectable socket logic
+function connectWithRetry(dispatch, maxRetries = 5) {
+  let retries = 0;
 
-export const openHomeStream = createAsyncThunk(
-  'home/openHomeStream',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const serial = state.user.serial;
-
-    if (!serial) {
-      return thunkAPI.rejectWithValue('Device serial not found.');
-    }
-    console.log('[openHomeStream] serial:', serial);
-    const wsURL = `${import.meta.env.VITE_WS_URL}?token=${state.user.token}`;
-
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(
-        JSON.stringify({
-          action: 'subscribe',
-          serial,
-          topics: ['home'],
-          userId: state.user.userId,
-          role: state.user.role,
-        })
+  const connect = () => {
+    if (fatalError || retries >= maxRetries) {
+      console.warn(
+        '[WebSocket] Retry stopped due to fatal error or max retries'
       );
       return;
     }
 
+    const token = getUserCookies('dryermaster_token');
+    if (!token) {
+      toast.error('Token missing. Cannot connect to live stream.');
+      return;
+    }
+
+    const wsURL = `${import.meta.env.VITE_WS_URL}?token=${token}`;
+    console.log('[WebSocket] Connecting to:', wsURL);
     socket = new WebSocket(wsURL);
 
     socket.onopen = () => {
       console.log('[WebSocket] Connected');
-      socket.send(
-        JSON.stringify({
-          action: 'subscribe',
-          serial,
-          topics: ['home'],
-          userId: state.user.userId,
-          role: state.user.role,
-        })
-      );
+      retries = 0;
     };
 
     socket.onmessage = (event) => {
       try {
+        if (!event.data) return;
+
         const message = JSON.parse(event.data);
-        if (message.type === 'streamData' && message.streamType === 'home') {
-          thunkAPI.dispatch(handleStreamPayload(message.data));
+        console.debug('[WebSocket][Received]', message);
+
+        switch (message.type) {
+          case 'devices_status_snapshot':
+            dispatch(updateDevicesSnapshot(message));
+            break;
+          case 'connection_status':
+            dispatch(updateConnectionStatus(message));
+            break;
+          case 'data':
+            if (message.topic === 'home') {
+              dispatch(handleStreamPayload(message.payload));
+            }
+            break;
+          case 'subscribed':
+            console.log('[WebSocket] Subscribed:', message.message);
+            break;
+          case 'error':
+            console.warn('[WebSocket][Error]', message);
+            toast.error(`[WebSocket] ${message.message}`);
+            if (message.reason === 'auth') {
+              fatalError = true;
+              socket.close();
+            }
+            break;
+          default:
+            console.log('[WebSocket][Unhandled]', message);
         }
-      } catch (err) {
-        console.error('[WebSocket] Failed to parse message:', err);
+      } catch (e) {
+        console.error('[WebSocket] JSON parse error:', e, event.data);
+        toast.error('WebSocket: Failed to parse message');
       }
     };
 
@@ -92,9 +102,28 @@ export const openHomeStream = createAsyncThunk(
       console.error('[WebSocket] Error:', err);
     };
 
-    socket.onclose = () => {
-      console.warn('[WebSocket] Disconnected');
+    socket.onclose = (event) => {
+      console.warn(
+        `[WebSocket] Closed. Code=${event.code}, Reason=${event.reason}`
+      );
+      if (!manualClose && !fatalError) {
+        retries += 1;
+        const backoff = Math.min(1000 * 2 ** retries, 10000);
+        console.log(`[WebSocket] Reconnecting in ${backoff}ms...`);
+        setTimeout(connect, backoff);
+      }
     };
+  };
+
+  connect();
+}
+
+export const openHomeStream = createAsyncThunk(
+  'home/openHomeStream',
+  async (_, thunkAPI) => {
+    fatalError = false;
+    manualClose = false;
+    connectWithRetry(thunkAPI.dispatch);
   }
 );
 
@@ -110,30 +139,70 @@ const homeSlice = createSlice({
       console.log('[Payload]', payload);
       state.streamPayload = payload;
     },
+    updateDevicesSnapshot: (state, { payload }) => {
+      const snapshot = payload.devices.map((device) => ({
+        ...device,
+        registeredAt: device.registeredAt
+          ? new Date(Number(device.registeredAt)).toLocaleString()
+          : null,
+        lastSeen: device.lastSeen
+          ? new Date(Number(device.lastSeen)).toLocaleString()
+          : null,
+      }));
+      console.table(snapshot);
+      state.devicesStatusSnapshot = snapshot;
+    },
+    updateConnectionStatus: (state, { payload }) => {
+      console.log('[ConnectionStatus]', payload);
+      state.connectionStatus = {
+        ...payload,
+        firstSeen: payload.firstSeen
+          ? new Date(Number(payload.firstSeen)).toLocaleString()
+          : null,
+        lastSeen: payload.lastSeen
+          ? new Date(Number(payload.lastSeen)).toLocaleString()
+          : null,
+      };
+    },
+
     sendHomeMessage: (_, { payload }) => {
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(payload));
+        console.debug('[WebSocket] Sent:', payload);
       } else {
-        console.warn('[WebSocket] Not connected, cannot send');
+        console.warn('[WebSocket] Not connected. Message not sent.');
+        toast.warn('WebSocket not connected.');
+      }
+    },
+    closeHomeStream: () => {
+      manualClose = true;
+      if (socket) {
+        socket.close();
       }
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(homeThunk.pending, (state) => {
+      .addCase(openHomeStream.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(homeThunk.fulfilled, (state, { payload }) => {
+      .addCase(openHomeStream.fulfilled, (state) => {
         state.isLoading = false;
-        console.log('[homeThunk.fulfilled]', payload);
       })
-      .addCase(homeThunk.rejected, (state, { payload }) => {
+      .addCase(openHomeStream.rejected, (state, { payload }) => {
         state.isLoading = false;
-        console.log('[homeThunk.rejected]', payload);
+        toast.error(`WebSocket failed: ${payload}`);
       });
   },
 });
 
-export const { getHomeStateValues, handleStreamPayload, sendHomeMessage } =
-  homeSlice.actions;
+export const {
+  getHomeStateValues,
+  handleStreamPayload,
+  sendHomeMessage,
+  closeHomeStream,
+  updateConnectionStatus,
+  updateDevicesSnapshot,
+} = homeSlice.actions;
+
 export default homeSlice.reducer;

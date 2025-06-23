@@ -22,7 +22,7 @@ const Home = () => {
     if (isSubscriptionActive) {
       dispatch(openHomeStream());
     }
-  }, []);
+  }, [dispatch]);
   if (!isSubscriptionActive || !isDmOnline) {
     return <DmStatus />;
   }
