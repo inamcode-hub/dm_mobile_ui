@@ -8,14 +8,12 @@ import DmStatusChecker from '../../../components/DmStatusChecker';
 const NavbarDesktop = () => {
   return (
     <Wrapper>
-      <AppBar
-        position='static'
-        className='app'>
-        <div className='navbar'>
-          <div className='info'>
+      <AppBar position="static" className="app">
+        <div className="navbar">
+          <div className="info">
             <h1>Dashboard</h1>
           </div>
-          <div className='theme'>
+          <div className="theme">
             <DmStatusChecker />
             <Notifications />
             <UserCard />
@@ -50,6 +48,25 @@ const Wrapper = styled.div`
       .theme {
         display: flex;
         align-items: center;
+        gap: 1rem;
+        padding-right: 1rem;
+        position: relative;
+
+        .status-card {
+          padding: 0.5rem 1rem;
+          border-radius: 1rem;
+          background-color: var(--card-bg, #f1f1f1);
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+          font-size: 0.85rem;
+          cursor: default;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+        }
+
+        svg {
+          vertical-align: middle;
+        }
       }
     }
   }

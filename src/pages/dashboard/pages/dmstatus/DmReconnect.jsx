@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { Button, CircularProgress, Typography, useTheme } from '@mui/material';
+import { green, blueGrey, orange } from '@mui/material/colors';
 
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import SignalWifiStatusbarConnectedNoInternet4RoundedIcon from '@mui/icons-material/SignalWifiStatusbarConnectedNoInternet4Rounded';
@@ -93,53 +94,56 @@ const DmReconnect = () => {
 };
 
 const Wrapper = styled.div`
-  margin-top: 3rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 1rem auto;
+  max-width: 400px;
+  width: 100%;
 
-  .body {
-    display: grid;
-    gap: 1rem;
+  .status-card {
+    padding: 1rem;
+    border-radius: 1rem;
+    background-color: ${({ isSocketConnecting, isOnline }) =>
+      isSocketConnecting ? orange[50] : isOnline ? green[50] : blueGrey[50]};
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s ease;
+  }
 
-    ul {
-      margin: 0;
-      padding-left: 0px;
-      list-style: none;
-    }
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    user-select: none;
 
-    li {
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      font-size: 0.95rem;
-    }
-
-    .action {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .spinner {
-      margin-left: 0.5rem;
-    }
-
-    .subtext {
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark'
-          ? theme.palette.grey[400]
-          : theme.palette.grey[600]};
+    &:hover {
+      opacity: 0.9;
     }
   }
 
-  .title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: ${({ theme }) =>
-      theme.palette.mode === 'dark'
-        ? theme.palette.info.main
-        : 'var(--primary-text)'};
+  .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    span,
+    p {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .details {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+    color: #333;
+
+    p {
+      margin: 0;
+    }
   }
 `;
 
