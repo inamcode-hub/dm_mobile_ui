@@ -25,12 +25,14 @@ const initialState = {
   // Loading state
   isLoading: false,
   isSocketConnecting: false,
+  isSocketConnected: false,
 
   // Live data
   streamPayload: [],
   // Connection/device diagnostics
   connectionStatus: null,
   devicesStatusSnapshot: [],
+  connectionUpdatedAt: null,
 };
 
 // Reconnectable socket logic
@@ -62,6 +64,7 @@ function connectWithRetry(dispatch, maxRetries = 5) {
       console.log('[WebSocket] Connected');
       retries = 0;
       dispatch(setSocketConnecting(false));
+      dispatch(setSocketConnected(true));
     };
 
     socket.onmessage = (event) => {
@@ -112,6 +115,8 @@ function connectWithRetry(dispatch, maxRetries = 5) {
         `[WebSocket] Closed. Code=${event.code}, Reason=${event.reason}`
       );
       dispatch(setSocketConnecting(false));
+      dispatch(setSocketConnected(false));
+
       if (!manualClose && !fatalError) {
         retries += 1;
         const backoff = Math.min(1000 * 2 ** retries, 10000);
@@ -139,6 +144,9 @@ const homeSlice = createSlice({
   reducers: {
     setSocketConnecting: (state, { payload }) => {
       state.isSocketConnecting = payload;
+    },
+    setSocketConnected: (state, action) => {
+      state.isSocketConnected = action.payload;
     },
     getHomeStateValues: (state, { payload }) => {
       const { name, value } = payload;
@@ -171,6 +179,7 @@ const homeSlice = createSlice({
           ? new Date(Number(payload.lastSeen)).toLocaleString()
           : null,
       };
+      state.connectionUpdatedAt = Date.now();
     },
     sendHomeMessage: (_, { payload }) => {
       if (socket && socket.readyState === WebSocket.OPEN) {
@@ -205,6 +214,7 @@ const homeSlice = createSlice({
 
 export const {
   setSocketConnecting,
+  setSocketConnected,
   getHomeStateValues,
   handleStreamPayload,
   sendHomeMessage,

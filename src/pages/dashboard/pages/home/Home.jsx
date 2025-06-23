@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import React from 'react';
 
 import Cards from './components/cards/Cards';
 import Chart from './components/chart/Chart';
@@ -14,30 +14,54 @@ import { openHomeStream } from '../../../../features/home/homeSlice';
 import DmSubscription from '../dmstatus/DmSubscription';
 import DmReconnect from '../dmstatus/DmReconnect';
 
+const getConnectionState = (isSocketConnected, connectionStatus) => {
+  if (!isSocketConnected) return 'no-server';
+  if (!connectionStatus) return 'waiting-device';
+  if (connectionStatus.status === 'online') return 'online';
+  return 'offline-device';
+};
+
 const Home = () => {
   const dispatch = useDispatch();
-
   const { isSubscriptionActive } = useSelector((state) => state.user);
-  const { connectionStatus } = useSelector((state) => state.home);
+  const { isSocketConnected, connectionStatus } = useSelector(
+    (state) => state.home
+  );
 
-  // Initiate WebSocket connection
-  React.useEffect(() => {
+  useEffect(() => {
     if (isSubscriptionActive) {
       dispatch(openHomeStream());
     }
   }, [isSubscriptionActive, dispatch]);
 
-  // 1. Not subscribed
   if (!isSubscriptionActive) {
     return <DmSubscription />;
   }
 
-  // 3. Socket connected but device is offline
-  if (connectionStatus?.status !== 'online') {
-    return <DmReconnect />;
+  const status = getConnectionState(isSocketConnected, connectionStatus);
+
+  if (status === 'no-server') {
+    return <DmReconnect status="no-server" message="Connecting to server..." />;
   }
 
-  // 4. Device is online
+  if (status === 'waiting-device') {
+    return (
+      <DmReconnect
+        status="waiting-device"
+        message="Waiting for device status..."
+      />
+    );
+  }
+
+  if (status === 'offline-device') {
+    return (
+      <DmReconnect
+        status="offline-device"
+        message="Device is currently offline."
+      />
+    );
+  }
+
   return (
     <Wrapper>
       <MoistureSetPoint />
@@ -52,7 +76,7 @@ const Home = () => {
 };
 
 const Wrapper = styled.div`
-  /* Full dashboard wrapper */
+  padding: 1rem;
 `;
 
 export default Home;
