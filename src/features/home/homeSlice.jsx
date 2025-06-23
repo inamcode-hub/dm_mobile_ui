@@ -79,7 +79,7 @@ function connectWithRetry(dispatch, maxRetries = 5) {
             }
             break;
           case 'subscribed':
-            console.log('[WebSocket] Subscribed:', message.message);
+            // console.log('[WebSocket] Subscribed:', message.message);
             break;
           case 'error':
             console.warn('[WebSocket][Error]', message);
@@ -136,7 +136,7 @@ const homeSlice = createSlice({
       state[name] = value;
     },
     handleStreamPayload: (state, { payload }) => {
-      console.log('[Payload]', payload);
+      // console.log('[Payload]', payload);
       state.streamPayload = payload;
     },
     updateDevicesSnapshot: (state, { payload }) => {
