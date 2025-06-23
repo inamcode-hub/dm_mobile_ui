@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import DmStatus from '../dmstatus/DmStatus';
 import Cards from './components/cards/Cards';
@@ -9,14 +9,24 @@ import Information from './components/information/Information';
 import MoistureSetPoint from './components/dialog/MoistureSetPoint';
 import DischargeRateSetPoint from './components/dialog/DischargeRateSetPoint';
 import ModeControl from './components/dialog/ModeControl';
+import React from 'react';
+import { openHomeStream } from '../../../../features/home/homeSlice';
 
 const Home = () => {
+  const dispatch = useDispatch();
   const { isDmOnline, isSubscriptionActive } = useSelector(
     (state) => state.user
   );
+
+  React.useEffect(() => {
+    if (isSubscriptionActive) {
+      dispatch(openHomeStream());
+    }
+  }, []);
   if (!isSubscriptionActive || !isDmOnline) {
     return <DmStatus />;
   }
+
   return (
     <Wrapper>
       <MoistureSetPoint />

@@ -10,14 +10,14 @@ import { useDispatch } from 'react-redux';
 const Cards = () => {
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const eventSource = connectToSSE(dispatch);
+  // useEffect(() => {
+  //   const eventSource = connectToSSE(dispatch);
 
-    // Clean up the event source when the component unmounts
-    return () => {
-      eventSource.close();
-    };
-  }, [dispatch]);
+  //   // Clean up the event source when the component unmounts
+  //   return () => {
+  //     eventSource.close();
+  //   };
+  // }, [dispatch]);
 
   return (
     <Wrapper>
