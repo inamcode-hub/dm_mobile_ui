@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useDispatch, useSelector } from 'react-redux';
 
-import DmStatus from '../dmstatus/DmStatus';
 import Cards from './components/cards/Cards';
 import Chart from './components/chart/Chart';
 import Controller from './components/control/Controller';
@@ -11,20 +10,25 @@ import DischargeRateSetPoint from './components/dialog/DischargeRateSetPoint';
 import ModeControl from './components/dialog/ModeControl';
 import React from 'react';
 import { openHomeStream } from '../../../../features/home/homeSlice';
+import DmSubscription from '../dmstatus/DmSubscription';
+import DmReconnect from '../dmstatus/DmReconnect';
 
 const Home = () => {
   const dispatch = useDispatch();
-  const { isDmOnline, isSubscriptionActive } = useSelector(
-    (state) => state.user
-  );
+  const { isSubscriptionActive } = useSelector((state) => state.user);
+  const { connectionStatus } = useSelector((state) => state.home);
 
   React.useEffect(() => {
     if (isSubscriptionActive) {
       dispatch(openHomeStream());
     }
-  }, [dispatch]);
-  if (!isSubscriptionActive || !isDmOnline) {
-    return <DmStatus />;
+  }, []);
+
+  if (!isSubscriptionActive) {
+    return <DmSubscription />;
+  }
+  if (connectionStatus?.status !== 'online') {
+    return <DmReconnect />;
   }
 
   return (

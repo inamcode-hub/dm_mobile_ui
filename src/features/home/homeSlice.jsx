@@ -24,6 +24,7 @@ const initialState = {
 
   // Loading state
   isLoading: false,
+  isSocketConnecting: false,
 
   // Live data
   streamPayload: [],
@@ -41,22 +42,26 @@ function connectWithRetry(dispatch, maxRetries = 5) {
       console.warn(
         '[WebSocket] Retry stopped due to fatal error or max retries'
       );
+      dispatch(setSocketConnecting(false));
       return;
     }
 
     const token = getUserCookies('dryermaster_token');
     if (!token) {
       toast.error('Token missing. Cannot connect to live stream.');
+      dispatch(setSocketConnecting(false));
       return;
     }
 
     const wsURL = `${import.meta.env.VITE_WS_URL}?token=${token}`;
     console.log('[WebSocket] Connecting to:', wsURL);
+    dispatch(setSocketConnecting(true));
     socket = new WebSocket(wsURL);
 
     socket.onopen = () => {
       console.log('[WebSocket] Connected');
       retries = 0;
+      dispatch(setSocketConnecting(false));
     };
 
     socket.onmessage = (event) => {
@@ -79,7 +84,7 @@ function connectWithRetry(dispatch, maxRetries = 5) {
             }
             break;
           case 'subscribed':
-            // console.log('[WebSocket] Subscribed:', message.message);
+            console.log('[WebSocket] Subscribed:', message.message);
             break;
           case 'error':
             console.warn('[WebSocket][Error]', message);
@@ -106,6 +111,7 @@ function connectWithRetry(dispatch, maxRetries = 5) {
       console.warn(
         `[WebSocket] Closed. Code=${event.code}, Reason=${event.reason}`
       );
+      dispatch(setSocketConnecting(false));
       if (!manualClose && !fatalError) {
         retries += 1;
         const backoff = Math.min(1000 * 2 ** retries, 10000);
@@ -131,12 +137,14 @@ const homeSlice = createSlice({
   name: 'home',
   initialState,
   reducers: {
+    setSocketConnecting: (state, { payload }) => {
+      state.isSocketConnecting = payload;
+    },
     getHomeStateValues: (state, { payload }) => {
       const { name, value } = payload;
       state[name] = value;
     },
     handleStreamPayload: (state, { payload }) => {
-      // console.log('[Payload]', payload);
       state.streamPayload = payload;
     },
     updateDevicesSnapshot: (state, { payload }) => {
@@ -164,7 +172,6 @@ const homeSlice = createSlice({
           : null,
       };
     },
-
     sendHomeMessage: (_, { payload }) => {
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(payload));
@@ -174,7 +181,7 @@ const homeSlice = createSlice({
         toast.warn('WebSocket not connected.');
       }
     },
-    closeHomeStream: () => {
+    closeHomeStream: (state) => {
       manualClose = true;
       if (socket) {
         socket.close();
@@ -197,6 +204,7 @@ const homeSlice = createSlice({
 });
 
 export const {
+  setSocketConnecting,
   getHomeStateValues,
   handleStreamPayload,
   sendHomeMessage,
