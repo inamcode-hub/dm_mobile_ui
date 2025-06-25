@@ -2,9 +2,15 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { getStreamValueByName } from '../../../../../../../lib/getStreamValueByName';
 
 const DryingTemperature = () => {
-  const { airPlenumTemperature } = useSelector((state) => state.dryerMaster);
+  const { streamPayload } = useSelector((state) => state.home);
+
+  const airPlenumTemperature = getStreamValueByName(
+    streamPayload,
+    'drying_temperature'
+  );
   return (
     <Wrapper>
       <div className="heading">
