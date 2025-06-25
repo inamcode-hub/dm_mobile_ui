@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
-import React from 'react';
 import { useSelector } from 'react-redux';
 import { getStreamValueByName } from '../../../../../../../lib/getStreamValueByName';
 

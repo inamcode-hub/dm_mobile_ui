@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
-import { data } from './Data';
+
 import { format } from 'date-fns';
 
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useWindowSize } from '../../../../../../../hooks/useWindowSize';
+import { useSelector } from 'react-redux';
 
 const ChartData = () => {
   const { width } = useWindowSize();
+  const { streamPayload } = useSelector((state) => state.home);
+  const data = streamPayload?.chart?.data || [];
   const seriesInlet = data.map((item) => {
     return {
       x: format(new Date(item.createdAt), 'EEE hh:mm'),
@@ -60,7 +63,7 @@ const ChartData = () => {
         opacity: 0.2,
       },
     },
-    colors: ['#5cb85c', '#63c', '#0961ad'],
+    colors: ['#5cb85c', '#070211', '#0961ad', 'var(--primary)'],
     stroke: {
       curve: 'smooth',
     },
@@ -157,23 +160,19 @@ const ChartData = () => {
   useEffect(() => {}, []);
   return (
     <Wrapper>
-      <div
-        id='chart-line'
-        className='chart-line'>
+      <div id="chart-line" className="chart-line">
         <ReactApexChart
           options={options}
           series={series}
-          type='line'
+          type="line"
           height={options.chart.height}
         />
       </div>
-      <div
-        id='chart-line2'
-        className='chart-line2'>
+      <div id="chart-line2" className="chart-line2">
         <ReactApexChart
           options={options2}
           series={series2}
-          type='line'
+          type="line"
           height={options2.chart.height}
         />
       </div>
