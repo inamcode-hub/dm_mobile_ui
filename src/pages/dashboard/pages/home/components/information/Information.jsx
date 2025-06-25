@@ -4,26 +4,39 @@ import { IconButton } from '@mui/material';
 
 import { grey } from '@mui/material/colors';
 import { useSelector } from 'react-redux';
+import { getStreamValueByName } from '../../../../../../lib/getStreamValueByName';
 
 const Information = () => {
-  const { modelPredictedMoisture, modelSuggestedRate, notReadyReason } =
-    useSelector((state) => state.dryerMaster);
+  const { notReadyReason } = useSelector((state) => state.dryerMaster);
+  const { streamPayload } = useSelector((state) => state.home);
+
+  const modelSuggestedRate = getStreamValueByName(
+    streamPayload,
+    'suggested_rate'
+  );
+  const reason = getStreamValueByName(streamPayload, 'not_ready_reason');
+
+  const predicted_zone = Number(
+    streamPayload?.live?.find((item) => item.name === 'moisture_predicted_zone')
+      ?.value[2]
+  ).toFixed(2);
+
   const data = [
     {
       id: 2,
       name: 'Predicted Moisture',
-      value: modelPredictedMoisture,
+      value: predicted_zone || 0,
     },
     {
       id: 1,
       name: 'Suggested Rate',
-      value: modelSuggestedRate,
+      value: modelSuggestedRate || 0,
     },
 
     {
       id: 3,
       name: 'Ready To Go Automatic',
-      value: notReadyReason === 0 ? 'Yes' : 'No',
+      value: reason === 0 ? 'Yes' : 'No',
     },
   ];
   return (

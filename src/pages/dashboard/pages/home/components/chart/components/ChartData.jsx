@@ -45,6 +45,7 @@ const ChartData = () => {
       labels: {
         style: { colors: '#000' },
         formatter: (val) => val,
+        rotate: 0,
       },
     },
   });
@@ -74,6 +75,7 @@ const ChartData = () => {
       tickAmount: width > 768 ? (width > 920 ? 15 : 8) : 7,
       labels: {
         formatter: (val) => val,
+        rotate: 0, // <-- forces horizontal text
       },
     },
     legend: {
@@ -85,7 +87,7 @@ const ChartData = () => {
   // ✅ Update series when data arrives (Last 4 hours only)
   useEffect(() => {
     if (!data?.length) return;
-    console.log(data);
+
     const formatSeries = (key) =>
       data.map((item) => ({
         // Local time conversion happens automatically with JS Date
