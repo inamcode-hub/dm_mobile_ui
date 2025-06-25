@@ -88,14 +88,16 @@ const ChartData = () => {
   useEffect(() => {
     if (!data?.length) return;
 
-    const formatSeries = (key) =>
-      data.map((item) => ({
-        // Local time conversion happens automatically with JS Date
-        x: item?.createdAt
-          ? format(new Date(item.createdAt), 'EEE hh:mm aa') // this uses browser time
-          : '',
+    const sortedData = [...data].sort(
+      (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+    );
 
-        y: item?.[key] != null ? Number(item[key]).toFixed(2) : null, // allow null for gaps
+    const formatSeries = (key) =>
+      sortedData.map((item) => ({
+        x: item?.createdAt
+          ? format(new Date(item.createdAt), 'EEE hh:mm aa')
+          : '',
+        y: item?.[key] != null ? Number(item[key]).toFixed(2) : null,
       }));
 
     setSeries([
