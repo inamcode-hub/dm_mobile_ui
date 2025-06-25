@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
-
 import { format } from 'date-fns';
-
 import { useTheme } from '@emotion/react';
 import styled from '@emotion/styled';
 import { useWindowSize } from '../../../../../../../hooks/useWindowSize';
@@ -10,50 +8,22 @@ import { useSelector } from 'react-redux';
 
 const ChartData = () => {
   const { width } = useWindowSize();
+  const theme = useTheme();
   const { streamPayload } = useSelector((state) => state.home);
   const data = streamPayload?.chart?.data || [];
-  const seriesInlet = data.map((item) => {
-    return {
-      x: format(new Date(item.createdAt), 'EEE hh:mm'),
-      y: item.inlet.toFixed(0),
-    };
-  });
 
-  const seriesOutlet = data.map((item) => {
-    return {
-      x: format(new Date(item.createdAt), 'EEE hh:mm'),
-      y: item.outlet.toFixed(0),
-    };
-  });
-
-  const seriesTarget = data.map((item) => {
-    return {
-      x: format(new Date(item.createdAt), 'EEE hh:mm'),
-      y: item.target.toFixed(0),
-    };
-  });
-
-  const seriesRate = data.map((item) => {
-    return {
-      x: format(new Date(item.createdAt), 'EEE hh:mm'),
-      y: item.rate.toFixed(0),
-    };
-  });
+  const [series, setSeries] = useState([]);
+  const [series2, setSeries2] = useState([]);
 
   const [options, setOptions] = useState({
     chart: {
-      id: 'chart2',
+      id: 'chart1',
       group: 'social',
       type: 'line',
       height: 350,
       stacked: false,
-      toolbar: {
-        show: true,
-      },
-      zoom: {
-        enabled: false,
-      },
-
+      toolbar: { show: true },
+      zoom: { enabled: false },
       dropShadow: {
         enabled: true,
         color: '#000',
@@ -63,44 +33,21 @@ const ChartData = () => {
         opacity: 0.2,
       },
     },
-    colors: ['#5cb85c', '#070211', '#0961ad', 'var(--primary)'],
-    stroke: {
-      curve: 'smooth',
-    },
+    colors: ['#5cb85c', '#070211', '#0961ad'],
+    stroke: { curve: 'smooth' },
     title: {
-      text: 'Average High & Low Moisture',
+      text: 'Average High & Low Moisture (Last 4 Hours)',
       align: 'left',
     },
     xaxis: {
       type: 'category',
-      tickAmount:
-        // width bigger than 768px than 10 if screen is bigger than 920px than 20
-        width > 768 ? (width > 920 ? 15 : 8) : 7,
+      tickAmount: width > 768 ? (width > 920 ? 15 : 8) : 7,
       labels: {
-        style: {
-          colors: '#000',
-        },
-        formatter: function (val) {
-          return val;
-        },
+        style: { colors: '#000' },
+        formatter: (val) => val,
       },
     },
   });
-
-  const [series, setSeries] = useState([
-    {
-      name: 'inlet',
-      data: seriesInlet,
-    },
-    {
-      name: 'target',
-      data: seriesTarget,
-    },
-    {
-      name: 'outlet',
-      data: seriesOutlet,
-    },
-  ]);
 
   const [options2, setOptions2] = useState({
     chart: {
@@ -108,13 +55,8 @@ const ChartData = () => {
       group: 'social',
       type: 'line',
       height: 300,
-      toolbar: {
-        show: false,
-      },
-      zoom: {
-        enabled: true,
-      },
-
+      toolbar: { show: false },
+      zoom: { enabled: true },
       dropShadow: {
         enabled: true,
         color: '#000',
@@ -124,42 +66,47 @@ const ChartData = () => {
         opacity: 0.2,
       },
     },
-
     colors: ['#f0ad4e'],
-    stroke: {
-      curve: 'smooth',
-    },
-    title: {
-      text: 'Average High & Low Rate',
-      align: 'left',
-    },
+    stroke: { curve: 'smooth' },
+    title: { text: 'Average High & Low Rate (Last 4 Hours)', align: 'left' },
     xaxis: {
       type: 'category',
-      tickAmount:
-        // width bigger than 768px than 10 if screen is bigger than 920px than 20
-        width > 768 ? (width > 920 ? 15 : 8) : 7,
+      tickAmount: width > 768 ? (width > 920 ? 15 : 8) : 7,
       labels: {
-        formatter: function (val) {
-          return val;
-        },
+        formatter: (val) => val,
       },
     },
     legend: {
       show: true,
-      showForSingleSeries: true, // Add this line
+      showForSingleSeries: true,
     },
   });
 
-  const [series2, setSeries2] = useState([
-    {
-      name: 'rate',
-      data: seriesRate,
-    },
-  ]);
+  // ✅ Update series when data arrives (Last 4 hours only)
+  useEffect(() => {
+    if (!data?.length) return;
+    console.log(data);
+    const formatSeries = (key) =>
+      data.map((item) => ({
+        // Local time conversion happens automatically with JS Date
+        x: item?.createdAt
+          ? format(new Date(item.createdAt), 'EEE hh:mm aa') // this uses browser time
+          : '',
 
-  useEffect(() => {}, []);
+        y: item?.[key] != null ? Number(item[key]).toFixed(2) : null, // allow null for gaps
+      }));
+
+    setSeries([
+      { name: 'inlet', data: formatSeries('inlet') },
+      { name: 'target', data: formatSeries('target') },
+      { name: 'outlet', data: formatSeries('outlet') },
+    ]);
+
+    setSeries2([{ name: 'rate', data: formatSeries('rate') }]);
+  }, [data]);
+
   return (
-    <Wrapper>
+    <Wrapper theme={theme}>
       <div id="chart-line" className="chart-line">
         <ReactApexChart
           options={options}
@@ -185,37 +132,28 @@ const Wrapper = styled.div`
   gap: 1rem;
   overflow: hidden;
   margin-bottom: 1rem;
+
   .apexcharts-toolbar {
     margin-right: 1rem;
   }
 
-  .apexcharts-title-text {
-    fill: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
-  }
+  .apexcharts-title-text,
   .apexcharts-xaxis-label,
-  .apexcharts-yaxis-label {
+  .apexcharts-yaxis-label,
+  .apexcharts-legend-text {
     fill: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
+    color: ${({ theme }) =>
+      theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
+    text-transform: capitalize;
   }
 
-  .apexcharts-tooltip {
+  .apexcharts-tooltip,
+  .apexcharts-tooltip-title {
     background: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#333' : '#fff'} !important;
     color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
-    text-transform: capitalize;
-  }
-  .apexcharts-tooltip-title {
-    background: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? '#000' : ''} !important;
-    color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
-  }
-  .apexcharts-legend-text {
-    color: ${({ theme }) =>
-      theme.palette.mode === 'dark' ? '#fff' : '#000'} !important;
-    text-transform: capitalize;
   }
 
   .chart-line,
@@ -225,12 +163,8 @@ const Wrapper = styled.div`
     border-radius: 10px;
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? '#000' : '#fff'};
-
     margin: 0 1rem;
   }
-  .chart-line {
-  }
-  .chart-line2 {
-  }
 `;
+
 export default ChartData;
