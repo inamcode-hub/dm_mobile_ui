@@ -11,13 +11,28 @@ import { grey, blue } from '@mui/material/colors';
 import { Tune } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../features/home/homeSlice';
+import { getStreamValueByName } from '../../../../../../lib/getStreamValueByName';
 
 const Controller = () => {
   const dispatch = useDispatch();
-  const { targetMoisture, dmRateOutput, localRemoteMode } = useSelector(
-    (state) => state.dryerMaster
+  const { localRemoteMode } = useSelector((state) => state.dryerMaster);
+  const { streamPayload } = useSelector((state) => state.home);
+  const targetMoisture = getStreamValueByName(
+    streamPayload,
+    'moisture_setpoint',
+    1
   );
-
+  const dmRateOutput = getStreamValueByName(
+    streamPayload,
+    'discharge_rate_setpoint'
+  );
+  const mode = getStreamValueByName(streamPayload, 'mode_control', 0);
+  const getMode = (mode) => {
+    if (mode == 10) return 'Local';
+    if (mode == 11) return 'Manual';
+    if (mode == 12) return 'Remote';
+    return 'Unknown';
+  };
   const handleMoisture = () => {
     dispatch(
       getHomeStateValues({ name: 'moistureSetPointDialog', value: true })
@@ -53,11 +68,13 @@ const Controller = () => {
       id: 3,
       name: 'Operating Mode',
       value:
-        localRemoteMode === 0
+        mode == 10
           ? 'Local'
-          : localRemoteMode === 1
+          : mode == 11
           ? 'Manual'
-          : 'Auto',
+          : mode == 12
+          ? 'Remote'
+          : 'Unknown',
       action: 'Change',
       icon: <GrSystem />,
       className: 'mode',
