@@ -3,27 +3,41 @@ import { grey } from '@mui/material/colors';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
+import {
+  findMode,
+  getStreamValueByName,
+} from '../../../../../../../lib/getStreamValueByName';
 
 const RateControl = () => {
-  const { dmRateOutput, dischargeRateIn, localRemoteMode } = useSelector(
-    (state) => state.dryerMaster
-  );
   const dispatch = useDispatch();
+  const { streamPayload } = useSelector((state) => state.home);
+
+  const dischargeRateIn = getStreamValueByName(streamPayload, 'discharge_rate');
+  const dmRateOutput = getStreamValueByName(
+    streamPayload,
+    'discharge_rate_setpoint'
+  );
+  const mode = getStreamValueByName(streamPayload, 'mode_control', 0);
+  const getMode = (mode) => {
+    if (mode == 10) return 'Local';
+    if (mode == 11) return 'Manual';
+    if (mode == 12) return 'Remote';
+    return 'Unknown';
+  };
 
   const handleSetPoint = () => {
     dispatch(getHomeStateValues({ name: 'rateSetPointDialog', value: true }));
   };
+
   const handleMode = () => {
     dispatch(getHomeStateValues({ name: 'modeControlDialog', value: true }));
   };
+
   return (
     <Wrapper>
       <div className="heading">
         <div className="title">Rate</div>
-        <div className="warning_alert">
-          {/* <div className='warning'>Warning</div>
-          <div className='alert'>Alert</div> */}
-        </div>
+        <div className="warning_alert" />
       </div>
       <div className="body">
         <div className="value">
@@ -35,14 +49,8 @@ const RateControl = () => {
             <span>{dmRateOutput}</span>
           </div>
           <div className="sub" onClick={handleMode}>
-            <span>Mode:</span>
-            <span>
-              {localRemoteMode === 0
-                ? 'Local'
-                : localRemoteMode === 1
-                ? 'Manual'
-                : 'Auto'}
-            </span>
+            <span>Mode:{getMode(mode)}</span>
+            {/* <span>{findMode(localRemoteMode)}</span> */}
           </div>
         </div>
       </div>
@@ -58,6 +66,7 @@ const Wrapper = styled.div`
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 8px;
   overflow: hidden;
+
   .heading {
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? grey[800] : '#f4c27c'};
@@ -69,8 +78,8 @@ const Wrapper = styled.div`
       theme.palette.mode === 'dark'
         ? `3px solid ${grey[600]}`
         : '3px solid var(--primary)'};
-
     gap: 1rem;
+
     .title {
       font-size: 1.5rem;
       font-weight: 500;
@@ -82,44 +91,32 @@ const Wrapper = styled.div`
       justify-content: flex-end;
       align-items: center;
       gap: 0.5rem;
-      .warning {
-        background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
-      }
-      .alert {
-        background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
-      }
-      .warning,
-      .alert {
-        border: 1px solid #ffffff;
-        color: #ffffff;
-        border-radius: 8px;
-        padding: 0.3rem;
-        font-size: 1rem;
-        font-weight: 500;
-      }
     }
   }
+
   .body {
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
+
     .value {
       display: flex;
       align-items: flex-end;
       gap: 0.5rem;
       color: #ffffff;
+
       .main {
         font-size: 2.5rem;
         font-weight: 500;
         color: #ffffff;
       }
+
       .sub {
         font-size: 1rem;
         font-weight: 500;
       }
     }
+
     .second_value {
       color: #ffffff;
       display: flex;
@@ -127,18 +124,10 @@ const Wrapper = styled.div`
       justify-content: center;
       gap: 0.2rem;
 
-      .main {
-        /* background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#e2901c'}; */
-        border: 1px solid #ffffff;
-        border-radius: 8px;
-      }
-      .sub {
-        border: 1px solid #ffffff;
-        border-radius: 8px;
-      }
       .main,
       .sub {
+        border: 1px solid #ffffff;
+        border-radius: 8px;
         display: flex;
         gap: 0.5rem;
         justify-content: space-between;
@@ -147,6 +136,7 @@ const Wrapper = styled.div`
         background-color: ${({ theme }) =>
           theme.palette.mode === 'dark' ? grey[900] : '#e2901c'};
         transition: all 0.3s ease;
+
         :hover {
           background-color: ${({ theme }) =>
             theme.palette.mode === 'dark' ? grey[700] : '#8f5b14'};
@@ -156,4 +146,5 @@ const Wrapper = styled.div`
     }
   }
 `;
+
 export default RateControl;

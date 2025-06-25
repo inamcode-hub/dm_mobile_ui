@@ -2,11 +2,16 @@ import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { getStreamValueByName } from '../../../../../../../lib/getStreamValueByName';
 
 const Inlet = () => {
-  const { inletMoisture, inletProductTemperature } = useSelector(
-    (state) => state.dryerMaster
+  const { streamPayload } = useSelector((state) => state.home);
+  const inletMoisture = getStreamValueByName(streamPayload, 'inlet_moisture');
+  const inletProductTemperature = getStreamValueByName(
+    streamPayload,
+    'inlet_temperature'
   );
+
   return (
     <Wrapper>
       <div className="heading">

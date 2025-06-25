@@ -3,35 +3,43 @@ import { grey } from '@mui/material/colors';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getHomeStateValues } from '../../../../../../../features/home/homeSlice';
+import { getStreamValueByName } from '../../../../../../../lib/getStreamValueByName';
 
 const Outlet = () => {
-  const {
-    outletMoistureAverage,
-    outletProductTemperatureAverage,
-    targetMoisture,
-  } = useSelector((state) => state.dryerMaster);
   const dispatch = useDispatch();
+  const { streamPayload } = useSelector((state) => state.home);
+
+  const outletMoisture = getStreamValueByName(streamPayload, 'outlet_moisture');
+  const outletProductTemperature = getStreamValueByName(
+    streamPayload,
+    'outlet_temperature'
+  );
+
+  const targetMoisture = getStreamValueByName(
+    streamPayload,
+    'moisture_setpoint',
+    1
+  );
+
   const handleClickOpen = () => {
     dispatch(
       getHomeStateValues({ name: 'moistureSetPointDialog', value: true })
     );
   };
+
   return (
     <Wrapper>
       <div className="heading">
         <div className="title">Outlet</div>
-        <div className="warning_alert">
-          {/* <div className='warning'>Warning</div>
-          <div className='alert'>Alert</div> */}
-        </div>
+        <div className="warning_alert">{/* reserved */}</div>
       </div>
       <div className="body">
         <div className="value">
           <div className="main">
-            {outletMoistureAverage} <span> %</span>
+            {outletMoisture} <span> %</span>
           </div>
           <div className="sub">
-            {outletProductTemperatureAverage} <span> &#8451;</span>
+            {outletProductTemperature} <span> &#8451;</span>
           </div>
         </div>
         <div className="second_value" onClick={handleClickOpen}>
@@ -53,6 +61,7 @@ const Wrapper = styled.div`
     rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;
   border-radius: 8px;
   overflow: hidden;
+
   .heading {
     background-color: ${({ theme }) =>
       theme.palette.mode === 'dark' ? grey[800] : '#afcfe9'};
@@ -64,8 +73,8 @@ const Wrapper = styled.div`
       theme.palette.mode === 'dark'
         ? `3px solid ${grey[600]}`
         : '3px solid var(--primary)'};
-
     gap: 1rem;
+
     .title {
       font-size: 1.5rem;
       font-weight: 500;
@@ -77,38 +86,29 @@ const Wrapper = styled.div`
       justify-content: flex-end;
       align-items: center;
       gap: 0.5rem;
-      .warning {
-        background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
-      }
-      .alert {
-        background: ${({ theme }) =>
-          theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
-      }
-      .warning,
-      .alert {
-        border: 1px solid #ffffff;
-        color: #ffffff;
-        border-radius: 8px;
-        padding: 0.3rem;
-        font-size: 1rem;
-        font-weight: 500;
-      }
     }
   }
+
   .body {
     display: flex;
     justify-content: space-between;
     padding: 0.5rem;
+
     .value {
       display: flex;
       align-items: flex-end;
       gap: 0.5rem;
       color: #ffffff;
+
       .main {
         font-size: 2.5rem;
         font-weight: 500;
         color: #ffffff;
+      }
+
+      .sub {
+        font-size: 1rem;
+        font-weight: 500;
       }
     }
 
@@ -121,15 +121,18 @@ const Wrapper = styled.div`
       justify-content: center;
       height: 2rem;
       padding: 0rem 0.5rem;
+
       .main {
         display: flex;
         gap: 0.5rem;
         color: #ffffff;
         justify-content: space-between;
       }
+
       background-color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? grey[900] : '#0961ad'};
       transition: all 0.3s ease;
+
       :hover {
         background-color: ${({ theme }) =>
           theme.palette.mode === 'dark' ? grey[700] : '#064074'};
@@ -138,4 +141,5 @@ const Wrapper = styled.div`
     }
   }
 `;
+
 export default Outlet;
