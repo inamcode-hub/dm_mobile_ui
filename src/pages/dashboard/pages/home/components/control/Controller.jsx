@@ -96,7 +96,7 @@ const Controller = () => {
                 )}
                 {item.name}
               </div>
-              <div className="value">{item.value}</div>
+              <div className="value">{item.value || 0}</div>
             </div>
             <Divider
               style={{

@@ -22,7 +22,7 @@ const RateControl = () => {
     if (mode == 10) return 'Local';
     if (mode == 11) return 'Manual';
     if (mode == 12) return 'Remote';
-    return 'Unknown';
+    return ' - -';
   };
 
   const handleSetPoint = () => {
@@ -41,12 +41,12 @@ const RateControl = () => {
       </div>
       <div className="body">
         <div className="value">
-          <div className="main">{dischargeRateIn}</div>
+          <div className="main">{dischargeRateIn || 0}</div>
         </div>
         <div className="second_value">
           <div className="main" onClick={handleSetPoint}>
             <span>SetPoint:</span>
-            <span>{dmRateOutput}</span>
+            <span>{dmRateOutput || 0}</span>
           </div>
           <div className="sub" onClick={handleMode}>
             <span>Mode:{getMode(mode)}</span>

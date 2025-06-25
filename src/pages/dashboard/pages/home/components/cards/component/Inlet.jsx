@@ -24,10 +24,10 @@ const Inlet = () => {
       <div className="body">
         <div className="value">
           <div className="main">
-            {inletMoisture} <span> %</span>
+            {inletMoisture || 0} <span> %</span>
           </div>
           <div className="sub">
-            {inletProductTemperature}
+            {inletProductTemperature || 0}
             <span> &#8451;</span>
           </div>
         </div>

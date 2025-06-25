@@ -36,16 +36,16 @@ const Outlet = () => {
       <div className="body">
         <div className="value">
           <div className="main">
-            {outletMoisture} <span> %</span>
+            {outletMoisture || 0} <span> %</span>
           </div>
           <div className="sub">
-            {outletProductTemperature} <span> &#8451;</span>
+            {outletProductTemperature || 0} <span> &#8451;</span>
           </div>
         </div>
         <div className="second_value" onClick={handleClickOpen}>
           <div className="main">
             <span>SetPoint:</span>
-            <span>{targetMoisture}</span>
+            <span>{targetMoisture || 0}</span>
           </div>
         </div>
       </div>

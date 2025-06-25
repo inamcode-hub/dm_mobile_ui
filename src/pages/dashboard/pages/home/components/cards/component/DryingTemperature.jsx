@@ -21,7 +21,7 @@ const DryingTemperature = () => {
       </div>
       <div className="body">
         <div className="value">
-          <div className="main">{airPlenumTemperature}</div>
+          <div className="main">{airPlenumTemperature || 0}</div>
           <div className="sub">
             <span> F</span>
           </div>
