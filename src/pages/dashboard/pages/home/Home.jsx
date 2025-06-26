@@ -24,15 +24,14 @@ const getConnectionState = (isSocketConnected, connectionStatus) => {
 const Home = () => {
   const dispatch = useDispatch();
   const { isSubscriptionActive } = useSelector((state) => state.user);
-  const { isSocketConnected, connectionStatus } = useSelector(
-    (state) => state.home
-  );
+  const { isSocketConnected, connectionStatus, isSocketConnecting } =
+    useSelector((state) => state.home);
 
   useEffect(() => {
-    if (isSubscriptionActive) {
+    if (isSubscriptionActive && !isSocketConnected && !isSocketConnecting) {
       dispatch(openHomeStream());
     }
-  }, [isSubscriptionActive, dispatch]);
+  }, [isSubscriptionActive, isSocketConnected, isSocketConnecting, dispatch]);
 
   if (!isSubscriptionActive) {
     return <DmSubscription />;
