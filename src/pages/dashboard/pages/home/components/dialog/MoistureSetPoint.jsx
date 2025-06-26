@@ -7,20 +7,28 @@ import {
   useMediaQuery,
 } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { getHomeStateValues } from '../../../../../../features/home/homeSlice';
+import {
+  getHomeStateValues,
+  sendHomeMessage,
+} from '../../../../../../features/home/homeSlice';
 import styled from '@emotion/styled';
 import { grey } from '@mui/material/colors';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import { toast } from 'react-toastify';
-import { getUserCookies } from '../../../../../../features/user/lib';
-import { customFetch } from '../../../../../../lib/customeFetch';
+
+import { getStreamValueByName } from '../../../../../../lib/getStreamValueByName';
 const MoistureSetPoint = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const { targetMoisture } = useSelector((state) => state?.dryerMaster);
-  const { moistureSetPointDialog } = useSelector((state) => state.home);
+
   const [newMoistureSetPoint, setNewMoistureSetPoint] = React.useState('');
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const { streamPayload, connectionStatus, moistureSetPointDialog } =
+    useSelector((state) => state.home);
+  const targetMoisture = getStreamValueByName(
+    streamPayload,
+    'moisture_setpoint'
+  );
 
   const handleClose = () => {
     dispatch(
@@ -35,29 +43,29 @@ const MoistureSetPoint = () => {
       return;
     }
     try {
-      const token = getUserCookies('dryermaster_token');
-      const response = await customFetch.post(
-        '/dryermaster/dashboard/moisture_set_point',
-        {
-          newValue: newMoistureSetPoint,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+      dispatch(
+        sendHomeMessage({
+          action: 'update_api',
+          serial: connectionStatus?.serial,
+          topic: 'home',
+          domain: 'update_api',
+          updates: [
+            {
+              path: 'moisture_setpoint',
+              value: parseFloat(newMoistureSetPoint),
+            },
+          ],
+          reason: 'Moisture set point updated from UI',
+        })
       );
-      if (response.status === 200) {
-        toast.success('Moisture set point updated successfully!');
-        handleClose();
-      } else {
-        toast.error('Failed to update moisture set point!');
-      }
+      toast.success('Moisture set point updated successfully!');
+      // Optionally, you can close the dialog after submission
+      handleClose();
+
+      // handleClose();
     } catch (error) {
-      console.log(error);
       toast.error('Failed to update moisture set point!');
     }
-    // Close drawer after submitting
   };
 
   return (

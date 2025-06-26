@@ -56,12 +56,12 @@ function connectWithRetry(dispatch, maxRetries = 5) {
     }
 
     const wsURL = `${import.meta.env.VITE_WS_URL}?token=${token}`;
-    console.log('[WebSocket] Connecting to:', wsURL);
+    // console.log('[WebSocket] Connecting to:', wsURL);
     dispatch(setSocketConnecting(true));
     socket = new WebSocket(wsURL);
 
     socket.onopen = () => {
-      console.log('[WebSocket] Connected');
+      // console.log('[WebSocket] Connected');
       retries = 0;
       dispatch(setSocketConnecting(false));
       dispatch(setSocketConnected(true));
@@ -87,7 +87,7 @@ function connectWithRetry(dispatch, maxRetries = 5) {
             }
             break;
           case 'subscribed':
-            console.log('[WebSocket] Subscribed:', message.message);
+            // console.log('[WebSocket] Subscribed:', message.message);
             break;
           case 'error':
             console.warn('[WebSocket][Error]', message);
@@ -169,7 +169,6 @@ const homeSlice = createSlice({
       state.devicesStatusSnapshot = snapshot;
     },
     updateConnectionStatus: (state, { payload }) => {
-      console.log('[ConnectionStatus]', payload);
       state.connectionStatus = {
         ...payload,
         firstSeen: payload.firstSeen
@@ -182,6 +181,7 @@ const homeSlice = createSlice({
       state.connectionUpdatedAt = Date.now();
     },
     sendHomeMessage: (_, { payload }) => {
+      console.debug('[WebSocket] Sending message:', payload);
       if (socket && socket.readyState === WebSocket.OPEN) {
         socket.send(JSON.stringify(payload));
         console.debug('[WebSocket] Sent:', payload);
