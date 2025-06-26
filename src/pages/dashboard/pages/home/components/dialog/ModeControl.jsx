@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
@@ -8,102 +8,163 @@ import {
   useMediaQuery,
   useTheme,
 } from '@mui/material';
-import { getHomeStateValues } from '../../../../../../features/home/homeSlice';
 import styled from '@emotion/styled';
-import { GrSystem } from 'react-icons/gr';
 import { grey } from '@mui/material/colors';
+import { GrSystem } from 'react-icons/gr';
+import { toast } from 'react-toastify';
+import {
+  getHomeStateValues,
+  sendHomeMessage,
+} from '../../../../../../features/home/homeSlice';
+import { getStreamValueByName } from '../../../../../../lib/getStreamValueByName';
 
-const modeData = [
-  { value: 'automatic', label: 'Automatic', disabled: false, active: false },
-  { value: 'manual', label: 'Manual', disabled: false, active: false },
-  { value: 'local', label: 'Local', disabled: false, active: false },
-];
 const ModeControl = () => {
-  const theme = useTheme();
   const dispatch = useDispatch();
-  const { modeControlDialog, modeControl } = useSelector((state) => state.home);
-  const [mode, setMode] = React.useState('local');
+  const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
-  const automaticReady = false;
+  const { modeControlDialog, streamPayload, connectionStatus } = useSelector(
+    (state) => state.home
+  );
+
+  // Extract mode value safely from streamPayload
+  const rawMode = getStreamValueByName(streamPayload, 'mode_control', 0);
+  const modeValue = Number(rawMode); // Ensure it's numeric
+
+  const [mode, setMode] = useState('');
+
+  const getModeLabel = (value) => {
+    const map = {
+      10: 'local',
+      11: 'manual',
+      12: 'automatic',
+    };
+    return map[value] || '';
+  };
+
+  const getModeDisplay = (value) => {
+    const map = {
+      10: 'Local',
+      11: 'Manual',
+      12: 'Remote',
+    };
+    return map[value] || '- -';
+  };
+
+  useEffect(() => {
+    // Set selected button to current mode
+    const current = getModeLabel(modeValue);
+    setMode(current);
+  }, [modeValue]);
+
+  const handleAlignment = (e, newAlignment) => {
+    if (newAlignment !== null) {
+      setMode(newAlignment);
+    }
+  };
+
   const handleClose = () => {
     dispatch(getHomeStateValues({ name: 'modeControlDialog', value: false }));
   };
 
   const handleSubmit = () => {
-    // Dispatch action to update the mode here
-    handleClose(); // Close drawer after submitting
-  };
+    if (!mode) return;
 
-  const handleAlignment = (event, newAlignment) => {
-    if (newAlignment !== null) {
-      setMode(newAlignment);
+    const valueMap = {
+      local: 'local_mode',
+      manual: 'manual_mode',
+      automatic: 'automatic_mode',
+    };
+
+    dispatch(
+      sendHomeMessage({
+        action: 'update_api',
+        serial: connectionStatus?.serial,
+        topic: 'home',
+        domain: 'update_api',
+        updates: [
+          {
+            path: 'mode',
+            value: valueMap[mode],
+          },
+        ],
+        reason: `Mode updated from UI to ${mode}`,
+      })
+    );
+
+    toast.success(
+      `Mode changed to ${
+        mode.charAt(0).toUpperCase() + mode.slice(1)
+      } successfully!`
+    );
+
+    // Close this drawer and optionally open setpoint for 'automatic'
+    handleClose();
+
+    if (mode === 'automatic') {
+      dispatch(
+        getHomeStateValues({ name: 'moistureSetPointDialog', value: true })
+      );
+      toast.info('Please set the Moisture Set Point now.');
+    }
+    if (mode === 'manual') {
+      dispatch(getHomeStateValues({ name: 'rateSetPointDialog', value: true }));
+      toast.info('Please set the Discharge Rate Set Point now.');
     }
   };
-  useEffect(() => {
-    setMode(modeControl);
-  }, [modeControl]);
+
   return (
     <Drawer
-      anchor='right'
+      anchor="right"
       open={modeControlDialog}
       onClose={handleClose}
-      variant='temporary'
+      variant="temporary"
       sx={{
         '& .MuiDrawer-paper': { width: fullScreen ? '100%' : '500px' },
-      }}>
+      }}
+    >
       <Wrapper>
-        <div className='heading'>
-          <div className='title'>
-            <GrSystem />
-            Mode Control
+        <div className="heading">
+          <div className="title">
+            <GrSystem /> Mode Control
           </div>
         </div>
-        <div className='body'>
-          <div className='information'>
-            <div className='current_value'>
-              Currently you are in <span>{modeControl}</span> mode.
-            </div>
+        <div className="body">
+          <div className="current_value">
+            Currently you are in <span>{getModeDisplay(modeValue)}</span> mode.
           </div>
           <ToggleButtonGroup
-            color='primary'
+            color="primary"
             value={mode}
             exclusive
             onChange={handleAlignment}
-            fullWidth>
-            {modeData.map((item, index) => (
-              <ToggleButton
-                key={index}
-                value={item.value}
-                disabled={mode === item.value}
-                className={mode === item.value ? 'active' : ''}>
-                {item.label}
-                {/* {item.value === 'automatic' && !automaticReady && (
-                  <span>Calibrating</span>
-                )} */}
-              </ToggleButton>
-            ))}
+            fullWidth
+          >
+            <ToggleButton value="automatic" disabled={mode === 'automatic'}>
+              Automatic
+            </ToggleButton>
+            <ToggleButton value="manual" disabled={mode === 'manual'}>
+              Manual
+            </ToggleButton>
+            <ToggleButton value="local" disabled={mode === 'local'}>
+              Local
+            </ToggleButton>
           </ToggleButtonGroup>
-          {!automaticReady && (
-            <div className='info'>
-              The dryer is currently calibrating to your specific conditions.
-              Automatic mode will be available shortly after initial learning is
-              complete.
-            </div>
-          )}
+          <div className="info">
+            Automatic mode will be available after the system completes
+            calibration.
+          </div>
         </div>
-        <div className='footer'>
-          <Button
-            onClick={handleClose}
-            color='primary'
-            variant='outlined'>
+        <div className="footer">
+          <Button onClick={handleClose} color="primary" variant="outlined">
             Discard Changes
           </Button>
           <Button
             onClick={handleSubmit}
-            color='primary'
-            variant='contained'
-            disabled={!mode}>
+            color="primary"
+            variant="contained"
+            disabled={!mode}
+          >
             Update Mode
           </Button>
         </div>
@@ -130,7 +191,6 @@ const Wrapper = styled.div`
 
       svg {
         font-size: 2rem;
-        // icon color
         color: ${({ theme }) =>
           theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary.main};
       }
@@ -153,9 +213,6 @@ const Wrapper = styled.div`
       }
     }
 
-    .MuiTextField-root {
-      /* margin-top: 10px; */
-    }
     .info {
       font-size: 16px;
       color: ${({ theme }) =>
@@ -164,22 +221,14 @@ const Wrapper = styled.div`
       border: 1px solid #e0e0e0;
       padding: 10px;
       border-radius: 8px;
-      //info
       background-color: ${({ theme }) =>
         theme.palette.mode === 'dark' ? '#333' : '#f9f9f9'};
-    }
-    .active {
-      background-color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? grey[900] : grey[200]};
-      color: ${({ theme }) =>
-        theme.palette.mode === 'dark' ? '#fff' : theme.palette.primary.main};
     }
   }
 
   .footer {
     display: grid;
     grid-template-columns: 1fr 1fr;
-
     gap: 10px;
 
     .MuiButton-root {
